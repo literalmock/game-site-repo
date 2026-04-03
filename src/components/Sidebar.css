@@ -1,0 +1,119 @@
+.sidebar {
+  width: 100%;
+  --sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  --sidebar-border: rgba(15, 23, 42, 0.12);
+  --sidebar-shadow: 0 10px 26px rgba(15, 23, 42, 0.1);
+  --sidebar-title: #0f172a;
+  --sidebar-label: #475569;
+  --sidebar-text: #1e293b;
+  --sidebar-hover-bg: rgba(15, 23, 42, 0.06);
+  --sidebar-control-bg: #f1f5f9;
+  --sidebar-control-text: #0f172a;
+  --sidebar-control-border: rgba(15, 23, 42, 0.16);
+  --sidebar-placeholder: #64748b;
+}
+
+.sidebar-panel {
+  border: 1px solid var(--sidebar-border);
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--sidebar-bg);
+  box-shadow: var(--sidebar-shadow);
+}
+
+.sidebar-title {
+  margin: 0 0 24px;
+  color: var(--sidebar-title);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.sidebar-section {
+  margin-bottom: 32px;
+}
+
+.sidebar-section-last {
+  margin-bottom: 0;
+}
+
+.sidebar-label {
+  margin: 0 0 12px;
+  color: var(--sidebar-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sidebar-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--sidebar-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.sidebar-option:hover {
+  color: #22d3ee;
+  background: var(--sidebar-hover-bg);
+}
+
+.sidebar-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #06b6d4;
+}
+
+.sidebar-control {
+  width: 100%;
+  border: 1px solid var(--sidebar-control-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--sidebar-control-bg);
+  color: var(--sidebar-control-text);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.sidebar-control::placeholder {
+  color: var(--sidebar-placeholder);
+}
+
+.sidebar-control:hover,
+.sidebar-control:focus {
+  border-color: rgba(34, 211, 238, 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-shadow: 0 10px 30px rgba(2, 6, 23, 0.4);
+    --sidebar-title: #ffffff;
+    --sidebar-label: #cbd5e1;
+    --sidebar-text: #e2e8f0;
+    --sidebar-hover-bg: rgba(255, 255, 255, 0.06);
+    --sidebar-control-bg: #334155;
+    --sidebar-control-text: #ffffff;
+    --sidebar-control-border: rgba(255, 255, 255, 0.12);
+    --sidebar-placeholder: #94a3b8;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 280px;
+    padding-right: 8px;
+  }
+}

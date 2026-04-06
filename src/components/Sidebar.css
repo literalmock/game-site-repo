@@ -95,20 +95,18 @@
   border-color: rgba(34, 211, 238, 0.55);
 }
 
-@media (prefers-color-scheme: dark) {
-  .sidebar {
-    --sidebar-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    --sidebar-border: rgba(255, 255, 255, 0.1);
-    --sidebar-shadow: 0 10px 30px rgba(2, 6, 23, 0.4);
-    --sidebar-title: #ffffff;
-    --sidebar-label: #cbd5e1;
-    --sidebar-text: #e2e8f0;
-    --sidebar-hover-bg: rgba(255, 255, 255, 0.06);
-    --sidebar-control-bg: #334155;
-    --sidebar-control-text: #ffffff;
-    --sidebar-control-border: rgba(255, 255, 255, 0.12);
-    --sidebar-placeholder: #94a3b8;
-  }
+.app-layout--dark .sidebar {
+  --sidebar-bg: linear-gradient(180deg, rgba(30, 59, 102, 0.62) 0%, rgba(12, 27, 51, 0.9) 100%);
+  --sidebar-border: rgba(130, 168, 214, 0.28);
+  --sidebar-shadow: 0 12px 34px rgba(3, 10, 24, 0.5);
+  --sidebar-title: #f3f8ff;
+  --sidebar-label: #c7d8f0;
+  --sidebar-text: #e6effa;
+  --sidebar-hover-bg: rgba(108, 154, 212, 0.18);
+  --sidebar-control-bg: rgba(38, 70, 113, 0.55);
+  --sidebar-control-text: #f5f9ff;
+  --sidebar-control-border: rgba(136, 176, 223, 0.38);
+  --sidebar-placeholder: #a8c1e3;
 }
 
 @media (min-width: 1024px) {

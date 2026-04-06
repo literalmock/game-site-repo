@@ -1,0 +1,38 @@
+.app-layout {
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-layout--light {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.app-layout--dark {
+  color: #e9f2ff;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(110, 155, 212, 0.22) 0%, rgba(110, 155, 212, 0) 42%),
+    radial-gradient(circle at 85% 8%, rgba(64, 113, 173, 0.25) 0%, rgba(64, 113, 173, 0) 36%),
+    linear-gradient(180deg, #060d1d 0%, #0b1a33 48%, #091325 100%);
+}
+
+.app-layout-main {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1280px;
+  padding: 16px 12px;
+}
+
+@media (min-width: 640px) {
+  .app-layout-main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-layout-main {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

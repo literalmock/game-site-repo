@@ -69,13 +69,11 @@
   font-size: 0.78rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .game-card {
-    --card-border: rgba(255, 255, 255, 0.1);
-    --card-bg: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    --card-shadow: 0 10px 30px rgba(2, 6, 23, 0.4);
-    --card-media-bg: #334155;
-    --card-title: #ffffff;
-    --card-category: #94a3b8;
-  }
+.app-layout--dark .game-card {
+  --card-border: rgba(125, 167, 216, 0.3);
+  --card-bg: linear-gradient(180deg, rgba(30, 58, 98, 0.72) 0%, rgba(11, 24, 44, 0.95) 100%);
+  --card-shadow: 0 12px 30px rgba(2, 9, 22, 0.45);
+  --card-media-bg: #2c486f;
+  --card-title: #f3f8ff;
+  --card-category: #acc2df;
 }

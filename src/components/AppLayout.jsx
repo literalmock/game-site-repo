@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react"
 import {Outlet} from "react-router-dom"
 import Navbar from "./Navbar"
+import "./AppLayout.css"
 
 const AppLayout = () => {
   const [theme, setTheme] = useState("light")
@@ -19,9 +20,9 @@ const AppLayout = () => {
   }
 
   return (
-    <div className={`min-h-screen transition-colors ${theme === "dark" ? "bg-slate-950 text-slate-100" : "bg-slate-100 text-slate-900"}`}>
+    <div className={`app-layout ${theme === "dark" ? "app-layout--dark" : "app-layout--light"}`}>
       <Navbar isDark={theme === "dark"} onToggleTheme={toggleTheme} />
-      <main className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 lg:px-6">
+      <main className="app-layout-main">
         <Outlet />
       </main>
     </div>

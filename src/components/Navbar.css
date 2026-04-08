@@ -99,9 +99,6 @@
 }
 
 .nav-link-icon {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
   flex-shrink: 0;
 }
 
@@ -140,10 +137,7 @@
 }
 
 .navbar-search-icon {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  opacity: 0.8;
+  color: var(--search-icon);
 }
 
 .navbar-search-input {
@@ -282,9 +276,6 @@
 }
 
 .mobile-nav-icon {
-  width: 15px;
-  height: 15px;
-  object-fit: contain;
   flex-shrink: 0;
 }
 

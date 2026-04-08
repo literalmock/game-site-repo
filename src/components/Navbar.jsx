@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Moon, Sun, Menu, X, LogIn } from 'lucide-react'
+import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
 import './Navbar.css'
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#', icon: '/icons/home.png' },
-  { label: 'Games', href: '#', icon: '/icons/games.png' },
-  { label: 'Leaderboard', href: '#', icon: '/icons/leaderboard.png' },
+  { label: 'Home', href: '#', icon: House },
+  { label: 'Games', href: '#', icon: Gamepad2 },
+  { label: 'Leaderboard', href: '#', icon: Trophy },
 ]
 
 const Navbar = ({ isDark, onToggleTheme }) => {
@@ -24,7 +24,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
 
           <div className="navbar-search-wrap">
             <label className="navbar-search">
-              <img src="/icons/search.png" alt="" className="navbar-search-icon" />
+              <Search size={18} className="navbar-search-icon" />
               <input
                 type="text"
                 placeholder="Search games"
@@ -35,14 +35,14 @@ const Navbar = ({ isDark, onToggleTheme }) => {
 
           <div className="navbar-right">
             <nav className="navbar-links">
-              {NAV_LINKS.map(({ label, href, icon }) => (
+              {NAV_LINKS.map(({ label, href, icon: Icon }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
                   className="nav-link"
                 >
-                  <img src={icon} alt="" className="nav-link-icon" />
+                  <Icon size={16} className="nav-link-icon" />
                   <span className="nav-link-label">
                     {label}
                   </span>
@@ -94,14 +94,14 @@ const Navbar = ({ isDark, onToggleTheme }) => {
         </div>
 
         <nav className="mobile-nav">
-          {NAV_LINKS.map(({ label, href, icon }) => (
+          {NAV_LINKS.map(({ label, href, icon: Icon }) => (
             <a
               key={label}
               href={href}
               onClick={() => setMobileOpen(false)}
               className="mobile-nav-item"
             >
-              <img src={icon} alt="" className="mobile-nav-icon" />
+              <Icon size={15} className="mobile-nav-icon" />
               {label}
             </a>
           ))}

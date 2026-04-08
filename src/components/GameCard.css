@@ -65,7 +65,6 @@
   line-clamp: 2;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  min-height: calc(1.3em * 2);
 }
 
 .game-card-description {

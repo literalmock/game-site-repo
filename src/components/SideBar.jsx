@@ -1,23 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Sidebar.css";
 
-const Sidebar = () => {
-  const [selectedGenres, setSelectedGenres] = useState([]);
-
-  const genres = ["Action", "Shooter", "RPG", "Adventure", "Strategy"];
-
-  const toggleGenre = (genre) => {
-    setSelectedGenres((prev) =>
-      prev.includes(genre)
-        ? prev.filter((g) => g !== genre)
-        : [...prev, genre]
-    );
-  };
-
+const Sidebar = ({ genres = [], selectedGenres = [], onToggleGenre }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-panel">
-
         <h2 className="sidebar-title">
           Sort by
         </h2>
@@ -34,7 +21,7 @@ const Sidebar = () => {
                 <input
                   type="checkbox"
                   checked={selectedGenres.includes(genre)}
-                  onChange={() => toggleGenre(genre)}
+                  onChange={() => onToggleGenre?.(genre)}
                   className="sidebar-checkbox"
                 />
                 {genre}

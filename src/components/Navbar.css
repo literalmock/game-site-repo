@@ -45,7 +45,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
-  height: 56px;
+  height: 62px;
   width: 100%;
   max-width: 1152px;
   padding: 0 16px;
@@ -58,11 +58,22 @@
 }
 
 .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
   color: var(--nav-text);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
+}
+
+.navbar-brand img {
+  display: block;
+  width: auto;
+  height: 60px;
+  max-width: 220px;
+  object-fit: contain;
 }
 
 .navbar-links {
@@ -88,6 +99,9 @@
 }
 
 .nav-link-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 
@@ -126,7 +140,10 @@
 }
 
 .navbar-search-icon {
-  color: var(--search-icon);
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.8;
 }
 
 .navbar-search-input {
@@ -159,14 +176,21 @@
   color: var(--nav-muted);
   background: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: 
+    background-color 0.2s ease, 
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .icon-btn:hover {
   background: var(--nav-hover-bg);
   color: var(--nav-hover);
+  transform: scale(1.08);
 }
 
+.icon-btn:active {
+  transform: scale(0.95);
+}
 .signin-btn {
   display: none;
   align-items: center;
@@ -183,6 +207,7 @@
 
 .signin-btn:hover {
   background: var(--nav-hover-bg);
+  transform: scale(1.05);
 }
 
 .mobile-menu-btn {
@@ -256,6 +281,13 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.mobile-nav-icon {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .mobile-nav-item:hover {
   background: var(--nav-hover-bg);
   color: var(--nav-hover);
@@ -291,7 +323,12 @@
 
 @media (min-width: 640px) {
   .navbar-inner {
+    height: 66px;
     padding: 0 24px;
+  }
+
+  .navbar-brand img {
+    height: 46px;
   }
 
   .signin-btn {

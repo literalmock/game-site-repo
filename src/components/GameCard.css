@@ -1,5 +1,7 @@
 .game-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--card-border);
   border-radius: 12px;
@@ -15,6 +17,7 @@
   --card-media-bg: #e2e8f0;
   --card-title: #0f172a;
   --card-category: #475569;
+  --card-description: #75797d;
 }
 
 .game-card:hover {
@@ -42,13 +45,18 @@
 }
 
 .game-card-content {
-  padding: 12px 16px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 132px;
+  padding: 10px 12px;
 }
 
 .game-card-title {
   margin: 0;
   color: var(--card-title);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.3;
   transition: color 0.2s ease;
@@ -57,20 +65,77 @@
   line-clamp: 2;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  min-height: calc(1.3em * 2);
 }
 
+.game-card-description {
+  margin: 0;
+  color: var(--card-description);
+  font-size: 0.8rem;
+  display: -webkit-box;        
+  line-clamp: 2;
+  -webkit-line-clamp: 2;        
+  -webkit-box-orient: vertical; 
+  overflow: hidden;              
+  min-height: calc(1.25em * 2);
+}
+/* .game-card-description:hover {
+  color: var(--card-title);
+  -webkit-line-clamp: unset;
+} */
 .game-card:hover .game-card-title {
   color: #22d3ee;
 }
 
 .game-card-category {
-  margin: 8px 0 0;
+  margin: auto 0 0;
+  align-self: flex-start;
+  display: inline-block;
   color: var(--card-category);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px;
+  background-color: rgba(34, 211, 238, 0.1);
+  border-radius: 10px;
+  border-color: rgba(15, 23, 42, 0.16);
+}
+
+@media (min-width: 640px) {
+  .game-card-content {
+    min-height: 144px;
+    padding: 12px 14px;
+  }
+
+  .game-card-title {
+    font-size: 0.92rem;
+  }
+
+  .game-card-description {
+    font-size: 0.78rem;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    min-height: calc(1.25em * 3);
+  }
+
+  .game-card-category {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-card-content {
+    min-height: 150px;
+    padding: 12px 16px;
+  }
+
+  .game-card-title {
+    font-size: 0.9rem;
+  }
 }
 
 .app-layout--dark .game-card {
-  --card-border: rgba(125, 167, 216, 0.3);
+  --card-border: rgba(16, 47, 83, 0.3);
   --card-bg: linear-gradient(180deg, rgba(30, 58, 98, 0.72) 0%, rgba(11, 24, 44, 0.95) 100%);
   --card-shadow: 0 12px 30px rgba(2, 9, 22, 0.45);
   --card-media-bg: #2c486f;

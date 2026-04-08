@@ -20,6 +20,9 @@ const GameCard = ({ game }) => {
         <h3 className="game-card-title">
           {game.title}
         </h3>
+        <p className="game-card-description">
+          {game.description}
+        </p>
         <p className="game-card-category">{game.category}</p>
       </div>
     </a>

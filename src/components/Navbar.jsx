@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
+import { Moon, Sun, Menu, X, LogIn } from 'lucide-react'
 import './Navbar.css'
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#', icon: House },
-  { label: 'Games', href: '#', icon: Gamepad2 },
-  { label: 'Leaderboard', href: '#', icon: Trophy },
+  { label: 'Home', href: '#', icon: '/icons/home.png' },
+  { label: 'Games', href: '#', icon: '/icons/games.png' },
+  { label: 'Leaderboard', href: '#', icon: '/icons/leaderboard.png' },
 ]
 
 const Navbar = ({ isDark, onToggleTheme }) => {
@@ -18,29 +18,13 @@ const Navbar = ({ isDark, onToggleTheme }) => {
         <div className="navbar-inner">
           <div className="navbar-left">
             <a href="/" className="navbar-brand">
-              Gameverse
+              <img src="/logo_bigtext.png" alt="Gameverse" />
             </a>
-
-            <nav className="navbar-links">
-              {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="nav-link"
-                >
-                  <Icon size={16} className="nav-link-icon" />
-                  <span className="nav-link-label">
-                    {label}
-                  </span>
-                </a>
-              ))}
-            </nav>
           </div>
 
           <div className="navbar-search-wrap">
             <label className="navbar-search">
-              <Search size={14} className="navbar-search-icon" />
+              <img src="/icons/search.png" alt="" className="navbar-search-icon" />
               <input
                 type="text"
                 placeholder="Search games"
@@ -50,6 +34,22 @@ const Navbar = ({ isDark, onToggleTheme }) => {
           </div>
 
           <div className="navbar-right">
+            <nav className="navbar-links">
+              {NAV_LINKS.map(({ label, href, icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="nav-link"
+                >
+                  <img src={icon} alt="" className="nav-link-icon" />
+                  <span className="nav-link-label">
+                    {label}
+                  </span>
+                </a>
+              ))}
+            </nav>
+
             <button
               type="button"
               onClick={onToggleTheme}
@@ -94,14 +94,14 @@ const Navbar = ({ isDark, onToggleTheme }) => {
         </div>
 
         <nav className="mobile-nav">
-          {NAV_LINKS.map(({ label, href, icon: Icon }) => (
+          {NAV_LINKS.map(({ label, href, icon }) => (
             <a
               key={label}
               href={href}
               onClick={() => setMobileOpen(false)}
               className="mobile-nav-item"
             >
-              <Icon size={15} />
+              <img src={icon} alt="" className="mobile-nav-icon" />
               {label}
             </a>
           ))}

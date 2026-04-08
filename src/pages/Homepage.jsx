@@ -1,103 +1,42 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import SideBar from '../components/SideBar'
 import GameCard from '../components/GameCard'
 import './Homepage.css'
+import { games } from '../utils/game.js'
 
 const Homepage = () => {
-  const games = [
-    {
-      id: 1,
-      title: "Cronos: The New Dawn",
-      thumbnail: "/games/Cronos the new dawn.webp",
-      category: "Action",
-      url: "https://example.com/game1"
-    },
-    {
-      id: 2,
-      title: "Doom Eternal",
-      thumbnail: "/games/Doom Eternal.webp",
-      category: "Shooter",
-      url: "https://example.com/game2"
-    },
-    {
-      id: 3,
-      title: "Doom: The Dark Ages",
-      thumbnail: "/games/Doom the dark ages.webp",
-      category: "Shooter",
-      url: "https://example.com/game3"
-    },
-    {
-      id: 4,
-      title: "Dying Light",
-      thumbnail: "/games/Dying light.webp",
-      category: "Action",
-      url: "https://example.com/game4"
-    },
-    {
-      id: 5,
-      title: "Genshin Impact",
-      thumbnail: "/games/Genshin Impact.webp",
-      category: "RPG",
-      url: "https://example.com/game5"
-    },
-    {
-      id: 6,
-      title: "Hell is Us",
-      thumbnail: "/games/HellisUS.webp",
-      category: "Adventure",
-      url: "https://example.com/game6"
-    },
-    {
-      id: 7,
-      title: "Hollow Knight",
-      thumbnail: "/games/Hollow Knight.webp",
-      category: "Platformer",
-      url: "https://example.com/game7"
-    },
-    {
-      id: 8,
-      title: "Reanimal",
-      thumbnail: "/games/Reanimal.webp",
-      category: "Horror",
-      url: "https://example.com/game8"
-    },
-    {
-      id: 9,
-      title: "Slay the Spire",
-      thumbnail: "/games/Slay the Ispire.webp",
-      category: "Strategy",
-      url: "https://example.com/game9"
-    },
-    {
-      id: 10,
-      title: "Team Fortress",
-      thumbnail: "/games/Team Fortress.webp",
-      category: "Shooter",
-      url: "https://example.com/game10"
-    },
-    {
-      id: 11,
-      title: "Zelda",
-      thumbnail: "/games/Zelda.webp",
-      category: "Adventure",
-      url: "https://example.com/game11"
-    },
-    {
-      id: 12,
-      title: "Zelda 2",
-      thumbnail: "/games/Zelda2.webp",
-      category: "Adventure",
-      url: "https://example.com/game12"
-    }
-  ]
+  const [selectedGenres, setSelectedGenres] = useState([])
+
+  const genres = useMemo(
+    () => [...new Set(games.map((game) => game.category))].sort(),
+    [],
+  )
+
+  const filteredGames = useMemo(() => {
+    if (selectedGenres.length === 0) return games
+
+    return games.filter((game) => selectedGenres.includes(game.category))
+  }, [selectedGenres])
+
+  const toggleGenre = (genre) => {
+    setSelectedGenres((prev) =>
+      prev.includes(genre)
+        ? prev.filter((g) => g !== genre)
+        : [...prev, genre],
+    )
+  }
 
   return (
     <section className="homepage-layout">
-      <SideBar />
+      <SideBar
+        genres={genres}
+        selectedGenres={selectedGenres}
+        onToggleGenre={toggleGenre}
+      />
 
       <div className="homepage-content">
         <div className="homepage-games-grid">
-          {games.map((game) => (
+          {filteredGames.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
         </div>

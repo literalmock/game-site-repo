@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
 
           <div className="footer-links-grid">
-            <div>
+            <div className="footer-links-col footer-links-col--discover">
               <p className="footer-heading">Discover</p>
               <ul className="footer-link-list">
                 {FOOTER_LINKS.discover.map((item) => (
@@ -31,7 +31,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div>
+            <div className="footer-links-col">
               <p className="footer-heading">Account</p>
               <ul className="footer-link-list">
                 {FOOTER_LINKS.account.map((item) => (

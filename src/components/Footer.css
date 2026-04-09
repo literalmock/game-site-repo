@@ -103,7 +103,15 @@
 .footer-links-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 26px;
+  gap: 24px;
+  margin: 0 auto;
+  width: fit-content;
+  justify-items: start;
+  justify-self: center;
+}
+
+.footer-links-col--discover {
+  margin-left: 0;
 }
 
 .footer-heading {
@@ -292,9 +300,29 @@
   }
 
   .footer-top {
-    grid-template-columns: minmax(240px, 1fr) auto minmax(220px, 320px);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: start;
     gap: 34px;
+  }
+
+  .footer-brand-wrap {
+    max-width: 340px;
+    justify-self: start;
+  }
+
+  .footer-links-grid {
+    gap: 34px;
+    margin: 0 auto;
+    justify-self: center;
+  }
+
+  .footer-links-col--discover {
+    margin-left: 0;
+  }
+
+  .footer-newsletter {
+    width: min(100%, 320px);
+    justify-self: end;
   }
 
   .footer-bottom {

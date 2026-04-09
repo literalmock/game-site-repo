@@ -4,7 +4,7 @@ import GameCard from '../components/GameCard'
 import './Homepage.css'
 import { games } from '../utils/game.js'
 
-const Homepage = () => {
+const Games = () => {
   const [selectedGenres, setSelectedGenres] = useState([])
 
   const genres = useMemo(
@@ -17,6 +17,8 @@ const Homepage = () => {
 
     return games.filter((game) => selectedGenres.includes(game.category))
   }, [selectedGenres])
+
+  const featuredGames = useMemo(() => filteredGames.slice(0, 4), [filteredGames])
 
   const toggleGenre = (genre) => {
     setSelectedGenres((prev) =>
@@ -35,11 +37,31 @@ const Homepage = () => {
       />
 
       <div className="homepage-content">
+        <section className="homepage-section">
+          <div className="homepage-section-head">
+            <h2 className="homepage-section-title">Featured Games</h2>
+            <p className="homepage-section-subtitle">based on current filters</p>
+          </div>
+
+          <div className="homepage-featured-grid">
+            {featuredGames.map((game) => (
+              <GameCard key={`featured-${game.id}`} game={game} />
+            ))}
+          </div>
+        </section>
+
+        <section className="homepage-section">
+          <div className="homepage-section-head">
+            <h2 className="homepage-section-title">All Games</h2>
+            <p className="homepage-section-subtitle">{filteredGames.length} titles</p>
+          </div>
+
         <div className="homepage-games-grid">
           {filteredGames.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
         </div>
+        </section>
       </div>
     </section>
     
@@ -72,4 +94,4 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default Games

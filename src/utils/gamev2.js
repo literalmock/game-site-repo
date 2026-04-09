@@ -11,7 +11,7 @@ export const gamesv2 = [{
   title: "World Cup 2026 Soccer Game",
   thumbnail: "/games/world-cup-2026.webp",
   category: "Sports",
-  url: "https://gamedistribution.com/games/world-cup-2026-soccer-game/",
+  url: "https://html5.gamedistribution.com/ad37a85f16e246fabdc818f375a5eb45/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}",
   description: "Play fast-paced football matches and lead your team to victory in a World Cup-style experience."
 },
 {

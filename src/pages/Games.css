@@ -1,0 +1,131 @@
+.homepage-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px 12px 0;
+}
+
+.homepage-content {
+  min-width: 0;
+}
+
+.homepage-section + .homepage-section {
+  margin-top: 22px;
+}
+
+.homepage-section-head {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.homepage-section-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.homepage-section-subtitle {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+.app-layout--dark .homepage-section-subtitle {
+  color: #b2c7e6;
+}
+
+.homepage-featured-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.homepage-games-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 480px) {
+  .homepage-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homepage-games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 640px) {
+  .homepage-layout {
+    gap: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .homepage-featured-grid {
+    gap: 16px;
+  }
+
+  .homepage-games-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .homepage-layout {
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+  }
+
+  .homepage-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homepage-games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .homepage-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    align-items: start;
+    gap: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .homepage-content {
+    max-height: none;
+    overflow: visible;
+    padding-right: 6px;
+  }
+
+  .homepage-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homepage-games-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .homepage-layout {
+    gap: 32px;
+  }
+
+  .homepage-featured-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .homepage-games-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

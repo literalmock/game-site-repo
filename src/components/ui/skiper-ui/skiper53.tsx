@@ -14,9 +14,10 @@ type Skiper53Item = {
 type Skiper53Props = {
   items: Skiper53Item[];
   className?: string;
+  onItemClick?: (item: Skiper53Item, index: number) => void;
 };
 
-const Skiper53 = ({ items, className }: Skiper53Props) => {
+const Skiper53 = ({ items, className, onItemClick }: Skiper53Props) => {
   if (!items?.length) {
     return null;
   }
@@ -28,7 +29,7 @@ const Skiper53 = ({ items, className }: Skiper53Props) => {
         className,
       )}
     >
-      <HoverExpand_002 images={items} />
+      <HoverExpand_002 images={items} onItemClick={onItemClick} />
     </div>
   );
 };
@@ -38,9 +39,11 @@ export { Skiper53 };
 const HoverExpand_002 = ({
   images,
   className,
+  onItemClick,
 }: {
   images: Skiper53Item[];
   className?: string;
+  onItemClick?: (item: Skiper53Item, index: number) => void;
 }) => {
   const [activeImage, setActiveImage] = useState<number | null>(1);
 
@@ -70,7 +73,10 @@ const HoverExpand_002 = ({
                 height: activeImage === index ? "15rem" : "2.8rem",
               }}
               transition={{ duration: 0.34, ease: "easeInOut" }}
-              onClick={() => setActiveImage(index)}
+              onClick={() => {
+                setActiveImage(index);
+                onItemClick?.(image, index);
+              }}
               onHoverStart={() => setActiveImage(index)}
             >
               <AnimatePresence>

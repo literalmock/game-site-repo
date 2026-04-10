@@ -40,7 +40,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="nav-link"
+                  className={`nav-link nav-link--${label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <Icon size={16} className="nav-link-icon" />
                   <span className="nav-link-label">

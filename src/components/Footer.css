@@ -103,7 +103,7 @@
 .footer-links-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  gap: 56px;
   margin: 0 auto;
   width: fit-content;
   justify-items: start;
@@ -311,7 +311,7 @@
   }
 
   .footer-links-grid {
-    gap: 34px;
+    gap: 80px;
     margin: 0 auto;
     justify-self: center;
   }

@@ -2,9 +2,9 @@ import './App.css'
 import {BrowserRouter,Route,Routes,Navigate} from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import AppLayout from './components/AppLayout'
-import Games from './pages/Homepage'
+import Games from './pages/Games'
 import SignupPage from './pages/SignupPage'
-import Homepage from './pages/LandingPage'
+import Homepage from './pages/Homepage'
 function App() {
   return (
     <BrowserRouter>

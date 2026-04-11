@@ -57,13 +57,17 @@ const Homepage = () => {
   const visibleGames = useMemo(() => {
     if (featuredGames.length === 0) return []
 
+    const farLeftIndex = (featuredIndex - 2 + featuredGames.length) % featuredGames.length
     const prevIndex = (featuredIndex - 1 + featuredGames.length) % featuredGames.length
     const nextIndex = (featuredIndex + 1) % featuredGames.length
+    const farRightIndex = (featuredIndex + 2) % featuredGames.length
 
     return [
+      { game: featuredGames[farLeftIndex], slot: 'far-left' },
       { game: featuredGames[prevIndex], slot: 'left' },
       { game: featuredGames[featuredIndex], slot: 'center' },
       { game: featuredGames[nextIndex], slot: 'right' },
+      { game: featuredGames[farRightIndex], slot: 'far-right' },
     ]
   }, [featuredGames, featuredIndex])
 
@@ -328,7 +332,6 @@ const Homepage = () => {
           <div className="landing-featured-head">
             <div>
               <p className="landing-featured-kicker">Featured Picks</p>
-              <h2 className="landing-featured-title">Hero Carousel</h2>
             </div>
           </div>
 
@@ -349,7 +352,7 @@ const Homepage = () => {
                   href={game.url}
                   target="_blank"
                   rel="noreferrer"
-                  className={`landing-carousel-card landing-carousel-card--${slot} ${slot === 'center' ? 'landing-carousel-card--framed' : 'landing-carousel-card--side'}`}
+                  className={`landing-carousel-card landing-carousel-card--${slot} ${slot === 'center' ? 'landing-carousel-card--framed' : 'landing-carousel-card--side'} ${(slot === 'far-left' || slot === 'far-right') ? 'landing-carousel-card--edge' : ''}`}
                   onMouseEnter={() => {
                     if (slot === 'center') {
                       setIsCenterHovered(true)

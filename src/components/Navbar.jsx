@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import './Navbar.css'
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#', icon: House },
-  { label: 'Games', href: '#', icon: Gamepad2 },
+  { label: 'Home', href: '/home', icon: House },
+  { label: 'Games', href: '/games', icon: Gamepad2 },
   { label: 'Leaderboard', href: '#', icon: Trophy },
 ]
 
@@ -17,9 +18,9 @@ const Navbar = ({ isDark, onToggleTheme }) => {
       <header className={`navbar ${themeClass}`}>
         <div className="navbar-inner">
           <div className="navbar-left">
-            <a href="/" className="navbar-brand">
+            <Link to="/home" className="navbar-brand">
               <img src="/logo_bigtext.png" alt="Gameverse" />
-            </a>
+            </Link>
           </div>
 
           <div className="navbar-search-wrap">
@@ -36,9 +37,9 @@ const Navbar = ({ isDark, onToggleTheme }) => {
           <div className="navbar-right">
             <nav className="navbar-links">
               {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-                <a
+                <Link
                   key={label}
-                  href={href}
+                  to={href}
                   aria-label={label}
                   className={`nav-link nav-link--${label.toLowerCase().replace(/\s+/g, '-')}`}
                 >
@@ -46,7 +47,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
                   <span className="nav-link-label">
                     {label}
                   </span>
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -59,13 +60,13 @@ const Navbar = ({ isDark, onToggleTheme }) => {
               {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="signin-btn"
             >
               <LogIn size={14} />
               Sign In
-            </a>
+            </Link>
 
             <button
               type="button"
@@ -95,26 +96,26 @@ const Navbar = ({ isDark, onToggleTheme }) => {
 
         <nav className="mobile-nav">
           {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-            <a
+            <Link
               key={label}
-              href={href}
+              to={href}
               onClick={() => setMobileOpen(false)}
               className="mobile-nav-item"
             >
               <Icon size={15} className="mobile-nav-icon" />
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <div className="mobile-drawer-footer">
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="mobile-signin-btn"
           >
             <LogIn size={14} />
             Sign In
-          </a>
+          </Link>
         </div>
       </aside>
     </>

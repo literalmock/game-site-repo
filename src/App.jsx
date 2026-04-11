@@ -5,6 +5,7 @@ import AppLayout from './components/AppLayout'
 import Games from './pages/Games'
 import SignupPage from './pages/SignupPage'
 import Homepage from './pages/Homepage'
+import IframePage from './pages/iframePage'
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<Homepage />} />
         <Route path="/games" element={<Games />} />
+        <Route path="/iframe" element={<IframePage />} />
       </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

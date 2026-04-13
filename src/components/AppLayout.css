@@ -1,5 +1,7 @@
 .app-layout {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -17,22 +19,8 @@
 }
 
 .app-layout-main {
-  margin: 0 auto;
+  margin: 0;
   width: 100%;
-  max-width: 1280px;
-  padding: 0 12px 16px;
-}
-
-@media (min-width: 640px) {
-  .app-layout-main {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .app-layout-main {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
+  max-width: none;
+  padding: 0;
 }

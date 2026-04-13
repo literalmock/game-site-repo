@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { games } from '../utils/game'
 import { Skiper53 } from '../components/ui/skiper-ui/skiper53'
+import HeroAvatarPixelMorph from '../components/HeroAvatarPixelMorph'
 import './Homepage.css'
 import faqItems from '../utils/faq'
 const FEATURED_AUTOPLAY_RESUME_DELAY_MS = 3200
+const HERO_AVATAR_IMAGES = ['/avatars/charac1.png', '/avatars/charac2.png', '/avatars/charac3.png', '/avatars/charac4.png']
 
 const Homepage = () => {
   const navigate = useNavigate()
@@ -170,6 +172,7 @@ const Homepage = () => {
 
   const formattedLiveViews = useMemo(() => liveViews.toLocaleString('en-US'), [liveViews])
 
+
   const handleDiscoverGenreClick = useCallback((genre) => {
     navigate(`/games?genre=${encodeURIComponent(genre)}`)
   }, [navigate])
@@ -276,18 +279,18 @@ const Homepage = () => {
 
         <div className="landing-content-shell">
           <div className="landing-copy-wrap">
-            <p className="landing-kicker">
+            <p className="landing-kicker label-xs text-animate-fade-up">
               <Sparkles size={14} />
               GAMEVERSE GAMING HUB
             </p>
 
-            <h1 className="landing-title">
+            <h1 className="landing-title heading-xl text-animate-fade-up">
               Discover Worlds.
               <span>Compete Hard.</span>
               Play Everywhere.
             </h1>
 
-            <p className="landing-subtitle">
+            <p className="landing-subtitle text-body heading-paragraph-gap text-animate-fade-up">
               Jump into curated titles, trending drops, and community favorites in one cinematic launcher.
             </p>
 
@@ -305,7 +308,7 @@ const Homepage = () => {
 
           <aside className="landing-hero-side" aria-label="Genre spotlight panel">
             <div className="landing-hero-avatar-wrap" aria-hidden="true">
-              <img src="/image.png" alt="" className="landing-hero-avatar" />
+              <HeroAvatarPixelMorph imageUrls={HERO_AVATAR_IMAGES} />
             </div>
 
             <div className="landing-hero-live-counter" aria-label="Live views counter">
@@ -331,7 +334,8 @@ const Homepage = () => {
         <div className="landing-featured-shell">
           <div className="landing-featured-head">
             <div>
-              <p className="landing-featured-kicker">Featured Picks</p>
+              <p className="landing-featured-kicker label-xs">Featured</p>
+              <h2 className="landing-featured-title heading-lg heading-hover-accent">Featured Picks</h2>
             </div>
           </div>
 
@@ -398,9 +402,9 @@ const Homepage = () => {
 
       <section className="landing-categories" aria-label="Categories and genres">
         <div className="landing-categories-shell">
-          <p className="landing-categories-kicker">Discover By Style</p>
-          <h2 className="landing-categories-title">Categories And Genres</h2>
-          <p className="landing-categories-subtitle">
+          <p className="landing-categories-kicker label-xs">Discover By Style</p>
+          <h2 className="landing-categories-title heading-lg heading-hover-accent">Categories And Genres</h2>
+          <p className="landing-categories-subtitle text-body heading-paragraph-gap">
             Hover each row to preview a lane and find your next session mood.
           </p>
 
@@ -419,8 +423,8 @@ const Homepage = () => {
       >
         <div className="landing-why-shell">
           <p className="landing-why-kicker">Why GamerVerse?</p>
-          <h2 className="landing-why-title">Because gaming isn&apos;t just play - it&apos;s an experience.</h2>
-          <p className="landing-why-subtitle">
+          <h2 className="landing-why-title heading-lg heading-hover-accent">Because gaming isn&apos;t just play - it&apos;s an experience.</h2>
+          <p className="landing-why-subtitle text-body heading-paragraph-gap">
             Discover a platform built for speed, quality, and consistency across every device.
           </p>
 
@@ -497,9 +501,9 @@ const Homepage = () => {
 
       <section className="landing-faq" aria-label="Frequently asked questions">
         <div className="landing-faq-shell">
-          <p className="landing-faq-kicker">FAQ</p>
-          <h2 className="landing-faq-title">Frequently Asked Questions</h2>
-          <p className="landing-faq-subtitle">Everything you need to know about GamerVerse</p>
+          <p className="landing-faq-kicker label-xs">FAQ</p>
+          <h2 className="landing-faq-title heading-lg heading-hover-accent">Frequently Asked Questions</h2>
+          <p className="landing-faq-subtitle text-body heading-paragraph-gap">Everything you need to know about GamerVerse</p>
 
           <div className="landing-faq-list">
             {faqItems.map((item, index) => {
@@ -551,9 +555,9 @@ const Homepage = () => {
       </section>
       <section className="landing-newsletter-cta" aria-label="Newsletter signup">
         <div className="landing-newsletter-shell">
-          <p className="landing-newsletter-kicker">Stay In The Loop</p>
-          <h2 className="landing-newsletter-title">Get latest games and weekly launches</h2>
-          <p className="landing-newsletter-subtitle">
+          <p className="landing-newsletter-kicker label-xs">Stay In The Loop</p>
+          <h2 className="landing-newsletter-title heading-lg heading-hover-accent">Get latest games and weekly launches</h2>
+          <p className="landing-newsletter-subtitle text-body heading-paragraph-gap">
             Join the Gameverse newsletter for curated drops, early highlights, and weekly launch alerts.
           </p>
 

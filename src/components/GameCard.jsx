@@ -12,6 +12,9 @@ const GameCard = ({ game }) => {
       <div className="game-card-media">
         <img
           src={game.thumbnail}
+          onError={(e) => {
+    e.target.src = "/fallback.webp";
+  }}
           alt={game.title}
           className="game-card-image"
         />

@@ -1,8 +1,12 @@
+const getThumbnail = (iframeUrl) => {
+  const id = iframeUrl.split("/")[3];
+  return `/thumbnails/${id}.webp`;
+};
 export const viewerGames = [
   {
     id: 1,
+    thumbnail: "/games/i8citydriver.webp",
     title: "i8 City Driver",
-    thumbnail: "/games/i8-city-driver.webp",
     category: "Driving",
     tags: ["Driving"],
     rating: 4.2,
@@ -24,7 +28,7 @@ export const viewerGames = [
   {
     id: 3,
     title: "Dead Paradise",
-    thumbnail: "/games/dead-paradise.webp",
+    // thumbnail: "/games/dead-paradise.webp",
     category: "Action",
     tags: ["Action"],
     rating: 4.5,
@@ -175,5 +179,9 @@ export const viewerGames = [
     iframeUrl: "https://html5.gamedistribution.com/724f9f245a0e47308239bf37795141e6/",
     description: "Defeat enemies in fast-paced action scenarios with simple controls."
   }
-];
+]
+.map(game => ({
+  ...game,
+  thumbnail: getThumbnail(game.iframeUrl)
+}));
  export default viewerGames;

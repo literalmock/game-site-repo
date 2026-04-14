@@ -2,20 +2,18 @@
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: transparent;
+  transition: color 0.3s ease;
 }
 
 .app-layout--light {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: transparent;
+  color: #e9f2ff;
 }
 
 .app-layout--dark {
   color: #e9f2ff;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(110, 155, 212, 0.22) 0%, rgba(110, 155, 212, 0) 42%),
-    radial-gradient(circle at 85% 8%, rgba(64, 113, 173, 0.25) 0%, rgba(64, 113, 173, 0) 36%),
-    linear-gradient(180deg, #060d1d 0%, #0b1a33 48%, #091325 100%);
+  background: transparent;
 }
 
 .app-layout-main {

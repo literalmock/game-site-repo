@@ -13,7 +13,7 @@ const SignupPage = () => {
   };
   
   return (
-    <div className="login-page">
+    <div className="login-page login-page--signup">
       <div className="login-container">
         <div className="logo">
           <h1>Gameverse</h1>

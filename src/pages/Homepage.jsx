@@ -8,7 +8,63 @@ import HeroAvatarPixelMorph from '../components/HeroAvatarPixelMorph'
 import './Homepage.css'
 import faqItems from '../utils/faq'
 const FEATURED_AUTOPLAY_RESUME_DELAY_MS = 3200
-const HERO_AVATAR_IMAGES = ['/avatars/charac1.png', '/avatars/charac2.png', '/avatars/charac3.png', '/avatars/charac4.png']
+const HERO_AVATAR_IMAGES = ['/avatars/charac1.webp', '/avatars/charac2.webp', '/avatars/charac3.webp', '/avatars/charac4.webp']
+
+const FAQ_ITEM_VARIANTS = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
+const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
+  <motion.article
+    className={`landing-faq-item ${isOpen ? 'landing-faq-item--open' : ''}`}
+    variants={FAQ_ITEM_VARIANTS}
+  >
+    <button
+      type="button"
+      className="landing-faq-trigger"
+      onClick={onToggle}
+      aria-expanded={isOpen}
+    >
+      <span className="landing-faq-question">{item.question}</span>
+      <motion.span
+        className="landing-faq-icon"
+        animate={{ rotate: isOpen ? 180 : 0 }}
+        transition={{ duration: 0.28, ease: 'easeInOut' }}
+      >
+        <ChevronDown size={18} />
+      </motion.span>
+    </button>
+
+    <AnimatePresence initial={false}>
+      {isOpen ? (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{
+            height: { duration: 0.42, ease: [0.33, 1, 0.68, 1] },
+            opacity: { duration: 0.28, ease: 'easeOut' },
+          }}
+          className="landing-faq-answer-wrap"
+        >
+          <motion.p
+            className="landing-faq-answer"
+            initial={{ y: 8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.24, delay: 0.08, ease: 'easeOut' }}
+          >
+            {item.answer}
+          </motion.p>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  </motion.article>
+)
 
 const Homepage = () => {
   const navigate = useNavigate()
@@ -20,6 +76,7 @@ const Homepage = () => {
   const [isManualControlActive, setIsManualControlActive] = useState(false)
   const [liveViews, setLiveViews] = useState(() => Math.floor(125000 + Math.random() * 45000))
   const [openFaqIndex, setOpenFaqIndex] = useState(0)
+  const [faqParallax, setFaqParallax] = useState({ x: 0, y: 0, lightX: 50, lightY: 50 })
   const [whyMotionState, setWhyMotionState] = useState('hidden')
   const [isWhyInView, setIsWhyInView] = useState(false)
   const whySectionRef = useRef(null)
@@ -85,14 +142,14 @@ const Homepage = () => {
     }
 
     const genreImageFiles = [
-      'category01.jpg',
+      'category01.webp',
       'category02.webp',
-      'category03.jpg',
-      '05733b4621e4d2512e3bd63d7d385567.jpg',
-      '0bdd40f5859584f8f8e7389ff56c2f64.jpg',
-      '7be12ecab9933374bc4ca3048c1d2223.jpg',
-      'ac1366f33d60eb9f8cffd8667d7b3224.jpg',
-      'd42d687c511d6b0365f57b7c477e10ac.jpg',
+      'category03.webp',
+      '05733b4621e4d2512e3bd63d7d385567.webp',
+      '0bdd40f5859584f8f8e7389ff56c2f64.webp',
+      '7be12ecab9933374bc4ca3048c1d2223.webp',
+      'ac1366f33d60eb9f8cffd8667d7b3224.webp',
+      'd42d687c511d6b0365f57b7c477e10ac.webp',
     ]
 
     return Object.entries(genreMap).map(([category, genre], index) => ({
@@ -176,6 +233,23 @@ const Homepage = () => {
   const handleDiscoverGenreClick = useCallback((genre) => {
     navigate(`/games?genre=${encodeURIComponent(genre)}`)
   }, [navigate])
+
+  const handleFaqVisualMove = useCallback((event) => {
+    const bounds = event.currentTarget.getBoundingClientRect()
+    const relativeX = (event.clientX - bounds.left) / bounds.width
+    const relativeY = (event.clientY - bounds.top) / bounds.height
+
+    setFaqParallax({
+      x: (relativeX - 0.5) * 18,
+      y: (relativeY - 0.5) * 16,
+      lightX: Math.round(relativeX * 100),
+      lightY: Math.round(relativeY * 100),
+    })
+  }, [])
+
+  const handleFaqVisualLeave = useCallback(() => {
+    setFaqParallax({ x: 0, y: 0, lightX: 50, lightY: 50 })
+  }, [])
 
   useEffect(() => {
     if (isCenterHovered || isManualControlActive) {
@@ -501,55 +575,70 @@ const Homepage = () => {
 
       <section className="landing-faq" aria-label="Frequently asked questions">
         <div className="landing-faq-shell">
-          <p className="landing-faq-kicker label-xs">FAQ</p>
-          <h2 className="landing-faq-title heading-lg heading-hover-accent">Frequently Asked Questions</h2>
-          <p className="landing-faq-subtitle text-body heading-paragraph-gap">Everything you need to know about GamerVerse</p>
+          <div className="landing-faq-split">
+            <motion.div
+              className="landing-faq-visual"
+              onMouseMove={handleFaqVisualMove}
+              onMouseLeave={handleFaqVisualLeave}
+              initial={{ opacity: 0, x: -36 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                '--faq-light-x': `${faqParallax.lightX}%`,
+                '--faq-light-y': `${faqParallax.lightY}%`,
+              }}
+            >
+              <div className="landing-faq-visual-grid" aria-hidden="true" />
+              <motion.div
+                className="landing-faq-orb"
+                animate={{ x: faqParallax.x, y: faqParallax.y, rotate: faqParallax.x * 0.5 }}
+                transition={{ type: 'spring', stiffness: 100, damping: 14, mass: 0.6 }}
+              >
+                <span className="landing-faq-orb-core" />
+                <span className="landing-faq-orb-ring landing-faq-orb-ring--one" />
+                <span className="landing-faq-orb-ring landing-faq-orb-ring--two" />
+                <span className="landing-faq-orb-icon"><Gamepad2 size={28} /></span>
+              </motion.div>
+              <span className="landing-faq-particle landing-faq-particle--one" aria-hidden="true" />
+              <span className="landing-faq-particle landing-faq-particle--two" aria-hidden="true" />
+              <span className="landing-faq-particle landing-faq-particle--three" aria-hidden="true" />
+            </motion.div>
 
-          <div className="landing-faq-list">
-            {faqItems.map((item, index) => {
-              const isOpen = openFaqIndex === index
+            <div className="landing-faq-content">
+              <p className="landing-faq-kicker label-xs">FAQ</p>
+              <h2 className="landing-faq-title heading-lg heading-hover-accent">Frequently Asked Questions</h2>
+              <p className="landing-faq-subtitle text-body heading-paragraph-gap">Everything you need to know about GamerVerse</p>
 
-              return (
-                <motion.article
-                  key={item.question}
-                  className={`landing-faq-item ${isOpen ? 'landing-faq-item--open' : ''}`}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.22 }}
-                  transition={{ duration: 0.48, ease: 'easeOut', delay: index * 0.08 }}
-                >
-                  <button
-                    type="button"
-                    className="landing-faq-trigger"
-                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
-                    aria-expanded={isOpen}
-                  >
-                    <span className="landing-faq-question">{item.question}</span>
-                    <motion.span
-                      className="landing-faq-icon"
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.28, ease: 'easeInOut' }}
-                    >
-                      <ChevronDown size={18} />
-                    </motion.span>
-                  </button>
+              <motion.div
+                className="landing-faq-list"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.1,
+                      delayChildren: 0.1,
+                    },
+                  },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                {faqItems.map((item, index) => {
+                  const isOpen = openFaqIndex === index
 
-                  <AnimatePresence initial={false}>
-                    {isOpen ? (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.34, ease: 'easeInOut' }}
-                        className="landing-faq-answer-wrap"
-                      >
-                        <p className="landing-faq-answer">{item.answer}</p>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                </motion.article>
-              )
-            })}
+                  return (
+                    <FaqAccordionItem
+                      key={item.question}
+                      item={item}
+                      isOpen={isOpen}
+                      onToggle={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    />
+                  )
+                })}
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search, Play } from 'lucide-react'
+import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { games } from '../utils/game'
 import './Navbar.css'
@@ -7,7 +7,6 @@ import './Navbar.css'
 const NAV_LINKS = [
   { label: 'Home', href: '/home', icon: House },
   { label: 'Games', href: '/games', icon: Gamepad2 },
-  { label: 'Play', href: '/play', icon: Play },
   { label: 'Leaderboard', href: '#', icon: Trophy },
 ]
 
@@ -126,7 +125,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
         <div className="navbar-inner">
           <div className="navbar-left">
             <Link to="/home" className="navbar-brand">
-              <img src="/logo_bigtext.png" alt="Gameverse" />
+              <img src="/logo_bigtext.webp" alt="Gameverse" />
             </Link>
           </div>
 

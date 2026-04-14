@@ -13,16 +13,16 @@
   font-weight: bold;
 }
 /* FULL PAGE BACKGROUND */
-.login-page {
+.login-page.login-page--login {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-inline: 16px;
-
-  background-image: url('/night-sky.jpg'); /* use local */
+  background-image: url('/night-sky.webp');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* REMOVE full screen from container */
@@ -75,16 +75,16 @@
 .checkbox-row {
   display: flex;
   align-items: center;
-  gap: 6px;              /* 👈 control spacing */
+  gap: 6px;          
 }
 
 .checkbox-row input {
-  width: auto;           /* 👈 VERY IMPORTANT (fixes stretching) */
+  width: auto;          
 }
 
 .checkbox-row label {
   margin: 0;
-  white-space: nowrap;   /* 👈 prevents weird wrapping */
+  white-space: nowrap;  
 }
 /* BUTTON */
 .login-form .btn {

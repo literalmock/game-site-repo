@@ -13,16 +13,16 @@
   font-weight: bold;
 }
 /* FULL PAGE BACKGROUND */
-.login-page {
+.login-page.login-page--signup {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-inline: 16px;
-
-  background-image: url('/night-sky.jpg'); /* use local */
+  background-image: url('/night-sky.webp');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* REMOVE full screen from container */

@@ -1,12 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './GameCard.css'
 
 const GameCard = ({ game }) => {
   return (
-    <a
-      href={game.url}
-      target="_blank"
-      rel="noreferrer"
+    <Link
+      to={`/games/${game.id}`}
+      state={{ game }}
       className="game-card"
     >
       <div className="game-card-media">
@@ -25,7 +25,7 @@ const GameCard = ({ game }) => {
         </p>
         <p className="game-card-category">{game.category}</p>
       </div>
-    </a>
+    </Link>
   )
 }
 

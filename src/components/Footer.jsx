@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-brand-wrap">
             <a href="/" className="footer-brand" aria-label="Gameverse home">
-              <img src="/logo_bigtext.png" alt="Gameverse" className="footer-brand-image" />
+              <img src="/logo_bigtext.webp" alt="Gameverse" className="footer-brand-image" />
             </a>
             <p className="footer-tagline">
               Explore worlds, chase scores, and play with friends across the Gameverse.

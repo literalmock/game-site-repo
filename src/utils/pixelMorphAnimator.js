@@ -69,7 +69,14 @@ export class PixelMorphAnimator {
     this.maxIntervalMs = maxIntervalMs
     this.cellSize = cellSize
 
-    this.dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1))
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const hardwareConcurrency = navigator.hardwareConcurrency || 4
+    const isLowPowerDevice = prefersReducedMotion || hardwareConcurrency <= 4
+
+    this.maxFps = isLowPowerDevice ? 36 : 50
+    this.cellSize = isLowPowerDevice ? Math.max(cellSize, 10) : cellSize
+
+    this.dpr = Math.max(1, Math.min(isLowPowerDevice ? 1.5 : 2, window.devicePixelRatio || 1))
     this.width = 1
     this.height = 1
     this.images = []
@@ -92,6 +99,7 @@ export class PixelMorphAnimator {
 
     this.resize = this.resize.bind(this)
     this.frame = this.frame.bind(this)
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this)
   }
 
   preloadImages() {
@@ -235,9 +243,9 @@ export class PixelMorphAnimator {
   }
 
   frame(now) {
-    if (!this.isRunning) return
+    if (!this.isRunning || document.hidden) return
 
-    if (now - this.lastFrame < 1000 / 62) {
+    if (now - this.lastFrame < 1000 / this.maxFps) {
       this.rafId = window.requestAnimationFrame(this.frame)
       return
     }
@@ -254,19 +262,44 @@ export class PixelMorphAnimator {
     this.rafId = window.requestAnimationFrame(this.frame)
   }
 
+  handleVisibilityChange() {
+    if (!this.isRunning) return
+
+    if (document.hidden) {
+      if (this.rafId) {
+        window.cancelAnimationFrame(this.rafId)
+        this.rafId = null
+      }
+      return
+    }
+
+    if (!this.rafId) {
+      this.lastFrame = 0
+      this.rafId = window.requestAnimationFrame(this.frame)
+    }
+  }
+
   async start() {
-    this.images = await this.preloadImages()
+    if (this.isRunning) return
+
+    if (!this.images.length) {
+      this.images = await this.preloadImages()
+    }
+
     if (!this.images.length) return
 
     this.isRunning = true
     this.resize()
     window.addEventListener('resize', this.resize)
+    document.addEventListener('visibilitychange', this.handleVisibilityChange)
 
     if (this.images.length > 1) {
       this.scheduleNext()
     }
 
-    this.rafId = window.requestAnimationFrame(this.frame)
+    if (!document.hidden) {
+      this.rafId = window.requestAnimationFrame(this.frame)
+    }
   }
 
   stop() {
@@ -283,5 +316,6 @@ export class PixelMorphAnimator {
     }
 
     window.removeEventListener('resize', this.resize)
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   }
 }

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Moon, Sun, Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
+import { Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { games } from '../utils/game'
 import './Navbar.css'
@@ -10,13 +10,12 @@ const NAV_LINKS = [
   { label: 'Leaderboard', href: '#', icon: Trophy },
 ]
 
-const Navbar = ({ isDark, onToggleTheme }) => {
+const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchActiveIndex, setSearchActiveIndex] = useState(-1)
   const searchWrapRef = useRef(null)
-  const themeClass = isDark ? 'navbar--dark' : 'navbar--light'
 
   const searchSuggestions = useMemo(() => {
     const normalizedQuery = searchQuery.toLowerCase().replace(/[^a-z0-9]/g, '')
@@ -121,7 +120,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
 
   return (
     <>
-      <header className={`navbar ${themeClass}`}>
+      <header className="navbar">
         <div className="navbar-inner">
           <div className="navbar-left">
             <Link to="/home" className="navbar-brand">
@@ -184,16 +183,6 @@ const Navbar = ({ isDark, onToggleTheme }) => {
                 </Link>
               ))}
             </nav>
-
-            <button
-              type="button"
-              onClick={onToggleTheme}
-              aria-label={isDark ? 'Light mode' : 'Dark mode'}
-              className="icon-btn"
-            >
-              {isDark ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-
             <Link
               to="/login"
               className="signin-btn"
@@ -219,7 +208,7 @@ const Navbar = ({ isDark, onToggleTheme }) => {
       )}
 
       <aside
-        className={`mobile-drawer ${themeClass} ${mobileOpen ? 'mobile-drawer--open' : ''}`}
+        className={`mobile-drawer ${mobileOpen ? 'mobile-drawer--open' : ''}`}
       >
         <div className="mobile-drawer-header">
           <span className="mobile-drawer-title">Menu</span>

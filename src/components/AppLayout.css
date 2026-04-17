@@ -6,11 +6,6 @@
   transition: color 0.3s ease;
 }
 
-.app-layout--light {
-  background: transparent;
-  color: #e9f2ff;
-}
-
 .app-layout--dark {
   color: #e9f2ff;
   background: transparent;

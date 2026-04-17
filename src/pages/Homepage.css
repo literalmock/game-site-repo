@@ -164,7 +164,6 @@
     radial-gradient(circle at 20% 18%, rgba(86, 139, 206, 0.44) 0%, rgba(86, 139, 206, 0) 42%),
     radial-gradient(circle at 78% 76%, rgba(98, 86, 216, 0.3) 0%, rgba(98, 86, 216, 0) 44%),
     linear-gradient(112deg, rgba(4, 10, 22, 0.82) 4%, rgba(6, 16, 34, 0.64) 46%, rgba(6, 16, 34, 0.1) 100%);
-  backdrop-filter: blur(2.6px) saturate(0.92);
   -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 70%, rgba(0, 0, 0, 0) 100%);
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 70%, rgba(0, 0, 0, 0) 100%);
 }
@@ -702,16 +701,16 @@
   border: 1px solid rgba(118, 178, 245, 0.32);
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(18, 45, 84, 0.5) 0%, rgba(7, 19, 39, 0.78) 100%);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(3px);
   padding: 14px;
-  box-shadow: 0 10px 20px rgba(2, 8, 20, 0.3);
+  box-shadow: 0 8px 16px rgba(2, 8, 20, 0.22);
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
 }
 
 .landing-why-card:hover {
   transform: translateY(-4px) scale(1.01);
   border-color: rgba(126, 230, 255, 0.66);
-  box-shadow: 0 0 0 1px rgba(129, 232, 255, 0.24), 0 18px 30px rgba(2, 10, 25, 0.44);
+  box-shadow: 0 0 0 1px rgba(129, 232, 255, 0.22), 0 12px 22px rgba(2, 10, 25, 0.3);
 }
 
 .landing-why-card:nth-child(2) {
@@ -779,7 +778,7 @@
 
 .landing-why--hidden .landing-why-card {
   opacity: 0;
-  filter: blur(4px);
+  filter: blur(2px);
 }
 
 .landing-why--hidden .landing-why-card:nth-child(odd) {
@@ -826,7 +825,7 @@
 
 .landing-why--scatter .landing-why-card {
   opacity: 0;
-  filter: blur(5px);
+  filter: blur(3px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(1) {
@@ -1016,8 +1015,8 @@
     linear-gradient(165deg, rgba(16, 34, 74, 0.76), rgba(10, 19, 44, 0.88));
   box-shadow:
     inset 0 0 0 1px rgba(160, 212, 255, 0.08),
-    0 18px 38px rgba(3, 10, 25, 0.46),
-    0 0 34px rgba(103, 154, 255, 0.18);
+    0 12px 26px rgba(3, 10, 25, 0.34),
+    0 0 22px rgba(103, 154, 255, 0.12);
 }
 
 .landing-faq-visual::before,
@@ -1026,7 +1025,7 @@
   position: absolute;
   pointer-events: none;
   border-radius: 999px;
-  filter: blur(14px);
+  filter: blur(8px);
 }
 
 .landing-faq-visual::before {
@@ -1072,7 +1071,7 @@
   inset: 18%;
   border-radius: 999px;
   background: radial-gradient(circle at 35% 30%, #e5f4ff 0%, #95ceff 34%, #6c74ff 78%, #2d2f67 100%);
-  box-shadow: 0 0 26px rgba(118, 211, 255, 0.44);
+  box-shadow: 0 0 16px rgba(118, 211, 255, 0.3);
 }
 
 .landing-faq-orb-ring {
@@ -1162,7 +1161,7 @@
   left: 0;
   transform: none;
   width: 64%;
-  box-shadow: 0 0 16px rgba(111, 228, 255, 0.48);
+  box-shadow: 0 0 10px rgba(111, 228, 255, 0.3);
 }
 
 .landing-faq-subtitle {
@@ -1186,11 +1185,11 @@
   border: 1px solid rgba(147, 201, 255, 0.2);
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(18, 36, 74, 0.52) 0%, rgba(10, 21, 45, 0.72) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   box-shadow:
     inset 0 1px 0 rgba(171, 216, 255, 0.1),
-    0 14px 28px rgba(2, 8, 20, 0.34);
+    0 10px 20px rgba(2, 8, 20, 0.24);
   transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
 }
 
@@ -1199,7 +1198,7 @@
   box-shadow:
     inset 0 1px 0 rgba(178, 228, 255, 0.16),
     0 0 0 1px rgba(122, 234, 255, 0.2),
-    0 16px 32px rgba(2, 9, 23, 0.44);
+    0 12px 24px rgba(2, 9, 23, 0.3);
   transform: translateY(-1px);
 }
 
@@ -1210,8 +1209,8 @@
     linear-gradient(135deg, rgba(108, 233, 255, 0.7), rgba(147, 131, 255, 0.72)) border-box;
   box-shadow:
     0 0 0 1px rgba(136, 227, 255, 0.18),
-    0 20px 36px rgba(3, 11, 27, 0.46),
-    0 0 30px rgba(108, 173, 255, 0.2);
+    0 14px 26px rgba(3, 11, 27, 0.3),
+    0 0 18px rgba(108, 173, 255, 0.14);
 }
 
 .landing-faq-trigger {
@@ -1538,6 +1537,7 @@
   .landing-track {
     gap: 10px;
     padding: 16px;
+    animation-duration: 54s;
   }
 
   .landing-bg-card {
@@ -1622,6 +1622,22 @@
     border-radius: 14px;
   }
 
+  .landing-why-card,
+  .landing-faq-item {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .landing-faq-visual {
+    min-height: 220px;
+  }
+
+  .landing-faq-orb,
+  .landing-faq-particle,
+  .landing-carousel-card--framed::after {
+    animation-duration: 10s;
+  }
+
   .landing-newsletter-subtitle {
     font-size: 0.86rem;
   }
@@ -1648,6 +1664,62 @@
   }
 }
 
+@media (max-width: 640px) {
+  .landing-hero {
+    min-height: auto;
+    padding-top: 20px;
+    padding-bottom: 14px;
+  }
+
+  .landing-copy-wrap {
+    max-width: 100%;
+  }
+
+  .landing-title {
+    font-size: clamp(2rem, 8.2vw, 2.4rem);
+  }
+
+  .landing-subtitle {
+    max-width: 100%;
+  }
+
+  .landing-carousel {
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 1fr) minmax(0, 0.38fr);
+    gap: 8px;
+  }
+
+  .landing-carousel-card--far-left,
+  .landing-carousel-card--far-right {
+    display: none;
+  }
+
+  .landing-carousel-card:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 420px) {
+  .landing-content-shell,
+  .landing-featured-head,
+  .landing-carousel-stage,
+  .landing-categories-shell,
+  .landing-why-shell,
+  .landing-faq-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .landing-cta-row {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .landing-cta-primary,
+  .landing-cta-secondary {
+    width: 100%;
+  }
+}
+
 @media (min-width: 768px) {
   .landing-why-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1666,11 +1738,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .landing-track,
   .landing-faq,
   .landing-faq::before,
   .landing-faq-orb,
   .landing-faq-orb-ring,
   .landing-faq-particle {
+    animation: none;
+  }
+
+  .landing-hero-avatar-wrap {
     animation: none;
   }
 

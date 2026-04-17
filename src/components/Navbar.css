@@ -1,25 +1,5 @@
 .navbar,
 .mobile-drawer {
-  --nav-bg: rgba(255, 255, 255, 0.95);
-  --nav-border: #e2e8f0;
-  --nav-text: #0f172a;
-  --nav-muted: #475569;
-  --nav-hover: #0f172a;
-  --nav-hover-bg: #f1f5f9;
-  --search-bg: #f8fafc;
-  --search-border: #e2e8f0;
-  --search-placeholder: #94a3b8;
-  --search-icon: #94a3b8;
-  --search-dropdown-bg: #ffffff;
-  --search-dropdown-border: #dbe4ee;
-  --search-dropdown-hover: #f1f5f9;
-  --search-suggestion-title: #0f172a;
-  --search-suggestion-meta: #4b6688;
-  --drawer-bg: #ffffff;
-}
-
-.navbar--dark,
-.mobile-drawer--dark {
   --nav-bg: rgba(9, 20, 42, 0.92);
   --nav-border: rgba(104, 146, 198, 0.35);
   --nav-text: #f3f8ff;
@@ -433,5 +413,30 @@
   .mobile-drawer,
   .navbar-overlay {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar {
+    height: 60px;
+  }
+
+  .navbar-inner {
+    padding: 0 10px;
+    gap: 6px;
+  }
+
+  .navbar-brand img {
+    height: 40px;
+    max-width: 170px;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mobile-drawer {
+    width: min(86vw, 290px);
   }
 }

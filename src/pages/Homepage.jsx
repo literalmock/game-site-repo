@@ -1,14 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Brain, ChevronDown, ChevronLeft, ChevronRight, Eye, Gamepad2, Gem, MonitorSmartphone, Rocket, Sparkles, Zap } from 'lucide-react'
-import { AnimatePresence, motion } from 'framer-motion'
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ChevronDown, ChevronLeft, ChevronRight, Eye, Gamepad2, Sparkles } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { games } from '../utils/game'
 import { Skiper53 } from '../components/ui/skiper-ui/skiper53'
 import HeroAvatarPixelMorph from '../components/HeroAvatarPixelMorph'
+import {
+  CATEGORY_GENRE_CARDS,
+  HERO_AVATAR_IMAGES,
+  WHY_CARD_MOTION_BLUEPRINTS,
+  WHY_GAMEVERSE_CARDS,
+} from '../utils/homepageContent'
 import './Homepage.css'
 import faqItems from '../utils/faq'
 const FEATURED_AUTOPLAY_RESUME_DELAY_MS = 3200
-const HERO_AVATAR_IMAGES = ['/avatars/charac1.webp', '/avatars/charac2.webp', '/avatars/charac3.webp', '/avatars/charac4.webp']
 
 const FAQ_ITEM_VARIANTS = {
   hidden: { opacity: 0, y: 24 },
@@ -66,17 +71,130 @@ const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
   </motion.article>
 )
 
+const LiveViewsCounter = memo(() => {
+  const [liveViews, setLiveViews] = useState(() => Math.floor(125000 + Math.random() * 45000))
+  const formattedLiveViews = useMemo(() => liveViews.toLocaleString('en-US'), [liveViews])
+
+  useEffect(() => {
+    const viewsTicker = window.setInterval(() => {
+      setLiveViews((prev) => prev + Math.floor(Math.random() * 64) + 18)
+    }, 2400)
+
+    return () => window.clearInterval(viewsTicker)
+  }, [])
+
+  return (
+    <div className="landing-hero-live-counter" aria-label="Live views counter">
+      <span className="landing-hero-live-label">
+        <Eye size={14} />
+        Live Views
+      </span>
+      <motion.span
+        key={liveViews}
+        initial={{ opacity: 0.35, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.32, ease: 'easeOut' }}
+        className="landing-hero-live-value"
+      >
+        {formattedLiveViews}
+      </motion.span>
+    </div>
+  )
+})
+
+const FaqVisual = memo(({ reducedMotion }) => {
+  const [parallax, setParallax] = useState({ x: 0, y: 0, lightX: 50, lightY: 50 })
+  const rafRef = useRef(null)
+  const nextParallaxRef = useRef(parallax)
+
+  const flushParallax = useCallback(() => {
+    rafRef.current = null
+    setParallax(nextParallaxRef.current)
+  }, [])
+
+  const handleMove = useCallback((event) => {
+    if (reducedMotion) return
+
+    const bounds = event.currentTarget.getBoundingClientRect()
+    const relativeX = (event.clientX - bounds.left) / bounds.width
+    const relativeY = (event.clientY - bounds.top) / bounds.height
+
+    nextParallaxRef.current = {
+      x: (relativeX - 0.5) * 18,
+      y: (relativeY - 0.5) * 16,
+      lightX: Math.round(relativeX * 100),
+      lightY: Math.round(relativeY * 100),
+    }
+
+    if (rafRef.current === null) {
+      rafRef.current = window.requestAnimationFrame(flushParallax)
+    }
+  }, [flushParallax, reducedMotion])
+
+  const handleLeave = useCallback(() => {
+    nextParallaxRef.current = { x: 0, y: 0, lightX: 50, lightY: 50 }
+
+    if (rafRef.current !== null) {
+      window.cancelAnimationFrame(rafRef.current)
+    }
+
+    rafRef.current = window.requestAnimationFrame(flushParallax)
+  }, [flushParallax])
+
+  useEffect(() => () => {
+    if (rafRef.current !== null) {
+      window.cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
+  }, [])
+
+  return (
+    <motion.div
+      className="landing-faq-visual"
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      initial={reducedMotion ? false : { opacity: 0, x: -36 }}
+      whileInView={reducedMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        '--faq-light-x': `${parallax.lightX}%`,
+        '--faq-light-y': `${parallax.lightY}%`,
+      }}
+    >
+      <div className="landing-faq-visual-grid" aria-hidden="true" />
+      <motion.div
+        className="landing-faq-orb"
+        animate={reducedMotion ? { x: 0, y: 0, rotate: 0 } : { x: parallax.x, y: parallax.y, rotate: parallax.x * 0.5 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 14, mass: 0.6 }}
+      >
+        <span className="landing-faq-orb-core" />
+        <span className="landing-faq-orb-ring landing-faq-orb-ring--one" />
+        <span className="landing-faq-orb-ring landing-faq-orb-ring--two" />
+        <span className="landing-faq-orb-icon"><Gamepad2 size={28} /></span>
+      </motion.div>
+      <span className="landing-faq-particle landing-faq-particle--one" aria-hidden="true" />
+      <span className="landing-faq-particle landing-faq-particle--two" aria-hidden="true" />
+      <span className="landing-faq-particle landing-faq-particle--three" aria-hidden="true" />
+    </motion.div>
+  )
+})
+
 const Homepage = () => {
   const navigate = useNavigate()
+  const shouldReduceMotion = useReducedMotion()
+  const [isCompactDevice, setIsCompactDevice] = useState(() => window.matchMedia('(max-width: 899px)').matches)
   const heroSlides = useMemo(() => games.slice(0, 8), [])
+  const heroTrackSlides = useMemo(() => {
+    const baseSlides = isCompactDevice ? heroSlides.slice(0, 4) : heroSlides
+    return [...baseSlides, ...baseSlides]
+  }, [heroSlides, isCompactDevice])
   const featuredGames = useMemo(() => games.slice(0, 12), [])
   const [featuredIndex, setFeaturedIndex] = useState(0)
   const [carouselDirection, setCarouselDirection] = useState('next')
   const [isCenterHovered, setIsCenterHovered] = useState(false)
   const [isManualControlActive, setIsManualControlActive] = useState(false)
-  const [liveViews, setLiveViews] = useState(() => Math.floor(125000 + Math.random() * 45000))
   const [openFaqIndex, setOpenFaqIndex] = useState(0)
-  const [faqParallax, setFaqParallax] = useState({ x: 0, y: 0, lightX: 50, lightY: 50 })
   const [whyMotionState, setWhyMotionState] = useState('hidden')
   const [isWhyInView, setIsWhyInView] = useState(false)
   const whySectionRef = useRef(null)
@@ -84,6 +202,7 @@ const Homepage = () => {
   const hasWhyEnteredRef = useRef(false)
   const lastScrollYRef = useRef(0)
   const manualResumeTimeoutRef = useRef(null)
+  const scrollRafRef = useRef(null)
 
   const scheduleAutoplayResume = useCallback(() => {
     setIsManualControlActive(true)
@@ -130,126 +249,14 @@ const Homepage = () => {
     ]
   }, [featuredGames, featuredIndex])
 
-  const categoryGenreCards = useMemo(() => {
-    const genreMap = {
-      Action: 'Combat Focus',
-      Shooter: 'High Tempo FPS',
-      RPG: 'Open World Journey',
-      Adventure: 'Story Rich Quests',
-      Platformer: 'Precision Movement',
-      Horror: 'Atmospheric Survival',
-      Strategy: 'Tactical Thinking',
-    }
-
-    const genreImageFiles = [
-      'category01.webp',
-      'category02.webp',
-      'category03.webp',
-      '05733b4621e4d2512e3bd63d7d385567.webp',
-      '0bdd40f5859584f8f8e7389ff56c2f64.webp',
-      '7be12ecab9933374bc4ca3048c1d2223.webp',
-      'ac1366f33d60eb9f8cffd8667d7b3224.webp',
-      'd42d687c511d6b0365f57b7c477e10ac.webp',
-    ]
-
-    return Object.entries(genreMap).map(([category, genre], index) => ({
-      src: `/genres/${genreImageFiles[index % genreImageFiles.length]}`,
-      alt: `${category} category artwork`,
-      title: category,
-      code: genre,
-    }))
-  }, [])
-
-  const whyGameverseCards = useMemo(() => ([
-    {
-      icon: Zap,
-      title: 'Instant Play',
-      points: [
-        'No downloads required',
-        'Play directly in browser',
-        'Fast loading optimized games',
-      ],
-    },
-    {
-      icon: Gamepad2,
-      title: 'Curated Game Library',
-      points: [
-        'Only high-quality games',
-        'No spam or low-quality clutter',
-        'Handpicked experience',
-      ],
-    },
-    {
-      icon: Brain,
-      title: 'Smart Recommendations',
-      points: [
-        'Personalized games by user interest',
-        'You may also like suggestions',
-        'Context-aware discovery',
-      ],
-    },
-    {
-      icon: MonitorSmartphone,
-      title: 'Cross Platform',
-      points: [
-        'Works on mobile and tablet',
-        'Perfect on desktop screens',
-        'Same experience everywhere',
-      ],
-    },
-    {
-      icon: Gem,
-      title: 'Clean UI Experience',
-      points: [
-        'No distractions',
-        'Smooth animations',
-        'Gamer-first design',
-      ],
-    },
-    {
-      icon: Rocket,
-      title: 'Fast Performance',
-      points: [
-        'Optimized assets',
-        'Lightweight UI',
-        'Smooth gameplay',
-      ],
-    },
-  ]), [])
-
-  const whyCardMotionBlueprints = useMemo(() => ([
-    { hidden: { x: -130, y: 0 }, scatter: { x: -190, y: -96, rotate: -14 } },
-    { hidden: { x: 130, y: 0 }, scatter: { x: 178, y: -118, rotate: 12 } },
-    { hidden: { x: 0, y: 104 }, scatter: { x: -148, y: 136, rotate: -10 } },
-    { hidden: { x: 0, y: -104 }, scatter: { x: 172, y: 122, rotate: 14 } },
-    { hidden: { x: -96, y: 42 }, scatter: { x: -34, y: 178, rotate: -9 } },
-    { hidden: { x: 96, y: 42 }, scatter: { x: 142, y: 154, rotate: 11 } },
-  ]), [])
-
-
-  const formattedLiveViews = useMemo(() => liveViews.toLocaleString('en-US'), [liveViews])
+  const categoryGenreCards = CATEGORY_GENRE_CARDS
+  const whyGameverseCards = WHY_GAMEVERSE_CARDS
+  const whyCardMotionBlueprints = WHY_CARD_MOTION_BLUEPRINTS
 
 
   const handleDiscoverGenreClick = useCallback((genre) => {
     navigate(`/games?genre=${encodeURIComponent(genre)}`)
   }, [navigate])
-
-  const handleFaqVisualMove = useCallback((event) => {
-    const bounds = event.currentTarget.getBoundingClientRect()
-    const relativeX = (event.clientX - bounds.left) / bounds.width
-    const relativeY = (event.clientY - bounds.top) / bounds.height
-
-    setFaqParallax({
-      x: (relativeX - 0.5) * 18,
-      y: (relativeY - 0.5) * 16,
-      lightX: Math.round(relativeX * 100),
-      lightY: Math.round(relativeY * 100),
-    })
-  }, [])
-
-  const handleFaqVisualLeave = useCallback(() => {
-    setFaqParallax({ x: 0, y: 0, lightX: 50, lightY: 50 })
-  }, [])
 
   useEffect(() => {
     if (isCenterHovered || isManualControlActive) {
@@ -264,11 +271,12 @@ const Homepage = () => {
   }, [isCenterHovered, isManualControlActive, moveCarousel])
 
   useEffect(() => {
-    const viewsTicker = window.setInterval(() => {
-      setLiveViews((prev) => prev + Math.floor(Math.random() * 64) + 18)
-    }, 1400)
+    const mediaQuery = window.matchMedia('(max-width: 899px)')
+    const handleChange = (event) => setIsCompactDevice(event.matches)
 
-    return () => window.clearInterval(viewsTicker)
+    mediaQuery.addEventListener('change', handleChange)
+
+    return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
 
   useEffect(() => {
@@ -286,12 +294,12 @@ const Homepage = () => {
 
         if (inView) {
           hasWhyEnteredRef.current = true
-          setWhyMotionState('in')
+          setWhyMotionState((prev) => (prev === 'in' ? prev : 'in'))
           return
         }
 
         if (entry.boundingClientRect.top > window.innerHeight * 0.85) {
-          setWhyMotionState('hidden')
+          setWhyMotionState((prev) => (prev === 'hidden' ? prev : 'hidden'))
         }
       },
       {
@@ -305,7 +313,7 @@ const Homepage = () => {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => {
+    const evaluateWhyMotionState = () => {
       const section = whySectionRef.current
       if (!section) return
 
@@ -315,22 +323,42 @@ const Homepage = () => {
       const currentY = window.scrollY
       const isScrollingDown = currentY > lastScrollYRef.current
 
+      let nextState = null
+
       if (isWhyInView) {
-        setWhyMotionState('in')
+        nextState = 'in'
       } else if (hasWhyEnteredRef.current && isScrollingDown && rect.bottom < window.innerHeight * 0.15) {
-        setWhyMotionState('scatter')
+        nextState = 'scatter'
       } else if (rect.top > window.innerHeight * 0.85) {
-        setWhyMotionState('hidden')
+        nextState = 'hidden'
+      }
+
+      if (nextState) {
+        setWhyMotionState((prev) => (prev === nextState ? prev : nextState))
       }
 
       lastScrollYRef.current = currentY
     }
 
-    onScroll()
+    const onScroll = () => {
+      if (scrollRafRef.current !== null) return
+
+      scrollRafRef.current = window.requestAnimationFrame(() => {
+        scrollRafRef.current = null
+        evaluateWhyMotionState()
+      })
+    }
+
+    evaluateWhyMotionState()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
 
     return () => {
+      if (scrollRafRef.current !== null) {
+        window.cancelAnimationFrame(scrollRafRef.current)
+        scrollRafRef.current = null
+      }
+
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
@@ -341,9 +369,9 @@ const Homepage = () => {
       <section className="landing-hero">
         <div className="landing-hero-bg" aria-hidden="true">
           <div className="landing-track">
-            {[...heroSlides, ...heroSlides].map((game, index) => (
+            {heroTrackSlides.map((game, index) => (
               <article className="landing-bg-card" key={`${game.id}-${index}`}>
-                <img src={game.thumbnail} alt="" className="landing-bg-image" />
+                <img src={game.thumbnail} alt="" className="landing-bg-image" loading="lazy" decoding="async" fetchPriority="low" />
               </article>
             ))}
           </div>
@@ -382,24 +410,10 @@ const Homepage = () => {
 
           <aside className="landing-hero-side" aria-label="Genre spotlight panel">
             <div className="landing-hero-avatar-wrap" aria-hidden="true">
-              <HeroAvatarPixelMorph imageUrls={HERO_AVATAR_IMAGES} />
+              <HeroAvatarPixelMorph imageUrls={HERO_AVATAR_IMAGES} reducedMotion={shouldReduceMotion} />
             </div>
 
-            <div className="landing-hero-live-counter" aria-label="Live views counter">
-              <span className="landing-hero-live-label">
-                <Eye size={14} />
-                Live Views
-              </span>
-              <motion.span
-                key={liveViews}
-                initial={{ opacity: 0.35, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.32, ease: 'easeOut' }}
-                className="landing-hero-live-value"
-              >
-                {formattedLiveViews}
-              </motion.span>
-            </div>
+            <LiveViewsCounter />
           </aside>
         </div>
       </section>
@@ -447,6 +461,9 @@ const Homepage = () => {
                     src={game.thumbnail}
                     alt={game.title}
                     className="landing-carousel-thumb"
+                    loading={slot === 'center' ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchPriority={slot === 'center' ? 'high' : 'low'}
                   />
                   <div className="landing-carousel-meta">
                     <h3>{game.title}</h3>
@@ -549,8 +566,8 @@ const Homepage = () => {
                   className="landing-why-card"
                   variants={cardVariants}
                   initial="hidden"
-                  animate={whyMotionState}
-                  whileHover={{
+                  animate={shouldReduceMotion ? 'in' : whyMotionState}
+                  whileHover={shouldReduceMotion ? undefined : {
                     scale: 1.035,
                     borderColor: 'rgba(126, 230, 255, 0.82)',
                     boxShadow: '0 0 0 1px rgba(129, 232, 255, 0.34), 0 20px 34px rgba(2, 10, 25, 0.5)',
@@ -576,34 +593,7 @@ const Homepage = () => {
       <section className="landing-faq" aria-label="Frequently asked questions">
         <div className="landing-faq-shell">
           <div className="landing-faq-split">
-            <motion.div
-              className="landing-faq-visual"
-              onMouseMove={handleFaqVisualMove}
-              onMouseLeave={handleFaqVisualLeave}
-              initial={{ opacity: 0, x: -36 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                '--faq-light-x': `${faqParallax.lightX}%`,
-                '--faq-light-y': `${faqParallax.lightY}%`,
-              }}
-            >
-              <div className="landing-faq-visual-grid" aria-hidden="true" />
-              <motion.div
-                className="landing-faq-orb"
-                animate={{ x: faqParallax.x, y: faqParallax.y, rotate: faqParallax.x * 0.5 }}
-                transition={{ type: 'spring', stiffness: 100, damping: 14, mass: 0.6 }}
-              >
-                <span className="landing-faq-orb-core" />
-                <span className="landing-faq-orb-ring landing-faq-orb-ring--one" />
-                <span className="landing-faq-orb-ring landing-faq-orb-ring--two" />
-                <span className="landing-faq-orb-icon"><Gamepad2 size={28} /></span>
-              </motion.div>
-              <span className="landing-faq-particle landing-faq-particle--one" aria-hidden="true" />
-              <span className="landing-faq-particle landing-faq-particle--two" aria-hidden="true" />
-              <span className="landing-faq-particle landing-faq-particle--three" aria-hidden="true" />
-            </motion.div>
+            <FaqVisual reducedMotion={shouldReduceMotion} />
 
             <div className="landing-faq-content">
               <p className="landing-faq-kicker label-xs">FAQ</p>

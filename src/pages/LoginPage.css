@@ -14,11 +14,12 @@
 }
 /* FULL PAGE BACKGROUND */
 .login-page.login-page--login {
-  height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-inline: 16px;
+  padding-block: 72px 20px;
   background-image: url('/night-sky.webp');
   background-size: cover;
   background-position: center;
@@ -108,4 +109,24 @@
 .login-form .btn:hover {
   transform: translateY(-1px);
   opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    left: 50%;
+    top: 14px;
+    transform: translateX(-50%);
+    font-size: 18px;
+  }
+
+  .login-form {
+    width: 100%;
+    padding: 24px 18px;
+    border-radius: 14px;
+    min-height: 0;
+  }
+
+  .auth-switch {
+    margin-top: 16px !important;
+  }
 }

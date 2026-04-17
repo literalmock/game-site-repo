@@ -338,3 +338,32 @@
     padding-right: 24px;
   }
 }
+
+@media (max-width: 520px) {
+  .footer-panel {
+    padding: 22px 14px;
+  }
+
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    width: 100%;
+    justify-self: stretch;
+    justify-items: start;
+  }
+
+  .footer-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-submit {
+    width: 100%;
+    border-radius: 999px;
+  }
+
+  .footer-legal {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+}

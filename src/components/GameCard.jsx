@@ -17,6 +17,8 @@ const GameCard = ({ game }) => {
   }}
           alt={game.title}
           className="game-card-image"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="game-card-content">

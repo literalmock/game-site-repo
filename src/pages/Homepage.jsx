@@ -39,7 +39,8 @@ const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
       <motion.span
         className="landing-faq-icon"
         animate={{ rotate: isOpen ? 180 : 0 }}
-        transition={{ duration: 0.28, ease: 'easeInOut' }}
+        transition={{ duration: 0.24, ease: 'easeInOut' }}
+        style={{ backfaceVisibility: 'hidden' }}
       >
         <ChevronDown size={18} />
       </motion.span>
@@ -48,20 +49,22 @@ const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
     <AnimatePresence initial={false}>
       {isOpen ? (
         <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
+          initial={{ maxHeight: 0, opacity: 0 }}
+          animate={{ maxHeight: 500, opacity: 1 }}
+          exit={{ maxHeight: 0, opacity: 0 }}
           transition={{
-            height: { duration: 0.42, ease: [0.33, 1, 0.68, 1] },
-            opacity: { duration: 0.28, ease: 'easeOut' },
+            maxHeight: { duration: 0.32, ease: "easeInOut" },
+            opacity: { duration: 0.24, ease: 'easeOut' },
           }}
-          className="landing-faq-answer-wrap"
+          className="landing-faq-answer-wrap overflow-hidden"
+          style={{ willChange: 'max-height, opacity' }}
         >
           <motion.p
             className="landing-faq-answer"
             initial={{ y: 8, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.24, delay: 0.08, ease: 'easeOut' }}
+            exit={{ y: 8, opacity: 0 }}
+            transition={{ duration: 0.2, delay: 0.04, ease: 'easeOut' }}
           >
             {item.answer}
           </motion.p>
@@ -156,17 +159,20 @@ const FaqVisual = memo(({ reducedMotion }) => {
       initial={reducedMotion ? false : { opacity: 0, x: -36 }}
       whileInView={reducedMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{
         '--faq-light-x': `${parallax.lightX}%`,
         '--faq-light-y': `${parallax.lightY}%`,
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden',
       }}
     >
       <div className="landing-faq-visual-grid" aria-hidden="true" />
       <motion.div
         className="landing-faq-orb"
         animate={reducedMotion ? { x: 0, y: 0, rotate: 0 } : { x: parallax.x, y: parallax.y, rotate: parallax.x * 0.5 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 14, mass: 0.6 }}
+        transition={{ type: 'spring', stiffness: 60, damping: 16, mass: 0.8 }}
+        style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
       >
         <span className="landing-faq-orb-core" />
         <span className="landing-faq-orb-ring landing-faq-orb-ring--one" />
@@ -496,7 +502,7 @@ const Homepage = () => {
           <p className="landing-categories-kicker label-xs">Discover By Style</p>
           <h2 className="landing-categories-title heading-lg heading-hover-accent">Categories And Genres</h2>
           <p className="landing-categories-subtitle text-body heading-paragraph-gap">
-            Hover each row to preview a lane and find your next session mood.
+            Hover each row to preview a lane, or tap to expand and explore your next session mood.
           </p>
 
           <Skiper53

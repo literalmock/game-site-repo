@@ -1696,6 +1696,23 @@
   .landing-carousel-card:hover {
     transform: scale(1.02);
   }
+
+  .landing-categories {
+    padding-top: 18px;
+    padding-bottom: 22px;
+  }
+
+  .landing-categories-title {
+    font-size: clamp(1.5rem, 6.2vw, 1.9rem);
+  }
+
+  .landing-categories-subtitle {
+    max-width: 100%;
+  }
+
+  .landing-categories-skiper {
+    padding: 0;
+  }
 }
 
 @media (max-width: 420px) {
@@ -1717,6 +1734,11 @@
   .landing-cta-primary,
   .landing-cta-secondary {
     width: 100%;
+  }
+
+  .landing-categories-shell {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
 

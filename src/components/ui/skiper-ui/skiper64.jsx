@@ -5,12 +5,8 @@ import { Gamepad2, Rocket, Shield } from "lucide-react";
 import React, { useRef } from "react";
 import { cn } from "../../../lib/utils";
 
-type Skiper64Props = {
-  className?: string;
-};
-
-const Skiper64 = ({ className }: Skiper64Props) => {
-  const playgroundRef = useRef<HTMLDivElement | null>(null);
+const Skiper64 = ({ className }) => {
+  const playgroundRef = useRef(null);
 
   return (
     <div

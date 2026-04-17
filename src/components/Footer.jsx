@@ -1,5 +1,5 @@
 import React from 'react'
-import { Send } from 'lucide-react'
+import { Send } from './ui/Icons'
 import './Footer.css'
 
 const FOOTER_LINKS = {

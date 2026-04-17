@@ -1,4 +1,4 @@
-import { Brain, Gamepad2, Gem, MonitorSmartphone, Rocket, Zap } from 'lucide-react'
+import { Brain, Gamepad2, Gem, MonitorSmartphone, Rocket, Zap } from '../components/ui/Icons'
 
 export const HERO_AVATAR_IMAGES = [
   '/avatars/charac1.webp',

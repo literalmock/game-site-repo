@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Star, Eye, Tag } from 'lucide-react';
+import { Eye, Star, Tag } from '../ui/Icons';
 
 const StarRating = ({ rating }) => {
   const filled = Math.floor(rating);
@@ -34,25 +33,13 @@ const GameDetails = ({ game }) => {
 
       <div className="gv-details-grid">
         {/* Description */}
-        <motion.div
-          className="gv-detail-card gv-detail-desc"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="gv-detail-card gv-detail-desc gv-reveal-up">
           <h3 className="gv-detail-label">About</h3>
           <p className="gv-detail-text">{game.description}</p>
-        </motion.div>
+        </div>
 
         {/* Tags */}
-        <motion.div
-          className="gv-detail-card"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3, delay: 0.05 }}
-        >
+        <div className="gv-detail-card gv-reveal-up" style={{ animationDelay: '0.05s' }}>
           <h3 className="gv-detail-label">
             <Tag size={13} className="gv-inline-icon" /> Tags
           </h3>
@@ -61,16 +48,10 @@ const GameDetails = ({ game }) => {
               <span key={tag} className="gv-tag">{tag}</span>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Stats */}
-        <motion.div
-          className="gv-detail-card"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
+        <div className="gv-detail-card gv-reveal-up" style={{ animationDelay: '0.1s' }}>
           <h3 className="gv-detail-label">
             <Star size={13} className="gv-inline-icon" /> Rating
           </h3>
@@ -83,16 +64,13 @@ const GameDetails = ({ game }) => {
 
           <h3 className="gv-detail-label" style={{ marginTop: '1rem' }}>Popularity</h3>
           <div className="gv-progress-bar">
-            <motion.div
+            <div
               className="gv-progress-fill"
-              initial={{ width: 0 }}
-              whileInView={{ width: `${popularityPercent}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              style={{ width: `${popularityPercent}%` }}
             />
           </div>
           <span className="gv-progress-label">{popularityPercent}%</span>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

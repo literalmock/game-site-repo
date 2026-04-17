@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { cn } from "../../../lib/utils";
 
@@ -28,7 +27,6 @@ const HoverExpand_002 = ({
   className,
   onItemClick,
 }) => {
-  const prefersReducedMotion = useReducedMotion();
   const [activeImage, setActiveImage] = useState(1);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [lastClickedIndex, setLastClickedIndex] = useState(null);
@@ -72,78 +70,59 @@ const HoverExpand_002 = ({
       <div className="w-full">
         <div className={cn("flex w-full flex-col items-center justify-center gap-2", isTouchDevice && "gap-3", "will-change-[height]") }>
           {images.map((image, index) => (
-            <motion.div
+            <div
               key={index}
               className={cn(
                 "group relative w-full cursor-pointer overflow-hidden rounded-2xl border border-cyan-300/20",
                 isTouchDevice && "shadow-[0_10px_24px_rgba(2,8,22,0.22)]",
+                activeImage === index ? "skiper53-card--active" : "skiper53-card--inactive",
               )}
               style={{
                 willChange: 'transform, opacity',
                 backfaceVisibility: 'hidden',
-              }}
-              initial={{ maxHeight: collapsedHeight, opacity: prefersReducedMotion ? 1 : 0.9 }}
-              animate={{
                 maxHeight: activeImage === index ? expandedHeight : collapsedHeight,
                 opacity: 1,
-              }}
-              transition={{ 
-                duration: animationDuration, 
-                ease: "easeInOut",
-                opacity: { duration: 0.2 }
+                transition: `max-height ${animationDuration}s ease-in-out, opacity 0.2s ease, transform 0.2s ease`,
               }}
               onClick={() => handleCardClick(image, index)}
-              onHoverStart={() => {
+              onMouseEnter={() => {
                 if (!isTouchDevice) {
                   setActiveImage(index);
                 }
               }}
-              whileTap={isTouchDevice ? { scale: 0.98 } : undefined}
+              onMouseDown={(event) => {
+                if (isTouchDevice) return
+                event.currentTarget.style.transform = 'scale(0.98)'
+              }}
+              onMouseUp={(event) => {
+                if (isTouchDevice) return
+                event.currentTarget.style.transform = ''
+              }}
             >
-              <AnimatePresence mode="wait">
-                {activeImage === index ? (
-                  <motion.div
-                    key="active"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.18 }}
-                    className="absolute h-full w-full bg-gradient-to-t from-slate-950/58 via-slate-900/20 to-slate-900/18"
-                    style={{ backfaceVisibility: 'hidden' }}
-                  />
-                ) : (
-                  <motion.div
-                    key="inactive"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.18 }}
-                    className="absolute inset-0 bg-slate-950/65"
-                    style={{ backfaceVisibility: 'hidden' }}
-                  />
+              <div
+                className={cn(
+                  "absolute inset-0 transition-opacity duration-200",
+                  activeImage === index
+                    ? "opacity-100 bg-gradient-to-t from-slate-950/58 via-slate-900/20 to-slate-900/18"
+                    : "opacity-100 bg-slate-950/65",
                 )}
-              </AnimatePresence>
-              <AnimatePresence>
-                {activeImage === index && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center"
-                    style={{ backfaceVisibility: 'hidden' }}
-                  >
-                    {image.title ? (
-                      <p className="text-lg font-bold tracking-wide text-cyan-100 drop-shadow-[0_2px_10px_rgba(3,10,26,0.9)]">
-                        {image.title}
-                      </p>
-                    ) : null}
-                    <p className="mt-2 text-base font-semibold text-cyan-200 drop-shadow-[0_2px_10px_rgba(3,10,26,0.9)]">
-                      {image.code}
+                style={{ backfaceVisibility: 'hidden' }}
+              />
+              {activeImage === index ? (
+                <div
+                  className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center skiper53-overlay"
+                  style={{ backfaceVisibility: 'hidden' }}
+                >
+                  {image.title ? (
+                    <p className="text-lg font-bold tracking-wide text-cyan-100 drop-shadow-[0_2px_10px_rgba(3,10,26,0.9)]">
+                      {image.title}
                     </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ) : null}
+                  <p className="mt-2 text-base font-semibold text-cyan-200 drop-shadow-[0_2px_10px_rgba(3,10,26,0.9)]">
+                    {image.code}
+                  </p>
+                </div>
+              ) : null}
               <img
                 src={image.src}
                 className={cn(
@@ -153,7 +132,7 @@ const HoverExpand_002 = ({
                 loading="lazy"
                 decoding="async"
               />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

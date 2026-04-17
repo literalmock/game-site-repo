@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, Volume2, VolumeX, Play, Star, Eye } from 'lucide-react';
+import { Eye, Maximize2, Play, Star, Volume2, VolumeX } from '../ui/Icons';
 
 const HeroSection = ({ game, isTransitioning }) => {
   const [isMuted, setIsMuted] = useState(false);
@@ -56,16 +55,11 @@ const HeroSection = ({ game, isTransitioning }) => {
 
       <div className="gv-hero-inner">
         {/* Glass iframe card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={game.id}
-            className="gv-iframe-card"
-            ref={containerRef}
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-          >
+        <div
+          key={game.id}
+          className="gv-iframe-card gv-fade-in"
+          ref={containerRef}
+        >
             {/* Skeleton loader */}
             {!isLoaded && (
               <div className="gv-skeleton" aria-label="Loading game...">
@@ -114,19 +108,13 @@ const HeroSection = ({ game, isTransitioning }) => {
               <span className="gv-now-playing-dot" />
               <span>Now Playing</span>
             </div>
-          </motion.div>
-        </AnimatePresence>
+        </div>
 
         {/* Game info */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`info-${game.id}`}
-            className="gv-hero-info"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
+        <div
+          key={`info-${game.id}`}
+          className="gv-hero-info gv-fade-up"
+        >
             <div className="gv-hero-meta">
               <span className="gv-category-badge">{game.category}</span>
               <div className="gv-stats">
@@ -150,8 +138,7 @@ const HeroSection = ({ game, isTransitioning }) => {
               <Maximize2 size={16} />
               Play Fullscreen
             </button>
-          </motion.div>
-        </AnimatePresence>
+        </div>
       </div>
     </section>
   );

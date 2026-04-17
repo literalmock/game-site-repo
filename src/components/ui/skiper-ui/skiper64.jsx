@@ -1,8 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Gamepad2, Rocket, Shield } from "lucide-react";
 import React, { useRef } from "react";
+import { Gamepad2, Rocket, Shield } from "../Icons";
 import { cn } from "../../../lib/utils";
 
 const Skiper64 = ({ className }) => {
@@ -24,59 +23,31 @@ const Skiper64 = ({ className }) => {
           filter: "url(#SkiperGooeyFilter)",
         }}
       >
-        <motion.div
-          drag
-          dragConstraints={playgroundRef}
-          dragElastic={0.16}
-          whileTap={{ scale: 0.98 }}
-          initial={{ y: 6, scale: 0.98 }}
-          animate={{ y: [6, 0, 6], scale: [0.98, 1, 0.98] }}
-          transition={{ duration: 2.4, ease: "easeInOut", repeat: Infinity }}
+        <div
           className="absolute left-1/2 top-1/2 h-[96px] w-[228px] -translate-x-1/2 -translate-y-1/2 rounded-[18px] border border-cyan-100/58 bg-gradient-to-r from-cyan-300/84 via-violet-300/74 to-fuchsia-400/84 shadow-[0_0_24px_rgba(129,140,248,0.36)]"
+          style={{ animation: 'skiper64-float-core 2.4s ease-in-out infinite' }}
         />
 
-        <motion.div
-          drag
-          dragConstraints={playgroundRef}
-          dragElastic={0.28}
-          whileTap={{ scale: 0.92 }}
-          initial={{ x: -86, y: -24 }}
-          animate={{
-            x: [-86, 86, -86],
-            y: [-24, -56, -24],
-            scale: [1, 1.08, 1],
-          }}
-          transition={{ duration: 2.2, ease: "easeInOut", repeat: Infinity }}
+        <div
           className="absolute left-1/2 top-1/2 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-cyan-100 shadow-[0_0_20px_rgba(103,232,249,0.86)]"
+          style={{ animation: 'skiper64-orb-a 2.2s ease-in-out infinite' }}
         >
           <Gamepad2 size={16} className="text-cyan-950" />
-        </motion.div>
+        </div>
 
-        <motion.div
-          drag
-          dragConstraints={playgroundRef}
-          dragElastic={0.28}
-          whileTap={{ scale: 0.92 }}
-          initial={{ x: 54, y: 56 }}
-          animate={{ x: [54, 18, 54], y: [56, 34, 56] }}
-          transition={{ duration: 2.1, ease: "easeInOut", repeat: Infinity }}
+        <div
           className="absolute left-1/2 top-1/2 grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-amber-100 shadow-[0_0_16px_rgba(251,191,36,0.76)]"
+          style={{ animation: 'skiper64-orb-b 2.1s ease-in-out infinite' }}
         >
           <Rocket size={14} className="text-amber-900" />
-        </motion.div>
+        </div>
 
-        <motion.div
-          drag
-          dragConstraints={playgroundRef}
-          dragElastic={0.24}
-          whileTap={{ scale: 0.92 }}
-          initial={{ x: 0, y: -68 }}
-          animate={{ x: [0, 14, 0], y: [-68, -78, -68] }}
-          transition={{ duration: 2.8, ease: "easeInOut", repeat: Infinity }}
+        <div
           className="absolute left-1/2 top-1/2 grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-fuchsia-100 shadow-[0_0_16px_rgba(217,70,239,0.74)]"
+          style={{ animation: 'skiper64-orb-c 2.8s ease-in-out infinite' }}
         >
           <Shield size={14} className="text-fuchsia-900" />
-        </motion.div>
+        </div>
       </div>
     </div>
   );

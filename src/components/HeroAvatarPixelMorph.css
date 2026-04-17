@@ -11,3 +11,11 @@
 	width: 100%;
 	height: 100%;
 }
+
+.hero-avatar-morph-static {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}

@@ -8,6 +8,7 @@ const HeroAvatarPixelMorph = ({ imageUrls, reducedMotion = false }) => {
 	const animatorRef = useRef(null)
 	const observerRef = useRef(null)
 	const startedRef = useRef(false)
+	const fallbackImage = Array.isArray(imageUrls) && imageUrls.length > 0 ? imageUrls[0] : ''
 
 	useEffect(() => {
 		if (
@@ -68,7 +69,17 @@ const HeroAvatarPixelMorph = ({ imageUrls, reducedMotion = false }) => {
 
 	return (
 		<div ref={containerRef} className="hero-avatar-morph" aria-hidden="true">
-			<canvas ref={canvasRef} className="hero-avatar-morph-canvas" />
+			{reducedMotion ? (
+				<img
+					src={fallbackImage}
+					alt=""
+					className="hero-avatar-morph-static"
+					loading="eager"
+					decoding="async"
+				/>
+			) : (
+				<canvas ref={canvasRef} className="hero-avatar-morph-canvas" />
+			)}
 		</div>
 	)
 }

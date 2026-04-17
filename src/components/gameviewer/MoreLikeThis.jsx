@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play } from '../ui/Icons';
 
 const MoreLikeThis = ({ games, activeGame, onSelect }) => {
   const similar = games
@@ -26,16 +25,11 @@ const MoreLikeThis = ({ games, activeGame, onSelect }) => {
       </div>
       <div className="gv-grid">
         {items.map((game, i) => (
-          <motion.button
+          <button
             key={game.id}
-            className="gv-grid-card"
+            className="gv-grid-card gv-reveal-up"
             onClick={() => onSelect(game)}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: i * 0.04 }}
-            whileHover={{ y: -4 }}
-            whileTap={{ scale: 0.97 }}
+            style={{ animationDelay: `${i * 0.04}s` }}
             aria-label={`Play ${game.title}`}
           >
             <div className="gv-grid-thumb-wrap">
@@ -47,7 +41,7 @@ const MoreLikeThis = ({ games, activeGame, onSelect }) => {
               />
               <div className="gv-grid-hover">
                 <span className="gv-grid-play">
-                  <Play size={20} fill="white" />
+                  <Play size={20} fill="currentColor" />
                 </span>
               </div>
             </div>
@@ -55,7 +49,7 @@ const MoreLikeThis = ({ games, activeGame, onSelect }) => {
               <span className="gv-grid-cat">{game.category}</span>
               <h3 className="gv-grid-title">{game.title}</h3>
             </div>
-          </motion.button>
+          </button>
         ))}
       </div>
     </section>

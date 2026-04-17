@@ -236,6 +236,21 @@
   text-shadow: 0 0 14px rgba(111, 228, 255, 0.32);
 }
 
+.landing-live-value-pop {
+  animation: landing-live-pop 0.32s ease-out;
+}
+
+@keyframes landing-live-pop {
+  from {
+    opacity: 0.35;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
 .landing-kicker {
   margin: 0 0 12px;
   display: inline-flex;
@@ -1019,6 +1034,21 @@
     0 0 22px rgba(103, 154, 255, 0.12);
 }
 
+.landing-faq-visual-enter {
+  animation: landing-faq-visual-enter 0.4s ease-out;
+}
+
+@keyframes landing-faq-visual-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
 .landing-faq-visual::before,
 .landing-faq-visual::after {
   content: '';
@@ -1537,7 +1567,20 @@
   .landing-track {
     gap: 10px;
     padding: 16px;
-    animation-duration: 54s;
+  }
+
+  .landing-track,
+  .landing-hero-avatar-wrap,
+  .landing-carousel-card--framed::after,
+  .landing-faq-orb,
+  .landing-faq-orb-ring,
+  .landing-faq-particle,
+  .landing-newsletter-roll-item {
+    animation: none;
+  }
+
+  .landing-track {
+    opacity: 0.45;
   }
 
   .landing-bg-card {
@@ -1569,6 +1612,11 @@
 
   .landing-carousel-card {
     border-radius: 9px;
+    transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  }
+
+  .landing-carousel-card:hover {
+    transform: none;
   }
 
   .landing-carousel-card--side {
@@ -1626,10 +1674,19 @@
   .landing-faq-item {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    box-shadow: 0 8px 14px rgba(2, 8, 20, 0.16);
+  }
+
+  .landing-why-card:hover {
+    transform: none;
   }
 
   .landing-faq-visual {
     min-height: 220px;
+    box-shadow: 0 8px 16px rgba(3, 10, 25, 0.2);
+    background:
+      radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.14), rgba(139, 232, 255, 0) 46%),
+      linear-gradient(165deg, rgba(16, 34, 74, 0.72), rgba(10, 19, 44, 0.84));
   }
 
   .landing-faq-orb,
@@ -1695,6 +1752,35 @@
 
   .landing-carousel-card:hover {
     transform: scale(1.02);
+  }
+
+  .landing-carousel-card,
+  .landing-why-card,
+  .landing-faq-item,
+  .landing-newsletter-shell,
+  .landing-faq-visual {
+    box-shadow: none;
+  }
+
+  .landing-track,
+  .landing-hero-avatar-wrap,
+  .landing-carousel-card--framed::after,
+  .landing-faq-orb,
+  .landing-faq-orb-ring,
+  .landing-faq-particle,
+  .landing-newsletter-roll-item {
+    animation: none !important;
+  }
+
+  .landing-hero-bg {
+    opacity: 0.5;
+  }
+
+  .landing-faq-visual {
+    min-height: 180px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.08), rgba(139, 232, 255, 0) 52%),
+      linear-gradient(165deg, rgba(16, 34, 74, 0.58), rgba(10, 19, 44, 0.74));
   }
 
   .landing-categories {
@@ -1795,5 +1881,35 @@
     transform: none;
     opacity: 1;
     filter: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-track,
+  .landing-hero-avatar-wrap,
+  .landing-carousel-card--framed::after,
+  .landing-faq-orb,
+  .landing-faq-orb-ring,
+  .landing-faq-particle,
+  .landing-newsletter-roll-item {
+    animation: none !important;
+  }
+
+  .landing-bg-card,
+  .landing-carousel-card,
+  .landing-why-card,
+  .landing-faq-item,
+  .landing-newsletter-shell {
+    box-shadow: none;
+  }
+
+  .landing-hero-bg {
+    opacity: 0.65;
+  }
+
+  .landing-overlay {
+    background:
+      radial-gradient(circle at 20% 18%, rgba(86, 139, 206, 0.18) 0%, rgba(86, 139, 206, 0) 42%),
+      linear-gradient(112deg, rgba(4, 10, 22, 0.92) 4%, rgba(6, 16, 34, 0.74) 46%, rgba(6, 16, 34, 0.18) 100%);
   }
 }

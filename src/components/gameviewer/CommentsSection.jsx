@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquare, ThumbsUp, Send } from 'lucide-react';
+import { MessageSquare, Send, ThumbsUp } from '../ui/Icons';
 
 const mockReviews = [
   {
@@ -53,13 +52,10 @@ const CommentsSection = ({ game }) => {
       {/* Reviews list */}
       <div className="gv-reviews">
         {mockReviews.map((review, i) => (
-          <motion.div
+          <div
             key={review.id}
-            className="gv-review-card"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: i * 0.06 }}
+            className="gv-review-card gv-reveal-up"
+            style={{ animationDelay: `${i * 0.06}s` }}
           >
             <div className="gv-review-header">
               <span className="gv-review-avatar">{review.avatar}</span>
@@ -76,7 +72,7 @@ const CommentsSection = ({ game }) => {
               <ThumbsUp size={13} />
               <span>{review.likes}</span>
             </button>
-          </motion.div>
+          </div>
         ))}
       </div>
 

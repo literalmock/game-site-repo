@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Menu, X, House, Gamepad2, Trophy, LogIn, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { games } from '../utils/game'
+import { Gamepad2, House, LogIn, Menu, Search, Trophy, X } from './ui/Icons'
 import './Navbar.css'
 
 const NAV_LINKS = [

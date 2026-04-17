@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronDown, ChevronLeft, ChevronRight, Eye, Gamepad2, Sparkles } from 'lucide-react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ChevronDown, ChevronLeft, ChevronRight, Eye, Gamepad2, Sparkles } from '../components/ui/Icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { games } from '../utils/game'
 import { Skiper53 } from '../components/ui/skiper-ui/skiper53'
@@ -8,27 +7,14 @@ import HeroAvatarPixelMorph from '../components/HeroAvatarPixelMorph'
 import {
   CATEGORY_GENRE_CARDS,
   HERO_AVATAR_IMAGES,
-  WHY_CARD_MOTION_BLUEPRINTS,
   WHY_GAMEVERSE_CARDS,
 } from '../utils/homepageContent'
 import './Homepage.css'
 import faqItems from '../utils/faq'
 const FEATURED_AUTOPLAY_RESUME_DELAY_MS = 3200
 
-const FAQ_ITEM_VARIANTS = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
 const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
-  <motion.article
-    className={`landing-faq-item ${isOpen ? 'landing-faq-item--open' : ''}`}
-    variants={FAQ_ITEM_VARIANTS}
-  >
+  <article className={`landing-faq-item ${isOpen ? 'landing-faq-item--open' : ''}`}>
     <button
       type="button"
       className="landing-faq-trigger"
@@ -36,42 +22,35 @@ const FaqAccordionItem = ({ item, isOpen, onToggle }) => (
       aria-expanded={isOpen}
     >
       <span className="landing-faq-question">{item.question}</span>
-      <motion.span
+      <span
         className="landing-faq-icon"
-        animate={{ rotate: isOpen ? 180 : 0 }}
-        transition={{ duration: 0.24, ease: 'easeInOut' }}
-        style={{ backfaceVisibility: 'hidden' }}
+        style={{ backfaceVisibility: 'hidden', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.24s ease-in-out' }}
       >
         <ChevronDown size={18} />
-      </motion.span>
+      </span>
     </button>
 
-    <AnimatePresence initial={false}>
-      {isOpen ? (
-        <motion.div
-          initial={{ maxHeight: 0, opacity: 0 }}
-          animate={{ maxHeight: 500, opacity: 1 }}
-          exit={{ maxHeight: 0, opacity: 0 }}
-          transition={{
-            maxHeight: { duration: 0.32, ease: "easeInOut" },
-            opacity: { duration: 0.24, ease: 'easeOut' },
-          }}
-          className="landing-faq-answer-wrap overflow-hidden"
-          style={{ willChange: 'max-height, opacity' }}
-        >
-          <motion.p
-            className="landing-faq-answer"
-            initial={{ y: 8, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 8, opacity: 0 }}
-            transition={{ duration: 0.2, delay: 0.04, ease: 'easeOut' }}
-          >
-            {item.answer}
-          </motion.p>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  </motion.article>
+    <div
+      className="landing-faq-answer-wrap overflow-hidden"
+      style={{
+        willChange: 'max-height, opacity',
+        maxHeight: isOpen ? '500px' : '0px',
+        opacity: isOpen ? 1 : 0,
+        transition: 'max-height 0.32s ease-in-out, opacity 0.24s ease-out',
+      }}
+    >
+      <p
+        className="landing-faq-answer"
+        style={{
+          transform: isOpen ? 'translateY(0px)' : 'translateY(8px)',
+          opacity: isOpen ? 1 : 0,
+          transition: 'transform 0.2s ease-out, opacity 0.2s ease-out',
+        }}
+      >
+        {item.answer}
+      </p>
+    </div>
+  </article>
 )
 
 const LiveViewsCounter = memo(() => {
@@ -92,15 +71,12 @@ const LiveViewsCounter = memo(() => {
         <Eye size={14} />
         Live Views
       </span>
-      <motion.span
+      <span
         key={liveViews}
-        initial={{ opacity: 0.35, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.32, ease: 'easeOut' }}
-        className="landing-hero-live-value"
+        className="landing-hero-live-value landing-live-value-pop"
       >
         {formattedLiveViews}
-      </motion.span>
+      </span>
     </div>
   )
 })
@@ -152,14 +128,10 @@ const FaqVisual = memo(({ reducedMotion }) => {
   }, [])
 
   return (
-    <motion.div
-      className="landing-faq-visual"
+    <div
+      className="landing-faq-visual landing-faq-visual-enter"
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      initial={reducedMotion ? false : { opacity: 0, x: -36 }}
-      whileInView={reducedMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{
         '--faq-light-x': `${parallax.lightX}%`,
         '--faq-light-y': `${parallax.lightY}%`,
@@ -168,28 +140,32 @@ const FaqVisual = memo(({ reducedMotion }) => {
       }}
     >
       <div className="landing-faq-visual-grid" aria-hidden="true" />
-      <motion.div
+      <div
         className="landing-faq-orb"
-        animate={reducedMotion ? { x: 0, y: 0, rotate: 0 } : { x: parallax.x, y: parallax.y, rotate: parallax.x * 0.5 }}
-        transition={{ type: 'spring', stiffness: 60, damping: 16, mass: 0.8 }}
-        style={{ willChange: 'transform', backfaceVisibility: 'hidden' }}
+        style={{
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+          transform: reducedMotion ? 'translate3d(0px, 0px, 0px) rotate(0deg)' : `translate3d(${parallax.x}px, ${parallax.y}px, 0px) rotate(${parallax.x * 0.5}deg)`,
+          transition: 'transform 220ms ease-out',
+        }}
       >
         <span className="landing-faq-orb-core" />
         <span className="landing-faq-orb-ring landing-faq-orb-ring--one" />
         <span className="landing-faq-orb-ring landing-faq-orb-ring--two" />
         <span className="landing-faq-orb-icon"><Gamepad2 size={28} /></span>
-      </motion.div>
+      </div>
       <span className="landing-faq-particle landing-faq-particle--one" aria-hidden="true" />
       <span className="landing-faq-particle landing-faq-particle--two" aria-hidden="true" />
       <span className="landing-faq-particle landing-faq-particle--three" aria-hidden="true" />
-    </motion.div>
+    </div>
   )
 })
 
 const Homepage = () => {
   const navigate = useNavigate()
-  const shouldReduceMotion = useReducedMotion()
+  const [shouldReduceMotion, setShouldReduceMotion] = useState(false)
   const [isCompactDevice, setIsCompactDevice] = useState(() => window.matchMedia('(max-width: 899px)').matches)
+  const lowPowerMode = shouldReduceMotion || isCompactDevice
   const heroSlides = useMemo(() => games.slice(0, 8), [])
   const heroTrackSlides = useMemo(() => {
     const baseSlides = isCompactDevice ? heroSlides.slice(0, 4) : heroSlides
@@ -202,6 +178,13 @@ const Homepage = () => {
   const [isManualControlActive, setIsManualControlActive] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState(0)
   const [whyMotionState, setWhyMotionState] = useState('hidden')
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const onChange = (event) => setShouldReduceMotion(event.matches)
+    setShouldReduceMotion(mediaQuery.matches)
+    mediaQuery.addEventListener('change', onChange)
+    return () => mediaQuery.removeEventListener('change', onChange)
+  }, [])
   const [isWhyInView, setIsWhyInView] = useState(false)
   const whySectionRef = useRef(null)
   const hasUserScrolledRef = useRef(false)
@@ -257,7 +240,6 @@ const Homepage = () => {
 
   const categoryGenreCards = CATEGORY_GENRE_CARDS
   const whyGameverseCards = WHY_GAMEVERSE_CARDS
-  const whyCardMotionBlueprints = WHY_CARD_MOTION_BLUEPRINTS
 
 
   const handleDiscoverGenreClick = useCallback((genre) => {
@@ -265,7 +247,7 @@ const Homepage = () => {
   }, [navigate])
 
   useEffect(() => {
-    if (isCenterHovered || isManualControlActive) {
+    if (lowPowerMode || isCenterHovered || isManualControlActive) {
       return undefined
     }
 
@@ -274,7 +256,7 @@ const Homepage = () => {
     }, 2200)
 
     return () => window.clearInterval(autoplayId)
-  }, [isCenterHovered, isManualControlActive, moveCarousel])
+  }, [isCenterHovered, isManualControlActive, lowPowerMode, moveCarousel])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 899px)')
@@ -416,7 +398,7 @@ const Homepage = () => {
 
           <aside className="landing-hero-side" aria-label="Genre spotlight panel">
             <div className="landing-hero-avatar-wrap" aria-hidden="true">
-              <HeroAvatarPixelMorph imageUrls={HERO_AVATAR_IMAGES} reducedMotion={shouldReduceMotion} />
+              <HeroAvatarPixelMorph imageUrls={HERO_AVATAR_IMAGES} reducedMotion={lowPowerMode} />
             </div>
 
             <LiveViewsCounter />
@@ -515,7 +497,7 @@ const Homepage = () => {
 
       <section
         ref={whySectionRef}
-        className="landing-why"
+        className={`landing-why landing-why--${shouldReduceMotion ? 'in' : whyMotionState}`}
         aria-label="Why Gameverse benefits"
       >
         <div className="landing-why-shell">
@@ -528,56 +510,12 @@ const Homepage = () => {
           <div className="landing-why-grid">
             {whyGameverseCards.map((item, index) => {
               const Icon = item.icon
-              const motionBlueprint = whyCardMotionBlueprints[index % whyCardMotionBlueprints.length]
-              const cardVariants = {
-                hidden: {
-                  opacity: 0,
-                  x: motionBlueprint.hidden.x,
-                  y: motionBlueprint.hidden.y,
-                  rotate: 0,
-                  scale: 1.08,
-                  filter: 'blur(4px)',
-                },
-                in: {
-                  opacity: 1,
-                  x: 0,
-                  y: 0,
-                  rotate: 0,
-                  scale: 1,
-                  filter: 'blur(0px)',
-                  transition: {
-                    duration: 0.82,
-                    ease: [0.22, 0.67, 0.2, 1],
-                    delay: index * 0.09,
-                  },
-                },
-                scatter: {
-                  opacity: 0,
-                  x: motionBlueprint.scatter.x,
-                  y: motionBlueprint.scatter.y,
-                  rotate: motionBlueprint.scatter.rotate,
-                  scale: 1.14,
-                  filter: 'blur(5px)',
-                  transition: {
-                    duration: 0.62,
-                    ease: [0.4, 0, 0.2, 1],
-                    delay: index * 0.035,
-                  },
-                },
-              }
 
               return (
-                <motion.div
+                <div
                   key={item.title}
                   className="landing-why-card"
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate={shouldReduceMotion ? 'in' : whyMotionState}
-                  whileHover={shouldReduceMotion ? undefined : {
-                    scale: 1.035,
-                    borderColor: 'rgba(126, 230, 255, 0.82)',
-                    boxShadow: '0 0 0 1px rgba(129, 232, 255, 0.34), 0 20px 34px rgba(2, 10, 25, 0.5)',
-                  }}
+                  style={{ transitionDelay: `${index * 90}ms` }}
                 >
                   <div className="landing-why-icon-wrap">
                     <Icon size={18} />
@@ -588,7 +526,7 @@ const Homepage = () => {
                       <li key={point} className="landing-why-card-desc">{point}</li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               )
             })}
           </div>
@@ -606,21 +544,7 @@ const Homepage = () => {
               <h2 className="landing-faq-title heading-lg heading-hover-accent">Frequently Asked Questions</h2>
               <p className="landing-faq-subtitle text-body heading-paragraph-gap">Everything you need to know about GamerVerse</p>
 
-              <motion.div
-                className="landing-faq-list"
-                variants={{
-                  hidden: {},
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.1,
-                      delayChildren: 0.1,
-                    },
-                  },
-                }}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-              >
+              <div className="landing-faq-list">
                 {faqItems.map((item, index) => {
                   const isOpen = openFaqIndex === index
 
@@ -633,7 +557,7 @@ const Homepage = () => {
                     />
                   )
                 })}
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

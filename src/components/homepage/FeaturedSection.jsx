@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from '../ui/Icons'
 import './FeaturedSection.css'
 
@@ -31,9 +32,9 @@ const FeaturedSection = ({
 
         <div className={`landing-carousel landing-carousel--${carouselDirection}`}>
           {visibleGames.map(({ game, slot }) => (
-            <a
+            <Link
               key={`${slot}-${game.id}-${featuredIndex}`}
-              href={game.url}
+              to={`/games/${game.id}`}
               target="_blank"
               rel="noreferrer"
               className={`landing-carousel-card landing-carousel-card--${slot} ${slot === 'center' ? 'landing-carousel-card--framed' : 'landing-carousel-card--side'} ${(slot === 'far-left' || slot === 'far-right') ? 'landing-carousel-card--edge' : ''}`}
@@ -61,7 +62,7 @@ const FeaturedSection = ({
                 <h3>{game.title}</h3>
                 <p>{game.category}</p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 

@@ -3,6 +3,9 @@
 @import "tailwindcss";
 @import "@fontsource-variable/geist";
 
+body {
+  font-family: 'Orbitron', sans-serif;
+}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

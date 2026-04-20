@@ -1,5 +1,5 @@
 import React from "react";
-import "./SignupPage.css";
+import "./AuthPage.css";
 import { Link } from "react-router-dom";
 const SignupPage = () => {
   const [username,setUsername] = React.useState("");
@@ -13,34 +13,36 @@ const SignupPage = () => {
   };
   
   return (
-    <div className="login-page login-page--signup">
-      <div className="login-container">
-        <div className="logo">
-          <h1>Gameverse</h1>
+    <div className="auth-page auth-page--signup">
+      <div className="auth-container">
+        <div className="auth-logo">
+          <Link to="/">
+            <h1>Gameverse</h1>
+          </Link>
         </div>
-        <form className="login-form" onSubmit={loginRequest}>
+        <form className="auth-form" onSubmit={loginRequest}>
         <h2>Signup</h2>
-        <div>
-            <label htmlFor="username">Full Name</label>
+        <div className="auth-field">
+            <label htmlFor="fullName">Full Name</label>
           <input 
             type="text" 
-            id="username" 
+            id="fullName" 
             placeholder="Full name required" 
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           /> 
         </div>
-        <div>
-            <label htmlFor="username">Email</label>
+        <div className="auth-field">
+            <label htmlFor="email">Email</label>
           <input 
-            type="text" 
+            type="email" 
             id="email" 
             placeholder="Email required" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           /> 
         </div>
-         <div>
+         <div className="auth-field">
             <label htmlFor="username">Username</label>
           <input 
             type="text" 
@@ -50,7 +52,7 @@ const SignupPage = () => {
             onChange={(e) => setUsername(e.target.value)}
           /> 
         </div>
-            <div>
+            <div className="auth-field">
           <label htmlFor="password">Password</label>
           <input 
             type="password" 
@@ -60,7 +62,7 @@ const SignupPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
             </div>
-<div className="checkbox-row">
+<div className="auth-checkbox-row">
   <input
     type="checkbox"
     id="remember"
@@ -69,10 +71,10 @@ const SignupPage = () => {
   />
   <label htmlFor="remember">Remember me</label>
 </div>
-          <div>
-            <button className="btn" type="submit">Signup</button>
-             <p className="auth-switch text-[14px] mt-16 mx-auto text-center">
-    Already have an account? <span className="link"> <Link to="/login">Login</Link></span>
+          <div className="auth-actions">
+            <button className="auth-btn" type="submit">Signup</button>
+             <p className="auth-switch">
+    Already have an account? <span className="auth-switch-link"> <Link to="/login">Login</Link></span>
   </p>
           </div>
         </form>

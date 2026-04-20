@@ -1,0 +1,30 @@
+.hero-avatar-rotator {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	border-radius: inherit;
+	overflow: hidden;
+}
+
+.hero-avatar-rotator-image {
+	position: absolute;
+	inset: 0;
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	object-fit: cover;
+	object-position: center;
+	animation: hero-avatar-rotate-in 680ms ease both;
+}
+
+@keyframes hero-avatar-rotate-in {
+	0% {
+		opacity: 0;
+		transform: scale(1.03);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}

@@ -1,0 +1,98 @@
+.landing-categories {
+  --landing-content-max-width: 1240px;
+  --landing-content-inline: clamp(18px, 3vw, 34px);
+  width: 100%;
+  margin-left: 0;
+  padding: clamp(24px, 3.8vw, 42px) 0 clamp(30px, 4.8vw, 54px);
+  background: transparent;
+}
+
+.landing-categories-shell {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--landing-content-max-width);
+  padding: 0 var(--landing-content-inline);
+}
+
+.landing-categories-kicker {
+  margin: 0;
+  color: var(--text-accent);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.landing-categories-title {
+  margin: 8px 0 0;
+  color: var(--text-strong);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: clamp(calc(var(--fs-4) + 0.12rem), 3.9vw, calc(var(--fs-5) + 0.24rem));
+  font-weight: 800;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  text-shadow: 0 0 8px rgba(111, 228, 255, 0.16);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.34rem;
+}
+
+.landing-categories-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(126, 232, 255, 0.95) 0%, rgba(126, 232, 255, 0.18) 100%);
+  box-shadow: 0 0 10px rgba(111, 228, 255, 0.34);
+}
+
+.landing-categories-subtitle {
+  margin: 8px 0 14px;
+  color: var(--text-body);
+  font-family: var(--font-ui, 'Poppins', sans-serif);
+  font-size: var(--fs-2);
+  letter-spacing: var(--ls-body);
+  line-height: var(--lh-body);
+  max-width: 62ch;
+}
+
+.landing-categories-skiper {
+  max-width: none;
+}
+
+@media (max-width: 899px) {
+  .landing-categories-subtitle {
+    font-size: 0.84rem;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-categories {
+    padding-top: 18px;
+    padding-bottom: 22px;
+  }
+
+  .landing-categories-title {
+    font-size: clamp(1.5rem, 6.2vw, 1.9rem);
+  }
+
+  .landing-categories-subtitle {
+    max-width: 100%;
+  }
+
+  .landing-categories-skiper {
+    padding: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .landing-categories-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

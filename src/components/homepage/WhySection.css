@@ -1,0 +1,268 @@
+.landing-why {
+  --landing-content-max-width: 1240px;
+  --landing-content-inline: clamp(18px, 3vw, 34px);
+  width: 100%;
+  margin-left: 0;
+  padding: clamp(24px, 3.8vw, 44px) 0 clamp(32px, 5vw, 56px);
+  background: transparent;
+}
+
+.landing-why-shell {
+  width: 100%;
+  max-width: var(--landing-content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--landing-content-inline);
+}
+
+.landing-why-kicker {
+  margin: 0;
+  color: var(--text-accent);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  letter-spacing: var(--ls-label);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.landing-why-title {
+  margin: 10px 0 0;
+  color: var(--text-strong);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: clamp(calc(var(--fs-4) + 0.12rem), 3.9vw, calc(var(--fs-5) + 0.24rem));
+  font-weight: 800;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  max-width: 48ch;
+  text-shadow: 0 0 8px rgba(111, 228, 255, 0.16);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.34rem;
+}
+
+.landing-why-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(126, 232, 255, 0.95) 0%, rgba(126, 232, 255, 0.18) 100%);
+  box-shadow: 0 0 10px rgba(111, 228, 255, 0.34);
+}
+
+.landing-why-subtitle {
+  margin: 10px 0 16px;
+  max-width: 64ch;
+  color: var(--text-body);
+  font-family: var(--font-ui, 'Poppins', sans-serif);
+  font-size: var(--fs-2);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+}
+
+.landing-why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.landing-why-card {
+  border: 1px solid rgba(118, 178, 245, 0.32);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(18, 45, 84, 0.5) 0%, rgba(7, 19, 39, 0.78) 100%);
+  padding: 14px;
+  box-shadow: 0 6px 12px rgba(2, 8, 20, 0.2);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.landing-why-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(126, 230, 255, 0.66);
+  box-shadow: 0 0 0 1px rgba(129, 232, 255, 0.18), 0 8px 16px rgba(2, 10, 25, 0.24);
+}
+
+.landing-why-icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-grid;
+  place-items: center;
+  color: #8ce9ff;
+  border: 1px solid rgba(128, 232, 255, 0.45);
+  background: rgba(15, 69, 97, 0.46);
+}
+
+.landing-why-card-title {
+  margin: 10px 0 0;
+  color: #f3f8ff;
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: 1rem;
+}
+
+.landing-why-card-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.landing-why-card-desc {
+  margin: 0;
+  color: #adc7e7;
+  font-family: var(--font-ui, 'Poppins', sans-serif);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.landing-why .landing-why-kicker,
+.landing-why .landing-why-title,
+.landing-why .landing-why-subtitle {
+  transition: transform 760ms cubic-bezier(0.22, 0.67, 0.2, 1), opacity 760ms ease;
+}
+
+.landing-why .landing-why-card {
+  transition:
+    transform 900ms cubic-bezier(0.22, 0.67, 0.2, 1),
+    opacity 900ms ease,
+    filter 900ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.landing-why--hidden .landing-why-kicker,
+.landing-why--hidden .landing-why-title,
+.landing-why--hidden .landing-why-subtitle {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.landing-why--hidden .landing-why-card {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.landing-why--hidden .landing-why-card:nth-child(odd) {
+  transform: translateX(-56px) translateY(16px) scale(1.05);
+}
+
+.landing-why--hidden .landing-why-card:nth-child(even) {
+  transform: translateX(56px) translateY(16px) scale(1.05);
+}
+
+.landing-why--in .landing-why-kicker,
+.landing-why--in .landing-why-title,
+.landing-why--in .landing-why-subtitle,
+.landing-why--in-up .landing-why-kicker,
+.landing-why--in-up .landing-why-title,
+.landing-why--in-up .landing-why-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.landing-why--in .landing-why-card,
+.landing-why--in-up .landing-why-card {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+.landing-why--in-up .landing-why-card {
+  transition-duration: 0ms, 0ms, 0ms, 220ms, 220ms;
+}
+
+.landing-why--scatter .landing-why-kicker,
+.landing-why--scatter .landing-why-title,
+.landing-why--scatter .landing-why-subtitle {
+  opacity: 0;
+  transform: translateY(-14px);
+}
+
+.landing-why--scatter .landing-why-card {
+  opacity: 0;
+  filter: blur(3px);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(1) {
+  transform: translate(-86px, -38px) rotate(-10deg) scale(1.14);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(2) {
+  transform: translate(0, -48px) rotate(6deg) scale(1.16);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(3) {
+  transform: translate(84px, -34px) rotate(10deg) scale(1.14);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(4) {
+  transform: translate(-78px, 34px) rotate(-8deg) scale(1.12);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(5) {
+  transform: translate(0, 44px) rotate(-4deg) scale(1.18);
+}
+
+.landing-why--scatter .landing-why-card:nth-child(6) {
+  transform: translate(80px, 32px) rotate(8deg) scale(1.12);
+}
+
+@media (max-width: 899px) {
+  .landing-why-subtitle {
+    font-size: 0.84rem;
+  }
+
+  .landing-why-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 8px 14px rgba(2, 8, 20, 0.16);
+  }
+
+  .landing-why-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-why-card {
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .landing-why-shell {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .landing-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .landing-why-card {
+    min-height: 200px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .landing-why-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-why .landing-why-kicker,
+  .landing-why .landing-why-title,
+  .landing-why .landing-why-subtitle,
+  .landing-why .landing-why-card {
+    transition: none;
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+}

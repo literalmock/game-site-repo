@@ -1,0 +1,180 @@
+.landing-newsletter-cta {
+  --landing-content-max-width: 1240px;
+  --landing-content-inline: clamp(18px, 3vw, 34px);
+  width: 100%;
+  margin-left: 0;
+  padding: clamp(24px, 3.8vw, 44px) 0 clamp(34px, 5.2vw, 60px);
+  background: transparent;
+}
+
+.landing-newsletter-shell {
+  width: 100%;
+  max-width: var(--landing-content-max-width);
+  margin: 0 auto;
+  padding: clamp(16px, 2.6vw, 24px) var(--landing-content-inline);
+  border: 1px solid rgba(116, 176, 239, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(16, 44, 80, 0.5) 0%, rgba(8, 22, 43, 0.82) 100%);
+  box-shadow: 0 10px 20px rgba(2, 8, 20, 0.26);
+}
+
+.landing-newsletter-kicker {
+  margin: 0;
+  color: var(--text-accent);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: var(--fs-0);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.landing-newsletter-title {
+  margin: 10px 0 0;
+  color: var(--text-strong);
+  font-family: var(--font-heading, 'Poppins', sans-serif);
+  font-size: clamp(calc(var(--fs-4) + 0.12rem), 3.9vw, calc(var(--fs-5) + 0.24rem));
+  font-weight: 800;
+  line-height: var(--lh-heading);
+  max-width: 28ch;
+  letter-spacing: var(--ls-heading);
+  text-shadow: 0 0 8px rgba(111, 228, 255, 0.16);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.34rem;
+}
+
+.landing-newsletter-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72%;
+  height: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(126, 232, 255, 0.95) 0%, rgba(126, 232, 255, 0.18) 100%);
+  box-shadow: 0 0 10px rgba(111, 228, 255, 0.34);
+}
+
+.landing-newsletter-subtitle {
+  margin: 10px 0 0;
+  color: var(--text-body);
+  font-family: var(--font-ui, 'Poppins', sans-serif);
+  font-size: var(--fs-2);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  max-width: 62ch;
+}
+
+.landing-newsletter-roll {
+  margin-top: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.landing-newsletter-roll-item {
+  border: 1px solid rgba(129, 232, 255, 0.34);
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: #cff2ff;
+  font-size: 0.78rem;
+  background: rgba(15, 55, 93, 0.46);
+  animation: landing-roll-in 7.4s ease-in-out infinite;
+}
+
+.landing-newsletter-roll-item:nth-child(2) {
+  animation-delay: 1.05s;
+}
+
+.landing-newsletter-roll-item:nth-child(3) {
+  animation-delay: 2.1s;
+}
+
+.landing-newsletter-roll-item:nth-child(4) {
+  animation-delay: 3.15s;
+}
+
+.landing-newsletter-form {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.landing-newsletter-input {
+  flex: 1;
+  min-width: 220px;
+  height: 42px;
+  border: 1px solid rgba(123, 169, 221, 0.42);
+  border-radius: 999px;
+  background: rgba(8, 24, 47, 0.66);
+  color: #e9f6ff;
+  padding: 0 14px;
+  outline: none;
+}
+
+.landing-newsletter-input::placeholder {
+  color: #96b8df;
+}
+
+.landing-newsletter-input:focus {
+  border-color: rgba(123, 236, 255, 0.74);
+  box-shadow: 0 0 0 2px rgba(123, 236, 255, 0.14);
+}
+
+.landing-newsletter-btn {
+  height: 42px;
+  border: 1px solid rgba(118, 222, 255, 0.68);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(66, 155, 212, 0.86) 0%, rgba(35, 114, 176, 0.94) 100%);
+  color: #f6fcff;
+  padding: 0 18px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+
+.landing-newsletter-btn:hover {
+  filter: brightness(1.07);
+}
+
+@keyframes landing-roll-in {
+  0%,
+  68%,
+  100% {
+    opacity: 0.52;
+    transform: translateY(12px);
+  }
+
+  12%,
+  54% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 899px) {
+  .landing-newsletter-shell {
+    border-radius: 14px;
+  }
+
+  .landing-newsletter-subtitle {
+    font-size: 0.86rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-newsletter-shell,
+  .landing-newsletter-roll-item {
+    box-shadow: none;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-newsletter-roll-item {
+    animation: none;
+  }
+}

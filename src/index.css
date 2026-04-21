@@ -56,7 +56,7 @@ body {
   --font-display-clash: 'Clash Display', 'Poppins', sans-serif;
   --font-display-poppins: 'Poppins', sans-serif;
   --font-subtext: 'Poppins', 'Geist Variable', sans-serif;
-    --site-bg-start: #020617;
+    --site-bg-start: #090d14;
     --site-bg-end: #0b1220;
     --font-ui: 'Poppins', 'Geist Variable', sans-serif;
     --font-heading: 'Poppins', 'Geist Variable', sans-serif;
@@ -80,10 +80,10 @@ body {
     --ls-label: 0.09em;
 
     /* Typography colors for dark UI */
-    --text-strong: #f4f8ff;
-    --text-body: #c5d4ea;
-    --text-muted: #9fb2cd;
-    --text-accent: #7fdcf6;
+    --text-strong: #e8f1ff;
+    --text-body: #c9d8ee;
+    --text-muted: #a7bad3;
+    --text-accent: #86d9f2;
 
     /* Vertical spacing between heading and body */
     --space-heading-body: 0.65rem;
@@ -192,21 +192,15 @@ body {
       radial-gradient(42% 34% at 84% 20%, rgba(124, 92, 255, 0.2) 0%, rgba(124, 92, 255, 0) 74%),
       radial-gradient(38% 34% at 50% 84%, rgba(52, 123, 255, 0.14) 0%, rgba(52, 123, 255, 0) 76%),
       linear-gradient(155deg, var(--site-bg-start) 0%, var(--site-bg-end) 100%);
-    background-size: 120% 120%, 120% 120%, 120% 120%, 100% 100%;
-    animation: site-bg-drift 48s ease-in-out infinite alternate;
-    transform: translate3d(0, 0, 0);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   }
 
   body::after {
-    content: '';
+    content: none;
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.075;
-    mix-blend-mode: soft-light;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
   }
 
   #root {
@@ -299,23 +293,5 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes site-bg-drift {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-    background-position: 0% 0%, 100% 0%, 50% 100%, 0% 0%;
-  }
-
-  100% {
-    transform: translate3d(0, -1.4%, 0) scale(1.03);
-    background-position: 8% -4%, 92% 6%, 54% 94%, 0% 0%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none;
   }
 }

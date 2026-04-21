@@ -46,7 +46,6 @@
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  filter: blur(16px);
 }
 
 .gv-page::before {
@@ -88,13 +87,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(28px) brightness(0.46) saturate(1.15);
-  transform: scale(1.15);
-  animation: gv-bg-drift 20s ease-in-out infinite alternate;
-}
-@keyframes gv-bg-drift {
-  from { transform: scale(1.12) translate(0, 0); }
-  to   { transform: scale(1.2) translate(-1.5%, 1%); }
+  filter: brightness(0.52) saturate(1.05);
+  transform: scale(1.04);
 }
 .gv-hero-bg-overlay {
   position: absolute;
@@ -106,32 +100,6 @@
     rgba(10, 16, 30, 0.5) 88%,
     rgba(10, 16, 30, 0.24) 100%
   );
-}
-
-/* === Particles === */
-.gv-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-.gv-particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: rgba(130, 200, 255, 0.55);
-  animation: gv-float calc(6s + var(--i) * 1.1s) ease-in-out infinite;
-  left: calc(var(--i) * 8.3%);
-  top: calc(20% + var(--i) * 4%);
-  opacity: 0;
-}
-@keyframes gv-float {
-  0%   { opacity: 0; transform: translateY(0) scale(1); }
-  30%  { opacity: 0.7; }
-  70%  { opacity: 0.4; }
-  100% { opacity: 0; transform: translateY(-70px) scale(0.6); }
 }
 
 /* Inner layout */
@@ -163,8 +131,6 @@
     0 0 0 1px rgba(100, 180, 255, 0.08),
     0 6px 24px rgba(0, 0, 0, 0.42),
     0 0 36px rgba(80, 160, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   transition: box-shadow 0.4s ease;
 }
 .gv-iframe-card:hover {

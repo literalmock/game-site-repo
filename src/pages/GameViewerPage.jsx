@@ -20,7 +20,6 @@ const GameViewerPage = () => {
     : fallbackGame;
 
   const [activeGame, setActiveGame] = useState(initialGame || viewerGames[0]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (!initialGame) {
@@ -33,10 +32,8 @@ const GameViewerPage = () => {
 
   const handleSelectGame = useCallback((game) => {
     if (game.id === activeGame?.id) return;
-    setIsTransitioning(true);
     setTimeout(() => {
       setActiveGame(game);
-      setIsTransitioning(false);
       navigate(`/games/${game.id}`, { replace: true, state: { game } });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 200);
@@ -46,7 +43,7 @@ const GameViewerPage = () => {
 
   return (
     <div className="gv-page">
-      <HeroSection game={activeGame} isTransitioning={isTransitioning} />
+      <HeroSection game={activeGame} />
 
       <div className="gv-content">
         <RecommendedGames

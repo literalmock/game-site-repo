@@ -46,3 +46,33 @@ export const Maximize2 = (props) => <IconBase {...props}><path d="M15 3h6v6" /><
 export const Volume2 = (props) => <IconBase {...props}><polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5" /><path d="M15 9a5 5 0 0 1 0 6" /><path d="M18.5 6.5a9 9 0 0 1 0 11" /></IconBase>
 export const VolumeX = (props) => <IconBase {...props}><polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5" /><path d="m16 9 5 6" /><path d="m21 9-5 6" /></IconBase>
 export const Shield = (props) => <IconBase {...props}><path d="M12 3 5 6v6c0 5 3.5 9 7 9s7-4 7-9V6z" /></IconBase>
+
+export const BrandX = ({ size = 16, className, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M18.9 3h2.9l-6.4 7.3L23 21h-6l-4.7-6.2L6.8 21H3.9l6.8-7.8L1 3h6.2l4.2 5.6L18.9 3zm-1 16.2h1.6L6.1 4.7H4.4l13.5 14.5z" />
+  </svg>
+)
+
+export const Instagram = (props) => (
+  <IconBase {...props}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.2" cy="6.8" r="0.8" fill="currentColor" stroke="none" />
+  </IconBase>
+)
+
+export const YouTube = (props) => (
+  <IconBase {...props}>
+    <rect x="3" y="6" width="18" height="12" rx="4" />
+    <path d="m10 9 6 3-6 3z" />
+  </IconBase>
+)

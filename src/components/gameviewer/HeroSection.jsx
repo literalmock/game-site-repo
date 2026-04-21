@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Eye, Maximize2, Play, Star, Volume2, VolumeX } from '../ui/Icons';
 
-const HeroSection = ({ game, isTransitioning }) => {
+const HeroSection = ({ game }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -10,8 +10,6 @@ const HeroSection = ({ game, isTransitioning }) => {
 
   useEffect(() => {
     setIsLoaded(false);
-    const timer = setTimeout(() => {}, 100);
-    return () => clearTimeout(timer);
   }, [game?.id]);
 
   const handleFullscreen = useCallback(() => {
@@ -44,13 +42,6 @@ const HeroSection = ({ game, isTransitioning }) => {
       <div className="gv-hero-bg">
         <img src={game.thumbnail} alt="" className="gv-hero-bg-img" aria-hidden="true" />
         <div className="gv-hero-bg-overlay" />
-      </div>
-
-      {/* Particles */}
-      <div className="gv-particles" aria-hidden="true">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <span key={i} className="gv-particle" style={{ '--i': i }} />
-        ))}
       </div>
 
       <div className="gv-hero-inner">

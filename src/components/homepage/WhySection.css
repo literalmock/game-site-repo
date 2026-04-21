@@ -127,7 +127,6 @@
   transition:
     transform 900ms cubic-bezier(0.22, 0.67, 0.2, 1),
     opacity 900ms ease,
-    filter 900ms ease,
     box-shadow 220ms ease,
     border-color 220ms ease;
 }
@@ -141,15 +140,14 @@
 
 .landing-why--hidden .landing-why-card {
   opacity: 0;
-  filter: blur(2px);
 }
 
 .landing-why--hidden .landing-why-card:nth-child(odd) {
-  transform: translateX(-56px) translateY(16px) scale(1.05);
+  transform: translateX(-56px) translateY(16px);
 }
 
 .landing-why--hidden .landing-why-card:nth-child(even) {
-  transform: translateX(56px) translateY(16px) scale(1.05);
+  transform: translateX(56px) translateY(16px);
 }
 
 .landing-why--in .landing-why-kicker,
@@ -165,12 +163,11 @@
 .landing-why--in .landing-why-card,
 .landing-why--in-up .landing-why-card {
   opacity: 1;
-  filter: blur(0);
-  transform: translateX(0) translateY(0) scale(1);
+  transform: translateX(0) translateY(0);
 }
 
 .landing-why--in-up .landing-why-card {
-  transition-duration: 0ms, 0ms, 0ms, 220ms, 220ms;
+  transition-duration: 0ms, 0ms, 220ms, 220ms;
 }
 
 .landing-why--scatter .landing-why-kicker,
@@ -182,31 +179,30 @@
 
 .landing-why--scatter .landing-why-card {
   opacity: 0;
-  filter: blur(3px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(1) {
-  transform: translate(-86px, -38px) rotate(-10deg) scale(1.14);
+  transform: translate(-86px, -38px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(2) {
-  transform: translate(0, -48px) rotate(6deg) scale(1.16);
+  transform: translate(0, -48px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(3) {
-  transform: translate(84px, -34px) rotate(10deg) scale(1.14);
+  transform: translate(84px, -34px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(4) {
-  transform: translate(-78px, 34px) rotate(-8deg) scale(1.12);
+  transform: translate(-78px, 34px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(5) {
-  transform: translate(0, 44px) rotate(-4deg) scale(1.18);
+  transform: translate(0, 44px);
 }
 
 .landing-why--scatter .landing-why-card:nth-child(6) {
-  transform: translate(80px, 32px) rotate(8deg) scale(1.12);
+  transform: translate(80px, 32px);
 }
 
 @media (max-width: 899px) {
@@ -263,6 +259,5 @@
     transition: none;
     transform: none;
     opacity: 1;
-    filter: none;
   }
 }

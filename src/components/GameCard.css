@@ -22,8 +22,8 @@
 
 .game-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(6, 182, 212, 0.45);
-  box-shadow: 0 12px 24px rgba(6, 182, 212, 0.18);
+  border-color: rgba(102, 147, 199, 0.52);
+  box-shadow: 0 12px 24px rgba(48, 87, 141, 0.25);
 }
 
 .game-card-media {
@@ -83,7 +83,7 @@
   -webkit-line-clamp: unset;
 } */
 .game-card:hover .game-card-title {
-  color: #22d3ee;
+  color: #8bd8f2;
 }
 
 .game-card-category {
@@ -134,10 +134,11 @@
 }
 
 .app-layout--dark .game-card {
-  --card-border: rgba(16, 47, 83, 0.3);
-  --card-bg: linear-gradient(180deg, rgba(30, 58, 98, 0.72) 0%, rgba(11, 24, 44, 0.95) 100%);
-  --card-shadow: 0 12px 30px rgba(2, 9, 22, 0.45);
-  --card-media-bg: #2c486f;
+  --card-border: rgba(99, 130, 169, 0.32);
+  --card-bg: linear-gradient(180deg, rgba(23, 38, 60, 0.88) 0%, rgba(15, 25, 40, 0.96) 100%);
+  --card-shadow: 0 12px 30px rgba(3, 9, 19, 0.46);
+  --card-media-bg: #233a5a;
   --card-title: #f3f8ff;
-  --card-category: #acc2df;
+  --card-category: #b8cce5;
+  --card-description: #c5d4e8;
 }

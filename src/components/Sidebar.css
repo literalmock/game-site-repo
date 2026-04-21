@@ -225,17 +225,17 @@
 }
 
 .app-layout--dark .sidebar {
-  --sidebar-bg: linear-gradient(180deg, rgba(30, 59, 102, 0.62) 0%, rgba(12, 27, 51, 0.9) 100%);
-  --sidebar-border: rgba(130, 168, 214, 0.28);
+  --sidebar-bg: linear-gradient(180deg, rgba(20, 34, 54, 0.82) 0%, rgba(14, 24, 39, 0.95) 100%);
+  --sidebar-border: rgba(116, 146, 184, 0.28);
   --sidebar-shadow: 0 12px 34px rgba(3, 10, 24, 0.5);
   --sidebar-title: #f3f8ff;
-  --sidebar-label: #c7d8f0;
-  --sidebar-text: #e6effa;
-  --sidebar-hover-bg: rgba(108, 154, 212, 0.18);
-  --sidebar-control-bg: rgba(38, 70, 113, 0.55);
+  --sidebar-label: #c5d5ea;
+  --sidebar-text: #e2ebf8;
+  --sidebar-hover-bg: rgba(112, 140, 176, 0.2);
+  --sidebar-control-bg: rgba(33, 52, 80, 0.7);
   --sidebar-control-text: #f5f9ff;
-  --sidebar-control-border: rgba(136, 176, 223, 0.38);
-  --sidebar-placeholder: #a8c1e3;
+  --sidebar-control-border: rgba(117, 149, 188, 0.36);
+  --sidebar-placeholder: #afc3dd;
 }
 
 @media (min-width: 1024px) {

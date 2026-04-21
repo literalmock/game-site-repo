@@ -1,21 +1,21 @@
 .navbar,
 .mobile-drawer {
-  --nav-bg: rgba(9, 20, 42, 0.92);
-  --nav-border: rgba(104, 146, 198, 0.35);
+  --nav-bg: rgba(13, 21, 34, 0.94);
+  --nav-border: rgba(114, 140, 177, 0.28);
   --nav-text: #f3f8ff;
-  --nav-muted: #b2c5e0;
+  --nav-muted: #b7c8df;
   --nav-hover: #ffffff;
-  --nav-hover-bg: rgba(80, 124, 182, 0.2);
-  --search-bg: rgba(31, 53, 87, 0.62);
-  --search-border: rgba(123, 164, 214, 0.4);
-  --search-placeholder: #9db7da;
-  --search-icon: #9db7da;
-  --search-dropdown-bg: linear-gradient(180deg, rgba(16, 37, 67, 0.98) 0%, rgba(8, 21, 41, 0.98) 100%);
-  --search-dropdown-border: rgba(123, 164, 214, 0.38);
-  --search-dropdown-hover: rgba(80, 124, 182, 0.28);
+  --nav-hover-bg: rgba(105, 131, 168, 0.16);
+  --search-bg: rgba(22, 36, 58, 0.72);
+  --search-border: rgba(115, 146, 189, 0.34);
+  --search-placeholder: #a8bedc;
+  --search-icon: #a8bedc;
+  --search-dropdown-bg: linear-gradient(180deg, rgba(17, 30, 48, 0.98) 0%, rgba(11, 22, 36, 0.98) 100%);
+  --search-dropdown-border: rgba(115, 146, 189, 0.3);
+  --search-dropdown-hover: rgba(105, 131, 168, 0.22);
   --search-suggestion-title: #eef7ff;
-  --search-suggestion-meta: #9ec8ee;
-  --drawer-bg: linear-gradient(180deg, #0b1830 0%, #10284a 100%);
+  --search-suggestion-meta: #aac1de;
+  --drawer-bg: linear-gradient(180deg, #0f1a2c 0%, #14243c 100%);
 }
 
 .navbar {
@@ -26,7 +26,6 @@
   height: clamp(62px, 10vh, 84px);
   border-bottom: 1px solid var(--nav-border);
   background: var(--nav-bg);
-  backdrop-filter: blur(10px);
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -281,7 +280,6 @@
   inset: 0;
   z-index: 40;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
 }
 
 .mobile-drawer {

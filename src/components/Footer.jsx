@@ -1,5 +1,5 @@
 import React from 'react'
-import { Send } from './ui/Icons'
+import { BrandX, Instagram, Send, YouTube } from './ui/Icons'
 import './Footer.css'
 
 const FOOTER_LINKS = {
@@ -56,10 +56,15 @@ const Footer = () => {
             </form>
             
             <div className="footer-socials" aria-label="Social links">
-              <a href="#" className="footer-social-link" aria-label="Twitter">X</a>
-              <a href="#" className="footer-social-link" aria-label="Instagram">X</a>
-              <a href="#" className="footer-social-link" aria-label="Discord">X</a>
-              <a href="#" className="footer-social-link" aria-label="YouTube">X</a>
+              <a href="#" className="footer-social-link" aria-label="X">
+                <BrandX size={14} />
+              </a>
+              <a href="#" className="footer-social-link" aria-label="Instagram">
+                <Instagram size={14} />
+              </a>
+              <a href="#" className="footer-social-link" aria-label="YouTube">
+                <YouTube size={14} />
+              </a>
             </div>
            
           </div>

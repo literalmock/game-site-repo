@@ -61,7 +61,7 @@
 }
 
 .landing-categories-skiper {
-  max-width: none;
+  max-width: fit-content;
 }
 
 @media (max-width: 899px) {

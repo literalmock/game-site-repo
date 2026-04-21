@@ -39,15 +39,11 @@ const FeaturedSection = ({
               rel="noreferrer"
               className={`landing-carousel-card landing-carousel-card--${slot} ${slot === 'center' ? 'landing-carousel-card--framed' : 'landing-carousel-card--side'} ${(slot === 'far-left' || slot === 'far-right') ? 'landing-carousel-card--edge' : ''}`}
               onMouseEnter={() => {
-                if (slot === 'center') {
-                  setIsCenterHovered(true)
-                }
+                setIsCenterHovered(true)
               }}
               onMouseLeave={() => {
-                if (slot === 'center') {
-                  setIsCenterHovered(false)
-                  scheduleAutoplayResume()
-                }
+                setIsCenterHovered(false)
+                scheduleAutoplayResume()
               }}
             >
               <img

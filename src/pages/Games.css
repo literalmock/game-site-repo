@@ -86,6 +86,36 @@
   .homepage-games-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .games-page-layout {
+    position: relative;
+    display: block;
+    min-height: calc(100vh - 88px);
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .games-page-layout .sidebar {
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    transform: translateY(-50%);
+    width: 280px;
+    padding-right: 0;
+    z-index: 20;
+  }
+
+  .games-page-layout .sidebar-panel {
+    max-height: calc(100vh - 104px);
+    overflow-y: auto;
+  }
+
+  .games-page-content {
+    margin-left: 304px;
+    max-height: calc(100vh - 88px);
+    overflow-y: auto;
+    padding-right: 6px;
+  }
 }
 
 @media (min-width: 1280px) {

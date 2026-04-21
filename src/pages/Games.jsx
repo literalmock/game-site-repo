@@ -47,14 +47,14 @@ const Games = () => {
   }
 
   return (
-    <section className="homepage-layout">
+    <section className="homepage-layout games-page-layout">
       <SideBar
         genres={genres}
         selectedGenres={selectedGenres}
         onToggleGenre={toggleGenre}
       />
 
-      <div className="homepage-content">
+      <div className="homepage-content games-page-content">
         <section className="homepage-section">
           <div className="homepage-section-head">
             <h2 className="homepage-section-title">All Games</h2>

@@ -1,81 +1,167 @@
 import React from "react";
-import "./AuthPage.css";
 import { Link } from "react-router-dom";
+import "./AuthPage.css";
+
 const SignupPage = () => {
-  const [username,setUsername] = React.useState("");
-  const [password,setPassword] = React.useState("");
-  const [rememberMe,setRememberMe] = React.useState(false);
-  const [fullName,setFullName] = React.useState("");
-  const [email,setEmail] = React.useState("");
-  const loginRequest = (e) => {
+  const [fullName, setFullName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [keepSignedIn, setKeepSignedIn] = React.useState(true);
+
+  const signupRequest = (e) => {
     e.preventDefault();
     console.log("Signup request sent");
   };
-  
+
   return (
     <div className="auth-page auth-page--signup">
+      <div className="auth-login-bg auth-login-bg--signup" aria-hidden="true">
+        <div className="auth-login-strip auth-signup-panel auth-signup-panel--one" />
+        <div className="auth-login-strip auth-signup-panel auth-signup-panel--two" />
+        <div className="auth-login-strip auth-signup-panel auth-signup-panel--three" />
+        <div className="auth-login-strip auth-signup-panel auth-signup-panel--four" />
+      </div>
+      <img
+        src="/avatars/charac4.webp"
+        alt=""
+        className="auth-signup-mascot"
+        aria-hidden="true"
+      />
+
       <div className="auth-container">
         <div className="auth-logo">
           <Link to="/">
-            <h1>Gameverse</h1>
+            <img src="/logo_bigtext.webp" alt="Gameverse" className="auth-header-logo" />
           </Link>
         </div>
-        <form className="auth-form" onSubmit={loginRequest}>
-        <h2>Signup</h2>
-        <div className="auth-field">
-            <label htmlFor="fullName">Full Name</label>
-          <input 
-            type="text" 
-            id="fullName" 
-            placeholder="Full name required" 
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          /> 
-        </div>
-        <div className="auth-field">
-            <label htmlFor="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            placeholder="Email required" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          /> 
-        </div>
-         <div className="auth-field">
-            <label htmlFor="username">Username</label>
-          <input 
-            type="text" 
-            id="username" 
-            placeholder="Username required" 
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          /> 
-        </div>
+
+        <form className="auth-form auth-form--signup" onSubmit={signupRequest}>
+          <div className="auth-form-brand">
+            <img src="/logo_bigtext.webp" alt="Gameverse" />
+          </div>
+
+          <h2>Create Account</h2>
+          <p className="auth-subtitle">
+            Create your account to save favorites and keep your profile in sync.
+          </p>
+
+          <div className="auth-signup-grid">
             <div className="auth-field">
-          <label htmlFor="password">Password</label>
-          <input 
-            type="password" 
-            id="password" 
-            placeholder="Password required" 
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Full name"
+                autoComplete="name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
             </div>
-<div className="auth-checkbox-row">
-  <input
-    type="checkbox"
-    id="remember"
-    checked={rememberMe}
-    onChange={(e) => setRememberMe(e.target.checked)}
-  />
-  <label htmlFor="remember">Remember me</label>
-</div>
-          <div className="auth-actions">
-            <button className="auth-btn" type="submit">Signup</button>
-             <p className="auth-switch">
-    Already have an account? <span className="auth-switch-link"> <Link to="/login">Login</Link></span>
-  </p>
+
+            <div className="auth-field">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+
+            <div className="auth-field auth-field--full">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email address"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="auth-field">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="auth-field">
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="auth-checkbox-row auth-checkbox-row--signup">
+            <label className="auth-checkbox-wrap" htmlFor="keepSignedIn">
+              <input
+                type="checkbox"
+                id="keepSignedIn"
+                checked={keepSignedIn}
+                onChange={(e) => setKeepSignedIn(e.target.checked)}
+              />
+              <span>Keep me signed in</span>
+            </label>
+          </div>
+
+          <div className="auth-actions auth-actions--signup">
+            <button className="auth-btn" type="submit">
+              Create Account
+            </button>
+
+            <div className="auth-divider" aria-hidden="true">
+              <span />
+              <p>OR</p>
+              <span />
+            </div>
+
+            <div className="auth-socials" aria-label="Social sign up">
+              <button
+                type="button"
+                className="auth-social-btn"
+                aria-label="Sign up with Google"
+              >
+                <img className="auth-social-icon" src="/icons/google.webp" alt="" />
+              </button>
+              <button
+                type="button"
+                className="auth-social-btn"
+                aria-label="Sign up with Discord"
+              >
+                <img className="auth-social-icon" src="/icons/discord.webp" alt="" />
+              </button>
+              <button
+                type="button"
+                className="auth-social-btn"
+                aria-label="Sign up with Steam"
+              >
+                <img className="auth-social-icon" src="/icons/steam.webp" alt="" />
+              </button>
+            </div>
+
+            <p className="auth-switch">
+              Already have an account?{" "}
+              <span className="auth-switch-link">
+                <Link to="/login">Login</Link>
+              </span>
+            </p>
           </div>
         </form>
       </div>

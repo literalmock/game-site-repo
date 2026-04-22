@@ -30,7 +30,7 @@ const LoginPage = () => {
       <div className="auth-container">
         <div className="auth-logo">
           <Link to="/">
-            <h1>Gameverse</h1>
+            <img src="/logo_bigtext.webp" alt="Gameverse" className="auth-header-logo" />
           </Link>
         </div>
 
@@ -88,9 +88,9 @@ const LoginPage = () => {
             </div>
 
             <div className="auth-socials" aria-label="Social sign in">
-              <button type="button" className="auth-social-btn" aria-label="Sign in with Google"><img className="auth-social-icon" src="/icons/google.png" alt="" /></button>
-              <button type="button" className="auth-social-btn" aria-label="Sign in with Discord"><img className="auth-social-icon" src="/icons/discord.png" alt="" /></button>
-              <button type="button" className="auth-social-btn" aria-label="Sign in with Steam"><img className="auth-social-icon" src="/icons/steam.png" alt="" /></button>
+              <button type="button" className="auth-social-btn" aria-label="Sign in with Google"><img className="auth-social-icon" src="/icons/google.webp" alt="" /></button>
+              <button type="button" className="auth-social-btn" aria-label="Sign in with Discord"><img className="auth-social-icon" src="/icons/discord.webp" alt="" /></button>
+              <button type="button" className="auth-social-btn" aria-label="Sign in with Steam"><img className="auth-social-icon" src="/icons/steam.webp" alt="" /></button>
             </div>
 
             <p className="auth-switch">

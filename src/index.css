@@ -3,9 +3,15 @@
 @import "tailwindcss";
 @import "@fontsource-variable/geist";
 
+@font-face {
+  font-family: 'Grozel';
+  src: url('/fonts/grozel.woff2') format('woff2');
+  font-display: swap;
+}
 body {
   font-family: 'Orbitron', sans-serif;
 }
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

@@ -3,13 +3,13 @@ import FaqVisual from './FaqVisual'
 import './FaqSection.css'
 
 const FaqSection = ({ shouldReduceMotion, faqItems, openFaqIndex, setOpenFaqIndex }) => (
-  <section className="landing-faq" aria-label="Frequently asked questions">
+  <section id="faqs" className="landing-faq" aria-label="Frequently asked questions">
     <div className="landing-faq-shell">
       <div className="landing-faq-split">
         <FaqVisual reducedMotion={shouldReduceMotion} />
 
         <div className="landing-faq-content">
-          <p className="landing-faq-kicker label-xs">FAQ</p>
+          <p  className="landing-faq-kicker label-xs">FAQ</p>
           <h2 className="landing-faq-title heading-lg heading-hover-accent">Frequently Asked Questions</h2>
           <p className="landing-faq-subtitle text-body heading-paragraph-gap">Everything you need to know about GamerVerse</p>
 

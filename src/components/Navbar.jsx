@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { games } from '../utils/game'
+import { Link, useNavigate } from 'react-router-dom'
+import viewerGames from '../utils/viewerGames'
 import { Gamepad2, House, LogIn, Menu, Search, Trophy, X } from './ui/Icons'
 import './Navbar.css'
 
@@ -11,6 +11,7 @@ const NAV_LINKS = [
 ]
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -51,7 +52,7 @@ const Navbar = () => {
       return 300 - gaps * 8 - (span - normalizedQuery.length) * 4
     }
 
-    return games
+    return viewerGames
       .map((game) => ({ game, score: scoreGame(game.title) }))
       .filter((entry) => entry.score > 0)
       .sort((a, b) => b.score - a.score)
@@ -60,12 +61,12 @@ const Navbar = () => {
   }, [searchQuery])
 
   const openGameFromSearch = useCallback((game) => {
-    if (!game?.url) return
-    window.open(game.url, '_blank', 'noopener,noreferrer')
+    if (!game?.id) return
+    navigate(`/games/${game.id}`, { state: { game } })
     setSearchQuery('')
     setSearchActiveIndex(-1)
     setIsSearchOpen(false)
-  }, [])
+  }, [navigate])
 
   const handleSearchSubmit = useCallback((event) => {
     event.preventDefault()

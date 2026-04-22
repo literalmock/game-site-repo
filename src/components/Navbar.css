@@ -75,17 +75,14 @@
 .nav-link {
   display: flex;
   align-items: center;
+  gap: 8px;
   height: 36px;
-  padding: 0 8px;
+  padding: 0 10px;
   border-radius: 6px;
   color: var(--nav-muted);
   font-size: 0.875rem;
   text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease;
-}
-
-.nav-link:hover {
-  color: var(--nav-hover);
+  transition: none;
 }
 
 .nav-link-icon {
@@ -94,16 +91,9 @@
 
 .nav-link-label {
   margin-left: 0;
-  max-width: 0;
+  max-width: none;
   overflow: hidden;
   white-space: nowrap;
-  opacity: 0;
-  transition: max-width 0.2s ease, margin-left 0.2s ease, opacity 0.2s ease;
-}
-
-.nav-link:hover .nav-link-label {
-  margin-left: 8px;
-  max-width: 96px;
   opacity: 1;
 }
 

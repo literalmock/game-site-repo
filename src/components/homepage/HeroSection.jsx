@@ -42,9 +42,18 @@ const HeroSection = ({ heroTrackSlides, gamesCount, lowPowerMode }) => (
         </div>
 
         <ul className="landing-stats">
-          <li><strong>{gamesCount}+</strong> Titles</li>
-          <li><strong>24/7</strong> Live Updates</li>
-          <li><strong>4K</strong> Ready Visuals</li>
+          <li className="landing-stat-chip">
+            <span className="landing-stat-value">{gamesCount}+</span>
+            <span className="landing-stat-label">Titles</span>
+          </li>
+          <li className="landing-stat-chip">
+            <span className="landing-stat-value">24/7</span>
+            <span className="landing-stat-label">Live Updates</span>
+          </li>
+          <li className="landing-stat-chip">
+            <span className="landing-stat-value">4K</span>
+            <span className="landing-stat-label">Ready Visuals</span>
+          </li>
         </ul>
       </div>
 

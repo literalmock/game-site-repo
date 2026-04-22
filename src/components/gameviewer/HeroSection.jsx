@@ -64,7 +64,7 @@ const HeroSection = ({ game }) => {
 
             <iframe
               ref={iframeRef}
-              src={game.iframeUrl}
+              src={`${game.iframeUrl}?gd_sdk_referrer_url=https://game-site-repo.vercel.app`}
               title={game.title}
               className={`gv-iframe ${isLoaded ? 'gv-iframe--visible' : ''}`}
               allow="fullscreen; autoplay"

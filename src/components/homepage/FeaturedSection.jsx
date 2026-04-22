@@ -15,7 +15,7 @@ const FeaturedSection = ({
     <div className="landing-featured-shell">
       <div className="landing-featured-head">
         <div>
-          <p className="landing-featured-kicker label-xs">Featured</p>
+          <p id='featured' className="landing-featured-kicker label-xs">Featured</p>
           <h2 className="landing-featured-title heading-lg heading-hover-accent">Featured Picks</h2>
         </div>
       </div>

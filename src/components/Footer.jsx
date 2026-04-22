@@ -3,8 +3,18 @@ import { BrandX, Instagram, Send, YouTube } from './ui/Icons'
 import './Footer.css'
 
 const FOOTER_LINKS = {
-  discover: ['Featured', 'New Releases', 'Top Rated', 'Genres'],
-  account: ['Profile', 'Wishlist', 'Library', 'Support'],
+  discover: [
+    { label: 'Featured', targetId: 'featured' },
+    { label: 'Genres', targetId: 'genres' },
+    { label: 'Why Gameverse?', targetId: 'why-gameverse' },
+    { label: 'FAQs', targetId: 'faqs' },
+  ],
+  account: [
+    { label: 'Profile', targetId: 'profile' },
+    { label: 'Wishlist', targetId: 'wishlist' },
+    { label: 'Library', targetId: 'library' },
+    { label: 'Support', targetId: 'support' },
+  ],
 }
 
 const Footer = () => {
@@ -26,7 +36,9 @@ const Footer = () => {
               <p className="footer-heading">Discover</p>
               <ul className="footer-link-list">
                 {FOOTER_LINKS.discover.map((item) => (
-                  <li key={item}><a href="#" className="footer-link">{item}</a></li>
+                  <li key={item.targetId}>
+                    <a href={`#${item.targetId}`} className="footer-link">{item.label}</a>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -35,7 +47,9 @@ const Footer = () => {
               <p className="footer-heading">Account</p>
               <ul className="footer-link-list">
                 {FOOTER_LINKS.account.map((item) => (
-                  <li key={item}><a href="#" className="footer-link">{item}</a></li>
+                  <li key={item.targetId}>
+                    <a href={`#${item.targetId}`} className="footer-link">{item.label}</a>
+                  </li>
                 ))}
               </ul>
             </div>

@@ -44,7 +44,6 @@ const GameViewerPage = () => {
   return (
     <div className="gv-page">
       <HeroSection game={activeGame} />
-
       <div className="gv-content">
         <RecommendedGames
           games={viewerGames}

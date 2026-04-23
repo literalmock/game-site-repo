@@ -8,8 +8,9 @@
 }
 
 .landing-why-shell {
-  width: 100%;
-  max-width: var(--landing-content-max-width);
+  box-sizing: border-box;
+  width: min(100%, calc(var(--landing-content-max-width) + (2 * var(--landing-content-inline))));
+  max-width: none;
   margin: 0 auto;
   padding: 0 var(--landing-content-inline);
 }

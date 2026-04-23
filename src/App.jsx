@@ -6,6 +6,7 @@ import Games from './pages/Games'
 import SignupPage from './pages/SignupPage'
 import Homepage from './pages/Homepage'
 import GameViewerPage from './pages/GameViewerPage'
+import Leaderboard from './pages/Leaderboard'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" element={<Homepage />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameViewerPage/>} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />

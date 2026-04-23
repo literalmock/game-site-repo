@@ -8,8 +8,9 @@
 }
 
 .landing-newsletter-shell {
-  width: 100%;
-  max-width: var(--landing-content-max-width);
+  box-sizing: border-box;
+  width: min(100%, calc(var(--landing-content-max-width) + (2 * var(--landing-content-inline))));
+  max-width: none;
   margin: 0 auto;
   padding: clamp(16px, 2.6vw, 24px) var(--landing-content-inline);
   border: 1px solid rgba(116, 176, 239, 0.28);
@@ -170,6 +171,13 @@
   .landing-newsletter-roll-item {
     box-shadow: none;
     animation: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .landing-newsletter-shell {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
 

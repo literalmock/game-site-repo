@@ -44,7 +44,7 @@ const HoverExpand_002 = ({
   // Reduced animation duration on mobile for snappier feel
   const animationDuration = isTouchDevice ? 0.24 : 0.34
   const collapsedHeight = isTouchDevice ? '4.2rem' : '2.8rem'
-  const expandedHeight = isTouchDevice ? '11.5rem' : '15rem'
+  const expandedHeight = isTouchDevice ? '13.5rem' : '19rem'
 
   const handleCardClick = (image, index) => {
     if (isTouchDevice) {

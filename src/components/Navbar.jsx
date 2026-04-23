@@ -7,7 +7,7 @@ import './Navbar.css'
 const NAV_LINKS = [
   { label: 'Home', href: '/home', icon: House },
   { label: 'Games', href: '/games', icon: Gamepad2 },
-  { label: 'Leaderboard', href: '#', icon: Trophy },
+  { label: 'Leaderboard', href: '/leaderboard', icon: Trophy },
 ]
 
 const Navbar = () => {

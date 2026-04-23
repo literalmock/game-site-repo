@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./AuthPage.css";
+import useAuthPageReady from "../hooks/useAuthPageReady";
 
 const SignupPage = () => {
   const [fullName, setFullName] = React.useState("");
@@ -9,6 +10,7 @@ const SignupPage = () => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [keepSignedIn, setKeepSignedIn] = React.useState(true);
+  const isPageReady = useAuthPageReady();
 
   const signupRequest = (e) => {
     e.preventDefault();
@@ -16,7 +18,14 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="auth-page auth-page--signup">
+    <div className="auth-page auth-page--signup" aria-busy={!isPageReady}>
+      {!isPageReady ? (
+        <div className="auth-loader" role="status" aria-live="polite">
+          <div className="auth-loader-spinner" aria-hidden="true" />
+          <p className="auth-loader-text">Loading sign up...</p>
+        </div>
+      ) : null}
+
       <div className="auth-login-bg auth-login-bg--signup" aria-hidden="true">
         <div className="auth-login-strip auth-signup-panel auth-signup-panel--one" />
         <div className="auth-login-strip auth-signup-panel auth-signup-panel--two" />
@@ -32,7 +41,7 @@ const SignupPage = () => {
 
       <div className="auth-container">
         <div className="auth-logo">
-          <Link to="/">
+          <Link to="/home">
             <img src="/logo_bigtext.webp" alt="Gameverse" className="auth-header-logo" />
           </Link>
         </div>
@@ -159,7 +168,7 @@ const SignupPage = () => {
             <p className="auth-switch">
               Already have an account?{" "}
               <span className="auth-switch-link">
-                <Link to="/login">Login</Link>
+                <Link to="/login" replace>Login</Link>
               </span>
             </p>
           </div>

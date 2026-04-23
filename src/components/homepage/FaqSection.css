@@ -12,8 +12,9 @@
 .landing-faq-shell {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: var(--landing-content-max-width);
+  box-sizing: border-box;
+  width: min(100%, calc(var(--landing-content-max-width) + (2 * var(--landing-content-inline))));
+  max-width: none;
   margin: 0 auto;
   padding: 0 var(--landing-content-inline);
 }
@@ -26,18 +27,25 @@
 }
 
 .landing-faq-visual {
+  --faq-mouse-x: 0px;
+  --faq-mouse-y: 0px;
+  --faq-tilt-x: 0deg;
+  --faq-tilt-y: 0deg;
+  --faq-controller-base-y: -36%;
   position: relative;
   min-height: clamp(240px, 40vw, 440px);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(145, 199, 255, 0.3);
   background:
-    radial-gradient(circle at 20% 22%, rgba(90, 171, 255, 0.28), rgba(90, 171, 255, 0) 46%),
-    radial-gradient(circle at 82% 72%, rgba(132, 103, 255, 0.28), rgba(132, 103, 255, 0) 48%),
-    linear-gradient(165deg, rgba(16, 34, 74, 0.76), rgba(10, 19, 44, 0.88));
+    radial-gradient(circle at 20% 24%, rgba(55, 195, 255, 0.22), rgba(55, 195, 255, 0) 24%),
+    radial-gradient(circle at 84% 78%, rgba(205, 79, 255, 0.24), rgba(205, 79, 255, 0) 26%),
+    radial-gradient(circle at 52% 56%, rgba(58, 43, 180, 0.36), rgba(58, 43, 180, 0) 40%),
+    linear-gradient(180deg, #090b2d 0%, #0b0d35 48%, #080821 100%);
   box-shadow:
     inset 0 0 0 1px rgba(160, 212, 255, 0.08),
     0 8px 16px rgba(3, 10, 25, 0.26);
+  perspective: 1200px;
 }
 
 .landing-faq-visual-enter {
@@ -61,7 +69,7 @@
   height: 180px;
   top: -26px;
   right: -46px;
-  background: rgba(125, 108, 255, 0.36);
+  background: rgba(61, 205, 255, 0.2);
 }
 
 .landing-faq-visual::after {
@@ -69,46 +77,93 @@
   height: 170px;
   bottom: -32px;
   left: -30px;
-  background: rgba(121, 219, 255, 0.32);
+  background: rgba(190, 78, 255, 0.22);
 }
 
 .landing-faq-visual-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(150, 196, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(150, 196, 255, 0.08) 1px, transparent 1px);
-  background-size: 30px 30px;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.85) 30%, rgba(0, 0, 0, 0) 86%);
-  opacity: 0.5;
+    linear-gradient(rgba(73, 116, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(73, 116, 255, 0.12) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.88) 28%, rgba(0, 0, 0, 0) 88%);
+  opacity: 0.48;
 }
 
-.landing-faq-orb {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(160px, 22vw, 220px);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 999px;
-  animation: landing-faq-orb-float 7.2s ease-in-out infinite;
-}
-
-.landing-faq-orb-core {
-  position: absolute;
-  inset: 20%;
-  border-radius: 999px;
-  background: radial-gradient(circle at 35% 30%, #e5f4ff 0%, #95ceff 34%, #6c74ff 78%, #2d2f67 100%);
-  box-shadow: 0 0 10px rgba(118, 211, 255, 0.2);
-}
-
-.landing-faq-orb-icon {
+.landing-faq-left {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  color: #ecf6ff;
-  filter: drop-shadow(0 0 10px rgba(144, 226, 255, 0.52));
+}
+
+.landing-faq-controller-wrap {
+  position: relative;
+  width: min(94%, clamp(360px, 42vw, 520px));
+  aspect-ratio: 1402 / 1121;
+  transform:
+    translate(var(--faq-mouse-x), var(--faq-mouse-y))
+    rotateX(var(--faq-tilt-x))
+    rotateY(var(--faq-tilt-y));
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out;
+  will-change: transform;
+  z-index: 2;
+}
+
+.landing-faq-controller-wrap--still {
+  transition: none;
+}
+
+.landing-faq-controller {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 24px rgba(0, 240, 255, 0.34))
+    drop-shadow(0 18px 28px rgba(52, 41, 146, 0.28));
+  will-change: transform;
+  animation:
+    landing-faq-controller-float 4s ease-in-out infinite,
+    landing-faq-controller-rotate 6s ease-in-out infinite;
+}
+
+.landing-faq-controller--still {
+  animation: none;
+}
+
+.landing-faq-controller-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.6;
+  animation: landing-faq-controller-orbit 8s linear infinite;
+}
+
+.landing-faq-controller-orb--one {
+  width: 190px;
+  height: 190px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-52%, -54%);
+  background: #00f0ff;
+  opacity: 0.34;
+}
+
+.landing-faq-controller-orb--two {
+  width: 230px;
+  height: 230px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-4%, 2%);
+  background: #7a5cff;
+  opacity: 0.28;
+  animation-duration: 10s;
+  animation-direction: reverse;
 }
 
 .landing-faq-content {
@@ -277,14 +332,39 @@
   }
 }
 
-@keyframes landing-faq-orb-float {
+@keyframes landing-faq-controller-float {
   0%,
   100% {
-    transform: translate(-50%, -50%) translateY(0px) rotate(-1deg);
+    transform: translate(-50%, var(--faq-controller-base-y)) translateY(0px);
   }
 
   50% {
-    transform: translate(-50%, -50%) translateY(-6px) rotate(1deg);
+    transform: translate(-50%, var(--faq-controller-base-y)) translateY(-12px);
+  }
+}
+
+@keyframes landing-faq-controller-rotate {
+  0%,
+  100% {
+    rotate: -2deg;
+  }
+
+  50% {
+    rotate: 2deg;
+  }
+}
+
+@keyframes landing-faq-controller-orbit {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(20px, -20px);
+  }
+
+  100% {
+    transform: translate(0, 0);
   }
 }
 
@@ -322,8 +402,9 @@
     min-height: 220px;
     box-shadow: 0 8px 16px rgba(3, 10, 25, 0.2);
     background:
-      radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.14), rgba(139, 232, 255, 0) 46%),
-      linear-gradient(165deg, rgba(16, 34, 74, 0.72), rgba(10, 19, 44, 0.84));
+      radial-gradient(circle at 22% 24%, rgba(55, 195, 255, 0.18), rgba(55, 195, 255, 0) 26%),
+      radial-gradient(circle at 82% 76%, rgba(205, 79, 255, 0.18), rgba(205, 79, 255, 0) 28%),
+      linear-gradient(180deg, rgba(9, 11, 45, 0.9), rgba(8, 8, 33, 0.94));
   }
 
   .landing-faq-subtitle {
@@ -348,12 +429,28 @@
   .landing-faq-visual {
     min-height: 180px;
     background:
-      radial-gradient(circle at 50% 50%, rgba(139, 232, 255, 0.08), rgba(139, 232, 255, 0) 52%),
-      linear-gradient(165deg, rgba(16, 34, 74, 0.58), rgba(10, 19, 44, 0.74));
+      radial-gradient(circle at 24% 26%, rgba(55, 195, 255, 0.12), rgba(55, 195, 255, 0) 28%),
+      radial-gradient(circle at 78% 74%, rgba(205, 79, 255, 0.14), rgba(205, 79, 255, 0) 30%),
+      linear-gradient(180deg, rgba(9, 11, 45, 0.78), rgba(8, 8, 33, 0.86));
   }
 
-  .landing-faq-orb {
-    animation: none !important;
+  .landing-faq-controller {
+    width: 100%;
+    height: auto;
+  }
+
+  .landing-faq-controller-wrap {
+    width: min(92%, clamp(280px, 68vw, 360px));
+  }
+
+  .landing-faq-controller-orb--one {
+    width: 132px;
+    height: 132px;
+  }
+
+  .landing-faq-controller-orb--two {
+    width: 156px;
+    height: 156px;
   }
 }
 
@@ -365,9 +462,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .landing-faq-orb,
+  .landing-faq-controller,
+  .landing-faq-controller-orb,
   .landing-faq-answer {
     animation: none;
+  }
+
+  .landing-faq-controller-wrap {
+    transition: none;
+    transform: translate(0, 0);
   }
 
   .landing-faq-item,

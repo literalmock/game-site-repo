@@ -2,6 +2,7 @@ import './WhySection.css'
 
 const WhySection = ({ shouldReduceMotion, whyMotionState, whySectionRef, whyGameverseCards }) => (
   <section
+    id="why-gameverse"
     ref={whySectionRef}
     className={`landing-why landing-why--${shouldReduceMotion ? 'in' : whyMotionState}`}
     aria-label="Why Gameverse benefits"

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { BrandX, Instagram, Send, YouTube } from './ui/Icons'
 import './Footer.css'
 
@@ -37,7 +38,7 @@ const Footer = () => {
               <ul className="footer-link-list">
                 {FOOTER_LINKS.discover.map((item) => (
                   <li key={item.targetId}>
-                    <a href={`#${item.targetId}`} className="footer-link">{item.label}</a>
+                    <Link to={`/home#${item.targetId}`} className="footer-link">{item.label}</Link>
                   </li>
                 ))}
               </ul>

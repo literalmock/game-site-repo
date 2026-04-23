@@ -1,11 +1,13 @@
 import React from "react";
 import "./AuthPage.css";
 import { Link } from "react-router-dom";
+import useAuthPageReady from "../hooks/useAuthPageReady";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [rememberMe, setRememberMe] = React.useState(false);
+  const isPageReady = useAuthPageReady();
 
   const loginRequest = (e) => {
     e.preventDefault();
@@ -13,7 +15,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="auth-page auth-page--login">
+    <div className="auth-page auth-page--login" aria-busy={!isPageReady}>
+      {!isPageReady ? (
+        <div className="auth-loader" role="status" aria-live="polite">
+          <div className="auth-loader-spinner" aria-hidden="true" />
+          <p className="auth-loader-text">Loading sign in...</p>
+        </div>
+      ) : null}
+
       <div className="auth-login-bg" aria-hidden="true">
         <div className="auth-login-strip auth-login-strip--one" />
         <div className="auth-login-strip auth-login-strip--two" />
@@ -29,7 +38,7 @@ const LoginPage = () => {
 
       <div className="auth-container">
         <div className="auth-logo">
-          <Link to="/">
+          <Link to="/home">
             <img src="/logo_bigtext.webp" alt="Gameverse" className="auth-header-logo" />
           </Link>
         </div>
@@ -96,7 +105,7 @@ const LoginPage = () => {
             <p className="auth-switch">
               Don&apos;t have an account?{" "}
               <span className="auth-switch-link">
-                <Link to="/signup">Signup</Link>
+                <Link to="/signup" replace>Signup</Link>
               </span>
             </p>
           </div>

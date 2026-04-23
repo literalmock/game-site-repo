@@ -11,10 +11,11 @@
 }
 
 .landing-featured-shell {
-  margin: 0;
-  width: 100%;
+  box-sizing: border-box;
+  width: min(100%, calc(var(--landing-content-max-width) + (2 * var(--landing-content-inline))));
   max-width: none;
-  padding: 10px 0;
+  margin: 0 auto;
+  padding: 10px var(--landing-content-inline);
   background: transparent;
 }
 
@@ -24,10 +25,9 @@
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  max-width: var(--landing-content-max-width);
-  margin: 0 auto;
-  padding: 0 var(--landing-content-inline);
-  margin-bottom: 8px;
+  max-width: none;
+  margin: 0 0 8px;
+  padding: 0;
 }
 
 .landing-featured-kicker {
@@ -78,10 +78,10 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: var(--landing-content-max-width);
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 var(--landing-content-inline);
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
 }
 
 .landing-featured-counter {
@@ -94,7 +94,7 @@
   grid-template-columns: 34px minmax(0, 1fr) 34px;
   align-items: center;
   gap: 8px;
-  padding: 0 var(--landing-content-inline);
+  padding: 0;
   width: 100%;
   max-width: none;
   margin: 0;
@@ -429,7 +429,7 @@
   .landing-carousel-stage {
     grid-template-columns: 30px minmax(0, 1fr) 30px;
     gap: 4px;
-    padding: 0 var(--landing-content-inline);
+    padding: 0;
   }
 
   .landing-carousel {
@@ -494,12 +494,10 @@
 }
 
 @media (max-width: 420px) {
-  .landing-featured-head,
-  .landing-carousel-stage {
+  .landing-featured-shell {
     padding-left: 12px;
     padding-right: 12px;
   }
-  
 }
 
 @media (prefers-reduced-motion: reduce) {

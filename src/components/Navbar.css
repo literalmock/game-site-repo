@@ -82,7 +82,22 @@
   color: var(--nav-muted);
   font-size: 0.875rem;
   text-decoration: none;
-  transition: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.14s ease, box-shadow 0.2s ease;
+}
+
+.nav-link:hover {
+  background: var(--nav-hover-bg);
+  color: var(--nav-hover);
+}
+
+.nav-link:active {
+  transform: scale(0.96);
+}
+
+.nav-link.is-active {
+  color: #8dffba;
+  background: rgba(53, 198, 113, 0.14);
+  box-shadow: 0 0 0 1px rgba(83, 233, 145, 0.22) inset, 0 0 16px rgba(46, 206, 116, 0.15);
 }
 
 .nav-link-icon {
@@ -328,7 +343,7 @@
   color: var(--nav-muted);
   font-size: 0.875rem;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.14s ease, box-shadow 0.2s ease;
 }
 
 .mobile-nav-icon {
@@ -338,6 +353,16 @@
 .mobile-nav-item:hover {
   background: var(--nav-hover-bg);
   color: var(--nav-hover);
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.97);
+}
+
+.mobile-nav-item.is-active {
+  color: #8dffba;
+  background: rgba(53, 198, 113, 0.14);
+  box-shadow: 0 0 0 1px rgba(83, 233, 145, 0.22) inset;
 }
 
 .mobile-drawer-footer {

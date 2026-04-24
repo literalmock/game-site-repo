@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import viewerGames from '../utils/viewerGames'
 import { Gamepad2, House, LogIn, Menu, Search, Trophy, X } from './ui/Icons'
 import './Navbar.css'
@@ -171,17 +171,19 @@ const Navbar = () => {
           <div className="navbar-right">
             <nav className="navbar-links">
               {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-                <Link
+                <NavLink
                   key={label}
                   to={href}
                   aria-label={label}
-                  className={`nav-link nav-link--${label.toLowerCase().replace(/\s+/g, '-')}`}
+                  className={({ isActive }) =>
+                    `nav-link nav-link--${label.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'is-active' : ''}`
+                  }
                 >
                   <Icon size={16} className="nav-link-icon" />
                   <span className="nav-link-label">
                     {label}
                   </span>
-                </Link>
+                </NavLink>
               ))}
             </nav>
             <Link
@@ -220,15 +222,15 @@ const Navbar = () => {
 
         <nav className="mobile-nav">
           {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-            <Link
+            <NavLink
               key={label}
               to={href}
               onClick={() => setMobileOpen(false)}
-              className="mobile-nav-item"
+              className={({ isActive }) => `mobile-nav-item ${isActive ? 'is-active' : ''}`}
             >
               <Icon size={15} className="mobile-nav-icon" />
               {label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 

@@ -13,8 +13,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<AppLayout />}>
-          <Route index element={<Navigate to="/home" replace />} />
+        <Route path='/' element={<Navigate to="/home" replace />} />
+        <Route element={<AppLayout />}>
           <Route path="/home" element={<Homepage />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameViewerPage/>} />

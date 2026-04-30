@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Eye, Gem, Search, Sparkles, Star, Trophy, Zap } from '../components/ui/Icons'
 import './Leaderboard.css'
 
 const SAMPLE_ENTRIES = [
@@ -15,6 +16,19 @@ const SAMPLE_ENTRIES = [
 ]
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
+const PODIUM_ORDER = [2, 1, 3]
+
+const LeaderboardStat = ({ icon: Icon, label, value }) => (
+  <article className="leaderboard-stat-card">
+    <span className="leaderboard-stat-icon" aria-hidden="true">
+      <Icon size={15} />
+    </span>
+    <div className="leaderboard-stat-copy">
+      <p className="leaderboard-stat-label">{label}</p>
+      <p className="leaderboard-stat-value">{value}</p>
+    </div>
+  </article>
+)
 
 const Leaderboard = () => {
   const [timeframe, setTimeframe] = useState('weekly')
@@ -51,15 +65,28 @@ const Leaderboard = () => {
   const topThree = entries.slice(0, 3)
   const rest = entries.slice(3)
   const maxScore = entries.reduce((max, entry) => Math.max(max, entry.effectiveScore), 0) || 1
+  const podiumEntries = PODIUM_ORDER.map((rank) => topThree.find((entry) => entry.rank === rank)).filter(Boolean)
+  const averageWinRate = entries.length
+    ? Math.round(entries.reduce((sum, entry) => sum + entry.winRate, 0) / entries.length)
+    : 0
+
+  const summaryStats = [
+    { id: 'players', icon: Eye, label: 'Players', value: entries.length.toLocaleString() },
+    { id: 'avg-rate', icon: Trophy, label: 'Avg Win Rate', value: `${averageWinRate}%` },
+    { id: 'top-score', icon: Zap, label: 'Top Score', value: entries[0]?.effectiveScore.toLocaleString() ?? '0' },
+  ]
 
   return (
     <section className="leaderboard-shell">
       <header className="leaderboard-head">
         <div className="leaderboard-head-copy">
-          <p className="label-xs">Competitive</p>
+          <p className="label-xs leaderboard-kicker">
+            <Sparkles size={14} />
+            Reward Arena
+          </p>
           <h1 className="heading-lg leaderboard-title">Leaderboard</h1>
           <p className="text-body leaderboard-subtitle heading-paragraph-gap">
-            Climb the ranks with wins, streaks, and high scores across the Gameverse.
+            Track top players, rewards, and your climb in the Gameverse competitive ladder.
           </p>
         </div>
 
@@ -89,20 +116,29 @@ const Leaderboard = () => {
           </div>
 
           <label className="leaderboard-search">
-            <span className="leaderboard-search-label">Search</span>
+            <span className="leaderboard-search-icon" aria-hidden="true">
+              <Search size={16} />
+            </span>
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Player name"
+              placeholder="Search username"
               className="leaderboard-search-input"
               type="search"
+              aria-label="Search leaderboard players"
             />
           </label>
         </div>
       </header>
 
+      <section className="leaderboard-stats" aria-label="Leaderboard highlights">
+        {summaryStats.map((stat) => (
+          <LeaderboardStat key={stat.id} icon={stat.icon} label={stat.label} value={stat.value} />
+        ))}
+      </section>
+
       <section className="leaderboard-podium" aria-label="Top players">
-        {topThree.map((entry) => {
+        {podiumEntries.map((entry) => {
           const intensity = clamp(entry.effectiveScore / maxScore, 0.15, 1)
           return (
             <article
@@ -127,9 +163,14 @@ const Leaderboard = () => {
                 </div>
               </div>
               <div className="leaderboard-score-row">
+                <p className="leaderboard-award-row">
+                  <Trophy size={15} />
+                  Earn {Math.max(150, Math.round(entry.effectiveScore / 48))} points
+                </p>
                 <p className="leaderboard-score">
+                  <Gem size={15} />
                   {entry.effectiveScore.toLocaleString()}
-                  <span className="leaderboard-score-unit">pts</span>
+                  <span className="leaderboard-score-unit">prize</span>
                 </p>
                 <div className="leaderboard-bar" aria-hidden="true">
                   <span className="leaderboard-bar-fill" style={{ width: `${(entry.effectiveScore / maxScore) * 100}%` }} />
@@ -142,7 +183,10 @@ const Leaderboard = () => {
 
       <section className="leaderboard-table-wrap" aria-label="Leaderboard table">
         <div className="leaderboard-table-head">
-          <p className="heading-md">All Ranks</p>
+          <p className="heading-md">
+            <Star size={15} fill="currentColor" />
+            Global Standings
+          </p>
           <p className="text-muted leaderboard-table-note">{entries.length} players</p>
         </div>
 

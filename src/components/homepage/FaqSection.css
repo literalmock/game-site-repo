@@ -392,6 +392,10 @@
 }
 
 @media (max-width: 899px) {
+  .landing-faq-visual {
+    --faq-controller-base-y: -50%;
+  }
+
   .landing-faq-item {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -427,6 +431,7 @@
   }
 
   .landing-faq-visual {
+    --faq-controller-base-y: -50%;
     min-height: 180px;
     background:
       radial-gradient(circle at 24% 26%, rgba(55, 195, 255, 0.12), rgba(55, 195, 255, 0) 28%),
@@ -437,10 +442,12 @@
   .landing-faq-controller {
     width: 100%;
     height: auto;
+    transform: translate(-50%, -54%);
+    animation: none;
   }
 
   .landing-faq-controller-wrap {
-    width: min(92%, clamp(280px, 68vw, 360px));
+    width: min(90%, clamp(248px, 68vw, 320px));
   }
 
   .landing-faq-controller-orb--one {

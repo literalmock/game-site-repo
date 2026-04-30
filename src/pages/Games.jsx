@@ -46,12 +46,17 @@ const Games = () => {
     )
   }
 
+  const handleSelectAllGenres = () => {
+    setSelectedGenres(genres);
+  };
+
   return (
     <section className="homepage-layout games-page-layout">
       <SideBar
         genres={genres}
         selectedGenres={selectedGenres}
         onToggleGenre={toggleGenre}
+        onSelectAll={handleSelectAllGenres}
       />
 
       <div className="homepage-content games-page-content">

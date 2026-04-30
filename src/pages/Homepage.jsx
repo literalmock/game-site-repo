@@ -124,31 +124,38 @@ const Homepage = () => {
     const section = whySectionRef.current
     if (!section) return undefined
 
+    if (shouldReduceMotion) {
+      setWhyMotionState('in')
+      return undefined
+    }
+
+    let hasRevealed = false
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const inView = entry.isIntersecting && entry.intersectionRatio >= 0.35
-
-        if (inView) {
-          setWhyMotionState((prev) => (prev === 'in' ? prev : 'in'))
+        if (hasRevealed) {
           return
         }
 
-        // Reset to hidden only when the section is below the viewport.
-        // This allows replaying the reveal when user scrolls back down.
-        if (entry.boundingClientRect.top > window.innerHeight * 0.92) {
-          setWhyMotionState((prev) => (prev === 'hidden' ? prev : 'hidden'))
+        // Reveal as soon as the section starts entering the middle viewport zone,
+        // especially on phones where this section can be taller than the viewport.
+        const shouldReveal = entry.isIntersecting && entry.intersectionRatio >= 0.12
+
+        if (shouldReveal) {
+          hasRevealed = true
+          setWhyMotionState('in')
         }
       },
       {
-        threshold: [0, 0.2, 0.35, 0.55],
-        rootMargin: '0px 0px -12% 0px',
+        threshold: [0, 0.05, 0.1, 0.2],
+        rootMargin: '0px 0px -18% 0px',
       },
     )
 
     observer.observe(section)
 
     return () => observer.disconnect()
-  }, [])
+  }, [shouldReduceMotion])
 
   return (
     <>

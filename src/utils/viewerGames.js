@@ -15,6 +15,17 @@ export const viewerGames = [
     description: "Drive through a detailed city environment and test your skills with realistic driving mechanics."
   },
   {
+    id: 49,
+    thumbnail: "/games/i8citydriver.webp",
+    title: "i8 City Driver",
+    category: "Driving",
+    tags: ["Driving"],
+    rating: 4.2,
+    views: "500K",
+    iframeUrl: "https://html5.gamemonetize.co/882isa4b37an4ap1p7dv7akabupe7awf/",
+    description: "Drive through a detailed city environment and test your skills with realistic driving mechanics."
+  },
+  {
     id: 2,
     title: "My Arcade Center 2",
     thumbnail: "/games/my-arcade-center-2.webp",

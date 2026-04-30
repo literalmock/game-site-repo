@@ -223,8 +223,37 @@
 }
 
 @media (max-width: 640px) {
+  .landing-why {
+    padding-top: 18px;
+    padding-bottom: 24px;
+  }
+
+  .landing-why-title {
+    font-size: clamp(1.5rem, 6.2vw, 1.9rem);
+    max-width: 100%;
+  }
+
+  .landing-why-subtitle {
+    margin-bottom: 12px;
+    max-width: 100%;
+    font-size: 0.82rem;
+  }
+
+  .landing-why-grid {
+    gap: 10px;
+  }
+
   .landing-why-card {
+    padding: 12px;
     box-shadow: none;
+  }
+
+  .landing-why-card-title {
+    font-size: 0.92rem;
+  }
+
+  .landing-why-card-desc {
+    font-size: 0.8rem;
   }
 }
 

@@ -47,7 +47,11 @@ const Games = () => {
   }
 
   const handleSelectAllGenres = () => {
-    setSelectedGenres(genres);
+    if (selectedGenres.length === genres.length) {
+      setSelectedGenres([]);
+    } else {
+      setSelectedGenres(genres);
+    }
   };
 
   return (

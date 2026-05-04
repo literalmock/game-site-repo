@@ -38,7 +38,7 @@ const Footer = () => {
               <ul className="footer-link-list">
                 {FOOTER_LINKS.discover.map((item) => (
                   <li key={item.targetId}>
-                    <Link to={`/home#${item.targetId}`} className="footer-link">{item.label}</Link>
+                    <a href={`/home#${item.targetId}`} className="footer-link">{item.label}</a>
                   </li>
                 ))}
               </ul>
@@ -47,11 +47,18 @@ const Footer = () => {
             <div className="footer-links-col">
               <p className="footer-heading">Account</p>
               <ul className="footer-link-list">
-                {FOOTER_LINKS.account.map((item) => (
-                  <li key={item.targetId}>
-                    <a href={`#${item.targetId}`} className="footer-link">{item.label}</a>
-                  </li>
-                ))}
+                <li>
+                  <Link to="/login" className="footer-link">Login</Link>
+                </li>
+                <li>
+                  <Link to="/signup" className="footer-link">Sign Up</Link>
+                </li>
+                <li>
+                  <Link to="/games" className="footer-link">Library</Link>
+                </li>
+                <li>
+                  <a href="mailto:support@gameverse.com" className="footer-link">Support</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -69,7 +76,6 @@ const Footer = () => {
                 <Send size={15} />
               </button>
             </form>
-            
             <div className="footer-socials" aria-label="Social links">
               <a href="#" className="footer-social-link" aria-label="X">
                 <BrandX size={14} />
@@ -81,7 +87,6 @@ const Footer = () => {
                 <YouTube size={14} />
               </a>
             </div>
-           
           </div>
         </div>
 
@@ -92,12 +97,10 @@ const Footer = () => {
             <a href="#" className="footer-legal-link">Terms</a>
           </div>
         </div>
-
-       
       </div>
-       <div className='footer-logo-effect'>
-                Gameverse
-        </div>
+      <div className='footer-logo-effect'>
+        Gameverse
+      </div>
     </footer>
   )
 }

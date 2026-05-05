@@ -1,0 +1,76 @@
+{
+  "name": "Pratham Singh",
+  "overview": "Pratham Singh is an India-based video editor and visual storyteller specializing in end-to-end video solutions including motion graphics, podcast editing, and short-form content. He focuses on delivering clean, intentional edits for brands and digital platforms, aiming to maximize retention and engagement through story-driven narratives.",
+  "websiteUrl": "https://video-editor-portfolio-eeq.pages.dev/",
+  "brandValues": ["Intentionality", "Story-driven creativity", "Impactful storytelling", "Visual continuity"],
+  "visualAesthetics": ["modern minimalist", "tech-chic", "sophisticated", "minimalist authority", "high-contrast impact"],
+  "toneOfVoice": ["Professional", "Creative", "Intentional", "Strategic"],
+  "fonts": ["antonio", "inter"],
+  "campaigns": [{
+    "creatives": [{
+      "title": "Stop the content treadmill.",
+      "versions": [{
+        "fileName": "resource_bbjWvAJu1-_6YMaDYN2kuo.png"
+      }]
+    }, {
+      "title": "Is the noise drowning you out?",
+      "versions": [{
+        "fileName": "resource_asV9IObw3bx5vYsDVU1kcx.png"
+      }]
+    }, {
+      "title": "Strategy over saturation.",
+      "versions": [{
+        "fileName": "resource_9Ew1K-Oo-luczCgoWKiORJ.png"
+      }]
+    }, {
+      "title": "Create with more intention.",
+      "versions": [{
+        "fileName": "resource_9J-pVqhY_1qcm31ip43_Y5.png"
+      }]
+    }]
+  }, {
+    "creatives": [{
+      "title": "Own the feed June 30.",
+      "versions": [{
+        "fileName": "resource_b8aMwIJotH51HCuq3ydOx1.png"
+      }]
+    }, {
+      "title": "Stop the scrolling fatigue.",
+      "versions": [{
+        "fileName": "resource_8WgoD14PHHK4RHRr7cZ_nn.png"
+      }]
+    }, {
+      "title": "Visuals built for retention.",
+      "versions": [{
+        "fileName": "resource_8to62TngoKS3WhDGp4HOVQ.png"
+      }]
+    }, {
+      "title": "Partner for growth.",
+      "versions": [{
+        "fileName": "resource_al1h_B33got5GeRvJwU4RV.png"
+      }]
+    }]
+  }, {
+    "creatives": [{
+      "title": "Intentional Edits. Lasting Impact.",
+      "versions": [{
+        "fileName": "resource_bQ2OvqV0fLg2VT1G5SVOMI.png"
+      }]
+    }, {
+      "title": "High-Contrast Impact.",
+      "versions": [{
+        "fileName": "resource_aBDpHls7fqm6GTgkENd_XX.png"
+      }]
+    }, {
+      "title": "Sophisticated Continuity.",
+      "versions": [{
+        "fileName": "resource_advxmirClCM0T10m9VS43C.png"
+      }]
+    }, {
+      "title": "Your Strategic Partner.",
+      "versions": [{
+        "fileName": "resource_bNk-wGeCQs40ANkFQIxOtj.png"
+      }]
+    }]
+  }]
+}

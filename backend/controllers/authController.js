@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
+const {profileEditSchema} = require('../utils/validation');
 const signup = async (req, res) => {
   try {
-    const { fullName, username, email, password , confirmPassword } = req.body;
+    const { fullname, username, email, password , confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: 'Passwords do not match' });
@@ -19,6 +19,7 @@ const signup = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
+      fullname,
       username,
       email,
       password: hashedPassword
@@ -31,16 +32,52 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  try {
-    const { username, password } = req.body; 
-    }
-    catch (error) {
-    res.status(500).json({ message: 'Server error' });
+  const { email, password } = req.body;
+  const emailValidation = profileEditSchema.safeParse({ email });
+  if (!emailValidation.success) {
+    return res.status(400).send("Enter a valid email");
   }
-    
+  if (!password) {
+    return res.status(400).send("Invalid password");
+  }
+  try {
+    //User exists
+    const isExistingUser = await User.findOne({ email });
+    if (!isExistingUser) {
+      return res.status(400).send("User Does Not Exist");
+    }
+    //use bcrypt to compare password
+    const userdetail = await User.findOne({ email: email });
+    const auth = await bcrypt.compare(password, userdetail.password);
+    if (!auth) {
+      return res.status(401).send("Password is Wrong");
+    }
+    // jwt authorization
+    const token = await jwt.sign({ _id: userdetail._id }, process.env.JWT_SECRET, { expiresIn: '1h' }`);`);
+    res.cookie("token" , token, {
+      httpOnly: true,
+      secure: false, // true in production (HTTPS)
+      sameSite: "strict",
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+    return res.status(200).json({ message: "Login successful", userdetail });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("some error occured");
+  }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logout successful" });
+};
+
+const getProfile = (req, res) => {
+  res.status(200).json({ user: req.user });
+};
 module.exports = {
   signup,
-  login
+  login,
+  logout,
+  getProfile
 };

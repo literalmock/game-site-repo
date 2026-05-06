@@ -7,9 +7,19 @@ const genreRoutes = require('./Routes/genres');
 const wishlistRoutes = require('./Routes/wishlist');
 const leaderboardRoutes = require('./Routes/leaderboard');
 const commentRoutes = require('./Routes/comments');
-const app = express();
-const PORT = process.env.PORT || 5000;
+const connectDB = require('./utils/connectDB');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
+
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(cookieParser());
+
+// Connect to MongoDB
+connectDB();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());

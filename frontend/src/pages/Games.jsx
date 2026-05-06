@@ -1,13 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import SideBar from '../components/SideBar.jsx'
 import GameCard from '../components/GameCard.jsx'
 import './Games.css'
 import viewerGames from '../utils/viewerGames.js'
 import { useSearchParams } from 'react-router-dom'
 
+const ITEMS_PER_PAGE = 12
+
 const Games = () => {
   const [searchParams] = useSearchParams()
   const [selectedGenres, setSelectedGenres] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const contentRef = useRef(null)
 
   const genres = useMemo(
     () => [...new Set(viewerGames.map((game) => game.category))].sort(),
@@ -16,6 +20,9 @@ const Games = () => {
   
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
 
     const requestedGenre = (searchParams.get('genre') || '').trim()
 
@@ -38,6 +45,29 @@ const Games = () => {
     return viewerGames.filter((game) => selectedGenres.includes(game.category))
   }, [selectedGenres])
 
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(filteredGames.length / ITEMS_PER_PAGE)),
+    [filteredGames.length],
+  )
+
+  const paginatedGames = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE
+    return filteredGames.slice(start, start + ITEMS_PER_PAGE)
+  }, [filteredGames, currentPage])
+
+  useEffect(() => {
+    setCurrentPage(1)
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, [selectedGenres])
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages)
+    }
+  }, [currentPage, totalPages])
+
   const toggleGenre = (genre) => {
     setSelectedGenres((prev) =>
       prev.includes(genre)
@@ -54,57 +84,86 @@ const Games = () => {
     }
   };
 
+  const handlePageChange = (nextPage) => {
+    const safePage = Math.min(Math.max(nextPage, 1), totalPages)
+    setCurrentPage(safePage)
+
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
-    <section className="homepage-layout games-page-layout">
-      <SideBar
-        genres={genres}
-        selectedGenres={selectedGenres}
-        onToggleGenre={toggleGenre}
-        onSelectAll={handleSelectAllGenres}
-      />
+    <>
+      <section className="homepage-layout games-page-layout">
+        <SideBar
+          genres={genres}
+          selectedGenres={selectedGenres}
+          onToggleGenre={toggleGenre}
+          onSelectAll={handleSelectAllGenres}
+        />
 
-      <div className="homepage-content games-page-content">
-        <section className="homepage-section">
-          <div className="homepage-section-head">
-            <h2 className="homepage-section-title">All Games</h2>
-            <p className="homepage-section-subtitle">{filteredGames.length} title{filteredGames.length > 1 ? 's' : ''}</p>
-          </div>
+        <div className="homepage-content games-page-content" ref={contentRef}>
+          <section className="homepage-section">
+            <div className="homepage-section-head">
+              <h2 className="homepage-section-title">All Games</h2>
+              <p className="homepage-section-subtitle">
+                {filteredGames.length} title{filteredGames.length > 1 ? 's' : ''} · Page {currentPage} of {totalPages}
+              </p>
+            </div>
 
-        <div className="homepage-games-grid">
-          {filteredGames.map((game) => (
-            <GameCard key={game.id} game={game} />
-          ))}
+            <div className="homepage-games-grid">
+              {paginatedGames.map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
+            </div>
+          </section>
         </div>
-        </section>
-      </div>
-    </section>
-    
-    // <section className="space-y-4">
-    //   <div className="flex items-center justify-between">
-    //     <h2 className="text-2xl font-bold">All Games</h2>
-    //     <p className="text-sm opacity-70">{games.length} titles</p>
-    //   </div>
+      </section>
 
-    //   <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-    //     {games.map((game) => (
-    //       <a
-    //         key={game.id}
-    //         href={game.url}
-    //         target="_blank"
-    //         rel="noreferrer"
-    //         className="card overflow-hidden border border-base-300 bg-base-100 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-    //       >
-    //         <figure className="aspect-[3/4] w-full bg-base-200">
-    //           <img src={game.thumbnail} alt={game.title} className="h-full w-full object-cover" />
-    //         </figure>
-    //         <div className="p-3">
-    //           <h3 className="line-clamp-2 text-sm font-semibold">{game.title}</h3>
-    //           <p className="mt-1 text-xs opacity-70">{game.category}</p>
-    //         </div>
-    //       </a>
-    //     ))}
-    //   </div>
-    // </section>
+      {totalPages > 1 ? (
+        <div className="games-pagination-shell">
+          <nav className="games-pagination" aria-label="Games pagination">
+            <button
+              type="button"
+              className="games-pagination-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => {
+              const page = index + 1
+              const isActive = page === currentPage
+
+              return (
+                <button
+                  key={page}
+                  type="button"
+                  className={`games-pagination-btn ${isActive ? 'games-pagination-btn--active' : ''}`}
+                  onClick={() => handlePageChange(page)}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {page}
+                </button>
+              )
+            })}
+
+            <button
+              type="button"
+              className="games-pagination-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </nav>
+        </div>
+      ) : null}
+    </>
   )
 }
 

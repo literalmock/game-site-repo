@@ -53,7 +53,7 @@ const login = async (req, res) => {
       return res.status(401).send("Password is Wrong");
     }
     // jwt authorization
-    const token = await jwt.sign({ _id: userdetail._id }, process.env.JWT_SECRET, { expiresIn: '1h' }`);`);
+    const token = await jwt.sign({ _id: userdetail._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.cookie("token" , token, {
       httpOnly: true,
       secure: false, // true in production (HTTPS)
@@ -73,11 +73,37 @@ const logout = (req, res) => {
 };
 
 const getProfile = (req, res) => {
-  res.status(200).json({ user: req.user });
+  //remove password from user object before sending response
+  const userWithoutPassword = { ...req.user._doc };
+  delete userWithoutPassword.password;
+  return res.status(200).json({ user: userWithoutPassword });
 };
+
+const updateProfile = async (req, res) => {
+  const userId = req.user._id;
+  const { fullname, username, email, about, photoURL } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { fullname, username, about, photoURL },
+      { new: true }
+    ).select('-password');
+    return res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+const forgotPassword = (req, res) => {
+    res.send("Forgot password route")
+    if (!email) {
+      return res.status(400).send("Enter a valid email");
+    }
+    // Implement password reset logic here (e.g., send reset link to email)
+}
 module.exports = {
   signup,
   login,
   logout,
-  getProfile
+  getProfile,
+  updateProfile
 };

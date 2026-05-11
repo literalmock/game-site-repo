@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const User = require('../models/User');
 const {profileEditSchema} = require('../utils/validation');
 const signup = async (req, res) => {
@@ -81,7 +82,7 @@ const getProfile = (req, res) => {
 
 const updateProfile = async (req, res) => {
   const userId = req.user._id;
-  const { fullname, username, email, about, photoURL } = req.body;
+  const { fullname, username, about, photoURL } = req.body;
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -93,17 +94,66 @@ const updateProfile = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
-const forgotPassword = (req, res) => {
-    res.send("Forgot password route")
-    if (!email) {
-      return res.status(400).send("Enter a valid email");
+// Forgot Password: Send reset link
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).send("Enter a valid email");
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    // Implement password reset logic here (e.g., send reset link to email)
-}
+    // Generate token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiry = Date.now() + 1000 * 60 * 60; // 1 hour
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = resetTokenExpiry;
+    await user.save();
+    // Send email (placeholder)
+    // In production, use nodemailer or similar to send email with reset link
+    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    console.log(`Password reset link (send via email): ${resetUrl}`);
+    res.status(200).json({ message: 'Password reset link sent to email (check console in dev)' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Reset Password: Set new password
+const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+  if (!password || !confirmPassword) {
+    return res.status(400).json({ message: 'Password and confirm password are required' });
+  }
+  if (password !== confirmPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+    res.json({ message: 'Password reset successful' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 module.exports = {
   signup,
   login,
   logout,
   getProfile,
-  updateProfile
+  updateProfile,
+  forgotPassword,
+  resetPassword
 };

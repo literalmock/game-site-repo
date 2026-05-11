@@ -10,8 +10,9 @@ Router.post("/login", authController.login)
 Router.post("/logout", authController.logout)
 Router.get("/me",auth, authController.getProfile)
 Router.put("/me", auth, authController.updateProfile)
-Router.post("/forgot-password", (req, res) => {
-    res.send("Forgot password route")
-})
+
+Router.post("/forgot-password", authController.forgotPassword)
+// Route for resetting password
+Router.post("/reset-password/:token", authController.resetPassword)
 
 module.exports = Router

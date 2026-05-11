@@ -32,7 +32,7 @@ POST   /api/games/:gameId/score
 COMMENTS:
 GET    /api/games/:gameId/comments
 POST   /api/games/:gameId/comments
-DELETE /api/comments/:id
+DELETE /api/comment/:id
 
 
 ## User Model

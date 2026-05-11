@@ -27,10 +27,10 @@ app.use(bodyParser.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/games', gameRoutes);
-app.use('/api/genres', genreRoutes);
-app.use('/api/user/wishlist', wishlistRoutes);
 app.use('/api/games', leaderboardRoutes);
 app.use('/api/games', commentRoutes);
+app.use('/api/genres', genreRoutes);
+app.use('/api/user/wishlist', wishlistRoutes);
 
 
 // Start the server

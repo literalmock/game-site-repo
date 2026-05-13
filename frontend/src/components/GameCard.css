@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  position: relative;
   border: 1px solid var(--card-border);
   border-radius: 12px;
   background: var(--card-bg);
@@ -134,11 +135,29 @@
 }
 
 .app-layout--dark .game-card {
-  --card-border: rgba(99, 130, 169, 0.32);
-  --card-bg: linear-gradient(180deg, rgba(23, 38, 60, 0.88) 0%, rgba(15, 25, 40, 0.96) 100%);
-  --card-shadow: 0 12px 30px rgba(3, 9, 19, 0.46);
-  --card-media-bg: #233a5a;
   --card-title: #f3f8ff;
-  --card-category: #b8cce5;
-  --card-description: #c5d4e8;
+  --card-gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 42%);
+  --card-glow: 0 14px 34px rgba(3, 9, 19, 0.46), 0 0 0 1px rgba(100, 160, 255, 0.16), 0 0 30px rgba(58, 129, 255, 0.16);
+  --card-hover-glow: 0 16px 38px rgba(4, 12, 24, 0.56), 0 0 0 1px rgba(122, 184, 255, 0.32), 0 0 40px rgba(64, 150, 255, 0.22);
+  --card-bg: linear-gradient(180deg, rgba(30, 48, 74, 0.96) 0%, rgba(18, 30, 50, 0.98) 100%);
+  --card-border: rgba(120, 161, 210, 0.4);
+  --card-shadow: var(--card-glow);
+  --card-media-bg: #2a4368;
+  --card-category: #c4daf5;
+  --card-description: #d1dff2;
+  backdrop-filter: saturate(122%) brightness(108%) contrast(106%);
+}
+
+.app-layout--dark .game-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--card-gloss);
+  pointer-events: none;
+}
+
+.app-layout--dark .game-card:hover {
+  box-shadow: var(--card-hover-glow);
+  border-color: rgba(142, 200, 255, 0.5);
 }

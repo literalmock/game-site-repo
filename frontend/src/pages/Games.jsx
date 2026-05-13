@@ -106,20 +106,22 @@ const Games = () => {
         />
 
         <div className="homepage-content games-page-content" ref={contentRef}>
-          <section className="homepage-section">
-            <div className="homepage-section-head">
-              <h2 className="homepage-section-title">All Games</h2>
-              <p className="homepage-section-subtitle">
-                {filteredGames.length} title{filteredGames.length > 1 ? 's' : ''} · Page {currentPage} of {totalPages}
-              </p>
-            </div>
+          <div className="games-page-content-panel">
+            <section className="homepage-section">
+              <div className="homepage-section-head">
+                <h2 className="homepage-section-title">All Games</h2>
+                <p className="homepage-section-subtitle">
+                  {filteredGames.length} title{filteredGames.length > 1 ? 's' : ''} · Page {currentPage} of {totalPages}
+                </p>
+              </div>
 
-            <div className="homepage-games-grid">
-              {paginatedGames.map((game) => (
-                <GameCard key={game.id} game={game} />
-              ))}
-            </div>
-          </section>
+              <div className="homepage-games-grid">
+                {paginatedGames.map((game) => (
+                  <GameCard key={game.id} game={game} />
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 

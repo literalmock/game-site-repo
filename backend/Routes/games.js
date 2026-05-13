@@ -1,13 +1,11 @@
 const express = require('express');
-const Router = express.Router();
+const router = express.Router();
+const gameController = require('../controllers/gameController');
 
-// Example route
-Router.get('/', (req, res) => {
-  res.send('Games route working');
-});
-Router.get('/:gameId', (req, res) => {
-  res.send(`Get details for game ${req.params.gameId}`);
-}
-);  
+router.get('/', gameController.getGames);
+router.get('/:gameId', gameController.getGameById);
+router.post('/', gameController.createGame);
+router.put('/:gameId', gameController.updateGame);
+router.delete('/:gameId', gameController.deleteGame);
 
-module.exports = Router;
+module.exports = router;

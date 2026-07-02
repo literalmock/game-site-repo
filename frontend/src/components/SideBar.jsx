@@ -124,6 +124,24 @@ const Sidebar = ({ genres = [], selectedGenres = [], onToggleGenre, onSelectAll 
           </>
         )}
 
+        <div className="sidebar-footer" aria-label="Sidebar footer">
+          <div
+            className="sidebar-gameverse-card sidebar-gameverse-card--footer"
+            role="note"
+            aria-label="Gameverse tips and disclaimer"
+          >
+            <p className="sidebar-gameverse-kicker">Quick Guide</p>
+            <h3 className="sidebar-gameverse-glow">Gameverse</h3>
+            <ul className="sidebar-gameverse-tips">
+              <li>Use 1-2 genre filters first for faster discovery.</li>
+              <li>Open game pages to check controls before playing.</li>
+            </ul>
+            <p className="sidebar-gameverse-disclaimer">
+              Disclaimer: Some games are loaded from external providers, so
+              availability and performance can vary by device or region.
+            </p>
+          </div>
+        </div>
       </div>
     </aside>
   );

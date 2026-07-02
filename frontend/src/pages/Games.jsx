@@ -4,6 +4,7 @@ import GameCard from '../components/GameCard.jsx'
 import './Games.css'
 import viewerGames from '../utils/viewerGames.js'
 import { useSearchParams } from 'react-router-dom'
+import { useGamesCatalog } from '../hooks/useGamesCatalog.js'
 
 const ITEMS_PER_PAGE = 12
 
@@ -12,10 +13,11 @@ const Games = () => {
   const [selectedGenres, setSelectedGenres] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const contentRef = useRef(null)
+  const { games: catalogGames, isLoadingGames, gamesError } = useGamesCatalog(viewerGames)
 
   const genres = useMemo(
-    () => [...new Set(viewerGames.map((game) => game.category))].sort(),
-    [],
+    () => [...new Set(catalogGames.map((game) => game.category))].sort(),
+    [catalogGames],
   )
   
   useEffect(() => {
@@ -40,10 +42,10 @@ const Games = () => {
   }, [searchParams, genres])
 
   const filteredGames = useMemo(() => {
-    if (selectedGenres.length === 0) return viewerGames
+    if (selectedGenres.length === 0) return catalogGames
 
-    return viewerGames.filter((game) => selectedGenres.includes(game.category))
-  }, [selectedGenres])
+    return catalogGames.filter((game) => selectedGenres.includes(game.category))
+  }, [catalogGames, selectedGenres])
 
   const totalPages = useMemo(
     () => Math.max(1, Math.ceil(filteredGames.length / ITEMS_PER_PAGE)),
@@ -111,7 +113,8 @@ const Games = () => {
               <div className="homepage-section-head">
                 <h2 className="homepage-section-title">All Games</h2>
                 <p className="homepage-section-subtitle">
-                  {filteredGames.length} title{filteredGames.length > 1 ? 's' : ''} · Page {currentPage} of {totalPages}
+                  {isLoadingGames ? 'Syncing games from database...' : `${filteredGames.length} title${filteredGames.length > 1 ? 's' : ''} · Page ${currentPage} of ${totalPages}`}
+                  {gamesError ? ' · showing local fallback' : ''}
                 </p>
               </div>
 

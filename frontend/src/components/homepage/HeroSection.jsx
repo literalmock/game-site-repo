@@ -3,69 +3,76 @@ import { Link } from 'react-router-dom'
 import HeroAvatarRotator from '../HeroAvatarRotator'
 import LiveViewsCounter from './LiveViewsCounter'
 import { HERO_AVATAR_IMAGES } from '../../utils/homepageContent'
+import { useAuth } from '../../context/useAuth'
 import './HeroSection.css'
 
-const HeroSection = ({ heroTrackSlides, gamesCount, lowPowerMode }) => (
-  <section className="landing-hero">
-    <div className="landing-hero-bg" aria-hidden="true">
-      <div className="landing-track">
-        {heroTrackSlides.map((game, index) => (
-          <article className="landing-bg-card" key={`${game.id}-${index}`}>
-            <img src={game.thumbnail} alt="" className="landing-bg-image" loading="lazy" decoding="async" fetchPriority="low" />
-          </article>
-        ))}
-      </div>
-    </div>
+const HeroSection = ({ heroTrackSlides, gamesCount, lowPowerMode }) => {
+  const { isAuthenticated } = useAuth()
 
-    <div className="landing-overlay" />
-
-    <div className="landing-content-shell">
-      <div className="landing-copy-wrap">
-        <p className="landing-kicker label-xs text-animate-fade-up">
-          <Sparkles size={14} />
-          GAMEVERSE GAMING HUB
-        </p>
-
-        <h1 className="landing-title heading-xl text-animate-fade-up">
-          Discover Worlds.
-          <span>Compete Hard.</span>
-          Play Everywhere.
-        </h1>
-
-        <p className="landing-subtitle text-body heading-paragraph-gap text-animate-fade-up">
-          Jump into curated titles, trending drops, and community favorites in one cinematic launcher.
-        </p>
-
-        <div className="landing-cta-row">
-          <Link to="/games" className="landing-cta-primary">Explore Library</Link>
-          <Link to="/signup" className="landing-cta-secondary">Create Free Account</Link>
+  return (
+    <section className="landing-hero">
+      <div className="landing-hero-bg" aria-hidden="true">
+        <div className="landing-track">
+          {heroTrackSlides.map((game, index) => (
+            <article className="landing-bg-card" key={`${game.id}-${index}`}>
+              <img src={game.thumbnail} alt="" className="landing-bg-image" loading="lazy" decoding="async" fetchPriority="low" />
+            </article>
+          ))}
         </div>
-
-        <ul className="landing-stats">
-          <li className="landing-stat-chip">
-            <span className="landing-stat-value">{gamesCount}+</span>
-            <span className="landing-stat-label">Titles</span>
-          </li>
-          <li className="landing-stat-chip">
-            <span className="landing-stat-value">24/7</span>
-            <span className="landing-stat-label">Live Updates</span>
-          </li>
-          <li className="landing-stat-chip">
-            <span className="landing-stat-value">4K</span>
-            <span className="landing-stat-label">Ready Visuals</span>
-          </li>
-        </ul>
       </div>
 
-      <aside className="landing-hero-side" aria-label="Genre spotlight panel">
-        <div className="landing-hero-avatar-wrap" aria-hidden="true">
-          <HeroAvatarRotator imageUrls={HERO_AVATAR_IMAGES} reducedMotion={lowPowerMode} />
+      <div className="landing-overlay" />
+
+      <div className="landing-content-shell">
+        <div className="landing-copy-wrap">
+          <p className="landing-kicker label-xs text-animate-fade-up">
+            <Sparkles size={14} />
+            GAMEVERSE GAMING HUB
+          </p>
+
+          <h1 className="landing-title heading-xl text-animate-fade-up">
+            Discover Worlds.
+            <span>Compete Hard.</span>
+            Play Everywhere.
+          </h1>
+
+          <p className="landing-subtitle text-body heading-paragraph-gap text-animate-fade-up">
+            Jump into curated titles, trending drops, and community favorites in one cinematic launcher.
+          </p>
+
+          <div className="landing-cta-row">
+            <Link to="/games" className="landing-cta-primary">Explore Library</Link>
+            {!isAuthenticated ? (
+              <Link to="/signup" className="landing-cta-secondary">Create Free Account</Link>
+            ) : null}
+          </div>
+
+          <ul className="landing-stats">
+            <li className="landing-stat-chip">
+              <span className="landing-stat-value">{gamesCount}+</span>
+              <span className="landing-stat-label">Titles</span>
+            </li>
+            <li className="landing-stat-chip">
+              <span className="landing-stat-value">24/7</span>
+              <span className="landing-stat-label">Live Updates</span>
+            </li>
+            <li className="landing-stat-chip">
+              <span className="landing-stat-value">4K</span>
+              <span className="landing-stat-label">Ready Visuals</span>
+            </li>
+          </ul>
         </div>
 
-        <LiveViewsCounter />
-      </aside>
-    </div>
-  </section>
-)
+        <aside className="landing-hero-side" aria-label="Genre spotlight panel">
+          <div className="landing-hero-avatar-wrap" aria-hidden="true">
+            <HeroAvatarRotator imageUrls={HERO_AVATAR_IMAGES} reducedMotion={lowPowerMode} />
+          </div>
+
+          <LiveViewsCounter />
+        </aside>
+      </div>
+    </section>
+  )
+}
 
 export default HeroSection

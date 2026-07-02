@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { games } from '../utils/game'
+import viewerGames from '../utils/viewerGames'
 import { CATEGORY_GENRE_CARDS, WHY_GAMEVERSE_CARDS } from '../utils/homepageContent'
 import faqItems from '../utils/faq'
+import { useGamesCatalog } from '../hooks/useGamesCatalog'
 import HeroSection from '../components/homepage/HeroSection'
 import FeaturedSection from '../components/homepage/FeaturedSection'
 import CategoriesSection from '../components/homepage/CategoriesSection'
@@ -17,14 +18,15 @@ const Homepage = () => {
   const [shouldReduceMotion, setShouldReduceMotion] = useState(false)
   const [isCompactDevice, setIsCompactDevice] = useState(() => window.matchMedia('(max-width: 899px)').matches)
   const lowPowerMode = shouldReduceMotion || isCompactDevice
+  const { games } = useGamesCatalog(viewerGames)
 
-  const heroSlides = useMemo(() => games.slice(0, 8), [])
+  const heroSlides = useMemo(() => games.slice(0, 8), [games])
   const heroTrackSlides = useMemo(() => {
     const baseSlides = isCompactDevice ? heroSlides.slice(0, 4) : heroSlides
     return [...baseSlides, ...baseSlides]
   }, [heroSlides, isCompactDevice])
 
-  const featuredGames = useMemo(() => games.slice(0, 12), [])
+  const featuredGames = useMemo(() => games.slice(0, 12), [games])
   const [featuredIndex, setFeaturedIndex] = useState(0)
   const [carouselDirection, setCarouselDirection] = useState('next')
   const [isCenterHovered, setIsCenterHovered] = useState(false)

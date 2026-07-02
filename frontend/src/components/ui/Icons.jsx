@@ -41,7 +41,9 @@ export const X = (props) => <IconBase {...props}><path d="M18 6 6 18" /><path d=
 export const House = (props) => <IconBase {...props}><path d="m3 11 9-8 9 8" /><path d="M5 10v10h14V10" /></IconBase>
 export const Trophy = (props) => <IconBase {...props}><path d="M8 21h8" /><path d="M12 17v4" /><path d="M7 4h10v6a5 5 0 0 1-10 0z" /><path d="M5 6H3a2 2 0 0 0 2 2" /><path d="M19 6h2a2 2 0 0 1-2 2" /></IconBase>
 export const LogIn = (props) => <IconBase {...props}><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><path d="m10 17 5-5-5-5" /><path d="M15 12H3" /></IconBase>
+export const LogOut = (props) => <IconBase {...props}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></IconBase>
 export const Search = (props) => <IconBase {...props}><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></IconBase>
+export const UserRound = (props) => <IconBase {...props}><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></IconBase>
 export const Maximize2 = (props) => <IconBase {...props}><path d="M15 3h6v6" /><path d="m9 21H3v-6" /><path d="m21 3-7 7" /><path d="m3 21 7-7" /></IconBase>
 export const Volume2 = (props) => <IconBase {...props}><polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5" /><path d="M15 9a5 5 0 0 1 0 6" /><path d="M18.5 6.5a9 9 0 0 1 0 11" /></IconBase>
 export const VolumeX = (props) => <IconBase {...props}><polygon points="11 5 6 9 3 9 3 15 6 15 11 19 11 5" /><path d="m16 9 5 6" /><path d="m21 9-5 6" /></IconBase>

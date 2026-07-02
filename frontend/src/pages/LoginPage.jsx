@@ -1,17 +1,38 @@
 import React from "react";
 import "./AuthPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthPageReady from "../hooks/useAuthPageReady";
+import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated, login } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [rememberMe, setRememberMe] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isPageReady = useAuthPageReady();
 
-  const loginRequest = (e) => {
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  const loginRequest = async (e) => {
     e.preventDefault();
-    console.log("Login request sent");
+    setError("");
+    setIsSubmitting(true);
+
+    try {
+      await login({ email, password });
+      navigate("/home", { replace: true });
+    } catch (err) {
+      setError(err.message || "Unable to sign in");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -55,9 +76,12 @@ const LoginPage = () => {
             <input
               type="email"
               id="email"
+              name="email"
               placeholder="Email Address"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -65,9 +89,12 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
+              name="password"
               placeholder="Password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -82,12 +109,18 @@ const LoginPage = () => {
               <span>Remember Me</span>
             </label>
 
-            <a href="#" className="auth-forgot-link">Forgot Password?</a>
+            <Link to="/forgot-password" className="auth-forgot-link">Forgot Password?</Link>
           </div>
 
+          {error ? (
+            <p className="auth-message auth-message--error" role="alert">
+              {error}
+            </p>
+          ) : null}
+
           <div className="auth-actions">
-            <button className="auth-btn" type="submit">
-              Sign In
+            <button className="auth-btn" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
 
             <div className="auth-divider" aria-hidden="true">

@@ -1,20 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./AuthPage.css";
 import useAuthPageReady from "../hooks/useAuthPageReady";
+import { useAuth } from "../context/useAuth";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated, login, signup } = useAuth();
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [keepSignedIn, setKeepSignedIn] = React.useState(true);
+  const [error, setError] = React.useState("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const isPageReady = useAuthPageReady();
 
-  const signupRequest = (e) => {
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  const signupRequest = async (e) => {
     e.preventDefault();
-    console.log("Signup request sent");
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await signup({
+        fullname: fullName,
+        username,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      if (keepSignedIn) {
+        await login({ email, password });
+        navigate("/home", { replace: true });
+        return;
+      }
+
+      navigate("/login", { replace: true });
+    } catch (err) {
+      setError(err.message || "Unable to create account");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,6 +106,7 @@ const SignupPage = () => {
                 autoComplete="name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                required
               />
             </div>
 
@@ -78,6 +119,7 @@ const SignupPage = () => {
                 autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
               />
             </div>
 
@@ -90,6 +132,7 @@ const SignupPage = () => {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -102,6 +145,7 @@ const SignupPage = () => {
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
@@ -114,6 +158,7 @@ const SignupPage = () => {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -130,9 +175,15 @@ const SignupPage = () => {
             </label>
           </div>
 
+          {error ? (
+            <p className="auth-message auth-message--error" role="alert">
+              {error}
+            </p>
+          ) : null}
+
           <div className="auth-actions auth-actions--signup">
-            <button className="auth-btn" type="submit">
-              Create Account
+            <button className="auth-btn" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating..." : "Create Account"}
             </button>
 
             <div className="auth-divider" aria-hidden="true">

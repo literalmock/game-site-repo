@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import viewerGames from '../utils/viewerGames'
-import { Gamepad2, House, LogIn, Menu, Search, Trophy, X } from './ui/Icons'
+import { useAuth } from '../context/useAuth'
+import { useGamesCatalog } from '../hooks/useGamesCatalog'
+import { ChevronDown, Gamepad2, House, LogIn, LogOut, Menu, Search, Trophy, UserRound, X } from './ui/Icons'
 import './Navbar.css'
 
 const NAV_LINKS = [
@@ -12,11 +14,15 @@ const NAV_LINKS = [
 
 const Navbar = () => {
   const navigate = useNavigate()
+  const { isAuthenticated, logout, user } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchActiveIndex, setSearchActiveIndex] = useState(-1)
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false)
   const searchWrapRef = useRef(null)
+  const accountMenuRef = useRef(null)
+  const { games: catalogGames } = useGamesCatalog(viewerGames)
 
   const searchSuggestions = useMemo(() => {
     const normalizedQuery = searchQuery.toLowerCase().replace(/[^a-z0-9]/g, '')
@@ -52,13 +58,13 @@ const Navbar = () => {
       return 300 - gaps * 8 - (span - normalizedQuery.length) * 4
     }
 
-    return viewerGames
+    return catalogGames
       .map((game) => ({ game, score: scoreGame(game.title) }))
       .filter((entry) => entry.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 5)
       .map((entry) => entry.game)
-  }, [searchQuery])
+  }, [catalogGames, searchQuery])
 
   const openGameFromSearch = useCallback((game) => {
     if (!game?.id) return
@@ -103,11 +109,22 @@ const Navbar = () => {
     }
   }, [searchSuggestions.length])
 
+  const handleLogout = useCallback(async () => {
+    await logout()
+    setMobileOpen(false)
+    setAccountMenuOpen(false)
+    navigate('/login', { replace: true })
+  }, [logout, navigate])
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (!searchWrapRef.current?.contains(event.target)) {
         setIsSearchOpen(false)
         setSearchActiveIndex(-1)
+      }
+
+      if (!accountMenuRef.current?.contains(event.target)) {
+        setAccountMenuOpen(false)
       }
     }
 
@@ -116,8 +133,17 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    setSearchActiveIndex(-1)
-  }, [searchQuery])
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setAccountMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const displayName = user?.username || user?.fullname || 'Player'
 
   return (
     <>
@@ -135,7 +161,10 @@ const Navbar = () => {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
+                onChange={(event) => {
+                  setSearchQuery(event.target.value)
+                  setSearchActiveIndex(-1)
+                }}
                 onFocus={() => setIsSearchOpen(true)}
                 onKeyDown={handleSearchInputKeyDown}
                 placeholder="Search games"
@@ -170,29 +199,72 @@ const Navbar = () => {
 
           <div className="navbar-right">
             <nav className="navbar-links">
-              {NAV_LINKS.map(({ label, href, icon: Icon }) => (
+              {NAV_LINKS.map((navLink) => {
+                const Icon = navLink.icon
+
+                return (
                 <NavLink
-                  key={label}
-                  to={href}
-                  aria-label={label}
+                  key={navLink.label}
+                  to={navLink.href}
+                  aria-label={navLink.label}
                   className={({ isActive }) =>
-                    `nav-link nav-link--${label.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'is-active' : ''}`
+                    `nav-link nav-link--${navLink.label.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'is-active' : ''}`
                   }
                 >
                   <Icon size={16} className="nav-link-icon" />
                   <span className="nav-link-label">
-                    {label}
+                    {navLink.label}
                   </span>
                 </NavLink>
-              ))}
+                )
+              })}
             </nav>
-            <Link
-              to="/login"
-              className="signin-btn"
-            >
-              <LogIn size={14} />
-              Sign In
-            </Link>
+            {isAuthenticated ? (
+              <div className="navbar-user" ref={accountMenuRef}>
+                <button
+                  type="button"
+                  className="navbar-user-trigger"
+                  onClick={() => setAccountMenuOpen((open) => !open)}
+                  aria-expanded={accountMenuOpen}
+                  aria-haspopup="menu"
+                >
+                  <UserRound size={14} />
+                  <span className="navbar-user-name">{displayName}</span>
+                  <ChevronDown size={14} className={`navbar-user-chevron ${accountMenuOpen ? 'is-open' : ''}`} />
+                </button>
+
+                {accountMenuOpen ? (
+                  <div className="navbar-account-menu" role="menu">
+                    <div className="navbar-account-card">
+                      <span className="navbar-account-avatar" aria-hidden="true">
+                        {displayName.slice(0, 1).toUpperCase()}
+                      </span>
+                      <div className="navbar-account-copy">
+                        <span className="navbar-account-label">Account</span>
+                        <span className="navbar-account-name">{displayName}</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="navbar-account-item navbar-account-item--danger"
+                      onClick={handleLogout}
+                      role="menuitem"
+                    >
+                      <LogOut size={15} />
+                      Logout
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="signin-btn"
+              >
+                <LogIn size={14} />
+                Sign In
+              </Link>
+            )}
 
             <button
               type="button"
@@ -221,27 +293,43 @@ const Navbar = () => {
         </div>
 
         <nav className="mobile-nav">
-          {NAV_LINKS.map(({ label, href, icon: Icon }) => (
-            <NavLink
-              key={label}
-              to={href}
-              onClick={() => setMobileOpen(false)}
-              className={({ isActive }) => `mobile-nav-item ${isActive ? 'is-active' : ''}`}
-            >
-              <Icon size={15} className="mobile-nav-icon" />
-              {label}
-            </NavLink>
-          ))}
+          {NAV_LINKS.map((navLink) => {
+            const Icon = navLink.icon
+
+            return (
+              <NavLink
+                key={navLink.label}
+                to={navLink.href}
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) => `mobile-nav-item ${isActive ? 'is-active' : ''}`}
+              >
+                <Icon size={15} className="mobile-nav-icon" />
+                {navLink.label}
+              </NavLink>
+            )
+          })}
         </nav>
 
         <div className="mobile-drawer-footer">
-          <Link
-            to="/login"
-            className="mobile-signin-btn"
-          >
-            <LogIn size={14} />
-            Sign In
-          </Link>
+          {isAuthenticated ? (
+            <button
+              type="button"
+              className="mobile-signin-btn mobile-signin-btn--button"
+              onClick={handleLogout}
+            >
+              <LogOut size={14} />
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="mobile-signin-btn"
+              onClick={() => setMobileOpen(false)}
+            >
+              <LogIn size={14} />
+              Sign In
+            </Link>
+          )}
         </div>
       </aside>
     </>

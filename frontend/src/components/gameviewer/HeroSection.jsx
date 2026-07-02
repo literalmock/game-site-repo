@@ -1,16 +1,61 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Eye, Maximize2, Play, Star, Volume2, VolumeX } from '../ui/Icons';
+import { apiRequest } from '../../services/api';
+import { useAuth } from '../../context/useAuth';
+
+const PLAYTIME_HEARTBEAT_MS = 30000;
 
 const HeroSection = ({ game }) => {
+  const { isAuthenticated } = useAuth();
   const [isMuted, setIsMuted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [sessionPoints, setSessionPoints] = useState(0);
   const iframeRef = useRef(null);
   const containerRef = useRef(null);
+  const lastHeartbeatAtRef = useRef(Date.now());
 
   useEffect(() => {
     setIsLoaded(false);
+    setSessionPoints(0);
+    lastHeartbeatAtRef.current = Date.now();
   }, [game?.id]);
+
+  useEffect(() => {
+    if (!game?.id || !isLoaded || !isAuthenticated) {
+      return undefined;
+    }
+
+    lastHeartbeatAtRef.current = Date.now();
+
+    const recordHeartbeat = async () => {
+      if (document.visibilityState !== 'visible') {
+        lastHeartbeatAtRef.current = Date.now();
+        return;
+      }
+
+      const now = Date.now();
+      const elapsedSeconds = Math.floor((now - lastHeartbeatAtRef.current) / 1000);
+      lastHeartbeatAtRef.current = now;
+
+      if (elapsedSeconds <= 0) return;
+
+      try {
+        const data = await apiRequest(`/games/${game.id}/playtime`, {
+          method: 'POST',
+          body: JSON.stringify({ seconds: elapsedSeconds }),
+        });
+
+        setSessionPoints((currentPoints) => currentPoints + (Number(data.earnedPoints) || 0));
+      } catch {
+        // Playtime tracking should never interrupt the game experience.
+      }
+    };
+
+    const heartbeatId = window.setInterval(recordHeartbeat, PLAYTIME_HEARTBEAT_MS);
+
+    return () => window.clearInterval(heartbeatId);
+  }, [game?.id, isAuthenticated, isLoaded]);
 
   const handleFullscreen = useCallback(() => {
     const el = containerRef.current;
@@ -97,7 +142,7 @@ const HeroSection = ({ game }) => {
             {/* Now Playing badge */}
             <div className="gv-now-playing" aria-label="Now playing">
               <span className="gv-now-playing-dot" />
-              <span>Now Playing</span>
+              <span>{isAuthenticated ? `Now Playing · +${sessionPoints} pts` : 'Now Playing'}</span>
             </div>
         </div>
 

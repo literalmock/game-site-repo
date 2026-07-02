@@ -43,12 +43,11 @@ const login = async (req, res) => {
   }
   try {
     //User exists
-    const isExistingUser = await User.findOne({ email });
-    if (!isExistingUser) {
+    const userdetail = await User.findOne({ email });
+    if (!userdetail) {
       return res.status(400).send("User Does Not Exist");
     }
     //use bcrypt to compare password
-    const userdetail = await User.findOne({ email: email });
     const auth = await bcrypt.compare(password, userdetail.password);
     if (!auth) {
       return res.status(401).send("Password is Wrong");
@@ -61,7 +60,9 @@ const login = async (req, res) => {
       sameSite: "strict",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
-    return res.status(200).json({ message: "Login successful", userdetail });
+    const userWithoutPassword = userdetail.toObject();
+    delete userWithoutPassword.password;
+    return res.status(200).json({ message: "Login successful", user: userWithoutPassword });
   } catch (err) {
     console.log(err);
     return res.status(500).send("some error occured");
@@ -113,9 +114,13 @@ const forgotPassword = async (req, res) => {
     await user.save();
     // Send email (placeholder)
     // In production, use nodemailer or similar to send email with reset link
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5173').split(',')[0].trim();
+    const resetUrl = `${clientUrl}/reset-password/${resetToken}`;
     console.log(`Password reset link (send via email): ${resetUrl}`);
-    res.status(200).json({ message: 'Password reset link sent to email (check console in dev)' });
+    res.status(200).json({
+      message: 'Password reset link generated',
+      resetUrl,
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

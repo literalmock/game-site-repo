@@ -15,6 +15,8 @@
 }
 
 .sidebar-panel {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--sidebar-border);
   border-radius: 12px;
   padding: 14px;
@@ -113,6 +115,33 @@
   margin-bottom: 0;
 }
 
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(104, 142, 191, 0.22);
+}
+
+.sidebar-footer-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 10px;
+  padding: 5px;
+  background: rgba(40, 81, 136, 0.22);
+  border: 1px solid rgba(118, 156, 207, 0.24);
+}
+
+.sidebar-footer-text {
+  margin: 0;
+  color: var(--sidebar-placeholder);
+  font-size: 0.74rem;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
 .sidebar-label {
   margin: 0 0 8px;
   color: var(--sidebar-label);
@@ -191,6 +220,61 @@
   border-color: rgba(34, 211, 238, 0.55);
 }
 
+.sidebar-gameverse-card {
+  margin: 4px 0 2px;
+  border: 1px solid rgba(118, 156, 204, 0.2);
+  border-radius: 10px;
+  padding: 10px 11px;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(136, 176, 226, 0.12), transparent 50%),
+    linear-gradient(180deg, rgba(11, 24, 50, 0.58) 0%, rgba(8, 19, 42, 0.72) 100%);
+}
+
+.sidebar-gameverse-card--footer {
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-gameverse-kicker {
+  margin: 0 0 4px;
+  color: #b8cbe3;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sidebar-gameverse-glow {
+  margin: 0 0 7px;
+  font-size: 1.03rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #c5dbf5;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 2px rgba(160, 195, 235, 0.22),
+    0 0 6px rgba(120, 170, 230, 0.16);
+}
+
+.sidebar-gameverse-tips {
+  margin: 0;
+  padding-left: 16px;
+  color: #cfddf0;
+  font-size: 0.76rem;
+  line-height: 1.38;
+}
+
+.sidebar-gameverse-tips li + li {
+  margin-top: 5px;
+}
+
+.sidebar-gameverse-disclaimer {
+  margin: 8px 0 0;
+  color: #a9bfdc;
+  font-size: 0.7rem;
+  line-height: 1.38;
+}
+
 @media (max-width: 767px) {
   .sidebar-panel {
     padding: 8px 10px;
@@ -222,6 +306,15 @@
     font-size: 0.83rem;
     padding: 2px 6px;
   }
+
+  .sidebar-gameverse-card {
+    margin-top: 8px;
+    padding: 9px 10px;
+  }
+
+  .sidebar-gameverse-glow {
+    font-size: 0.95rem;
+  }
 }
 
 .app-layout--dark .sidebar {
@@ -244,6 +337,33 @@
   border-right: 1px solid rgba(100, 150, 255, 0.12);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.03), 20px 0 60px rgba(0, 0, 0, 0.45);
   backdrop-filter: saturate(90%) brightness(92%);
+}
+
+.app-layout--dark .sidebar-footer {
+  border-top-color: rgba(112, 154, 212, 0.28);
+}
+
+.app-layout--dark .sidebar-gameverse-card {
+  border-color: rgba(96, 140, 198, 0.3);
+  background:
+    radial-gradient(circle at 80% 10%, rgba(118, 178, 236, 0.1), transparent 44%),
+    linear-gradient(180deg, rgba(10, 22, 46, 0.56) 0%, rgba(7, 18, 40, 0.72) 100%);
+}
+
+.app-layout--dark .sidebar-gameverse-glow {
+  color: #bdd4ee;
+  text-shadow:
+    0 0 2px rgba(118, 182, 244, 0.2),
+    0 0 6px rgba(96, 165, 250, 0.16);
+}
+
+.app-layout--dark .sidebar-footer-logo {
+  background: rgba(30, 70, 124, 0.28);
+  border-color: rgba(118, 168, 231, 0.28);
+}
+
+.app-layout--dark .sidebar-footer-text {
+  color: #a8bfdd;
 }
 
 @media (min-width: 1024px) {

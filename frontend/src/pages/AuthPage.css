@@ -414,10 +414,54 @@
   opacity: 0.9;
 }
 
+.auth-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+  transform: none;
+}
+
 .auth-page--login .auth-btn:hover,
 .auth-page--signup .auth-btn:hover {
   opacity: 1;
   filter: brightness(1.05);
+}
+
+.auth-message {
+  margin: 0;
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.auth-message--error {
+  border: 1px solid rgba(255, 114, 114, 0.34);
+  background: rgba(115, 23, 35, 0.36);
+  color: #ffd7d7;
+}
+
+.auth-message--success {
+  border: 1px solid rgba(89, 233, 174, 0.34);
+  background: rgba(18, 100, 78, 0.32);
+  color: #cbffeb;
+}
+
+.auth-reset-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(125, 211, 252, 0.34);
+  color: #dcf6ff;
+  background: rgba(25, 78, 126, 0.38);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-reset-link:hover {
+  background: rgba(33, 105, 166, 0.46);
 }
 
 .auth-divider {

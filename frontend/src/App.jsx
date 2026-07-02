@@ -7,6 +7,8 @@ import SignupPage from './pages/SignupPage'
 import Homepage from './pages/Homepage'
 import GameViewerPage from './pages/GameViewerPage'
 import Leaderboard from './pages/Leaderboard'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   )

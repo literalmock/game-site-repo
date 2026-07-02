@@ -1,15 +1,22 @@
 const Comment = require('../models/Comment');
-const Game = require('../models/Game');
-const auth = require('../middleware/auth');
 
 // Get comments for a game
 // GET /api/games/:gameId/comments
 exports.getCommentsForGame = async (req, res) => {
   try {
-    const comments = await Comment.find({ gameId: req.params.gameId }).populate('userId', 'username avatar');
+    const gameId = String(req.params.gameId || '').trim();
+    if (!gameId) {
+      return res.status(400).json({ message: 'Game ID is required' });
+    }
+
+    const comments = await Comment.find({ gameId })
+      .populate('userId', 'username fullname avatar')
+      .sort({ createdAt: -1 })
+      .lean();
+
     res.json(comments);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch comments' });
+    res.status(500).json({ message: 'Failed to fetch comments' });
   }
 };
 
@@ -17,44 +24,46 @@ exports.getCommentsForGame = async (req, res) => {
 // POST /api/games/:gameId/comments
 exports.createComment = async (req, res) => {
   try {
-  const { content , rating } = req.body;
-  const user = req.user;
-  console.log(req.user)
-  const gameId = req.params.gameId;
-    if (!content || !rating) {
-      return res.status(400).json({ error: 'Content and rating are required' });
+    const { content, rating = 5 } = req.body;
+    const user = req.user;
+    const gameId = String(req.params.gameId || '').trim();
+    const cleanContent = typeof content === 'string' ? content.trim() : '';
+    const numericRating = Number(rating);
+
+    if (!gameId) {
+      return res.status(400).json({ message: 'Game ID is required' });
     }
-    // 1. check if the gameId is valid and exists in the database
-    if (gameId.length !== 24) {
-      return res.status(400).json({ error: 'Invalid game ID' });
+
+    if (!cleanContent) {
+      return res.status(400).json({ message: 'Comment is required' });
     }
-    // Check if game exists
-    // const game = await Game.findById(gameId);
-    // if (!game) {
-    //   return res.status(404).json({ error: 'Game not found' });
-    // }
-    if (rating < 1 || rating > 5) {
-      return res.status(400).json({ error: 'Rating must be between 1 and 5' });
+
+    if (!Number.isInteger(numericRating) || numericRating < 1 || numericRating > 5) {
+      return res.status(400).json({ message: 'Rating must be between 1 and 5' });
     }
-    // 2. check if the user has already commented on this game (optional)
-        const existingComment = await Comment.findOne({ gameId: gameId, userId: user._id });
+
+    const existingComment = await Comment.findOne({ gameId, userId: user._id });
     if (existingComment) {
-      return res.status(400).json({ error: 'You have already commented on this game' });
+      return res.status(400).json({ message: 'You have already commented on this game' });
     }
-    // 3. validate the content and rating (already done above)
+
     const newComment = new Comment({
       avatar: user.avatar,
       userId: user._id,
-      gameId: gameId,
-      content: content,
-      rating: rating,
+      gameId,
+      content: cleanContent,
+      rating: numericRating,
     });
 
     await newComment.save();
-    res.status(201).json(newComment);
+    const populatedComment = await Comment.findById(newComment._id)
+      .populate('userId', 'username fullname avatar')
+      .lean();
+
+    res.status(201).json(populatedComment);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to create comment', details: err.message });
+    res.status(500).json({ message: 'Failed to create comment', details: err.message });
   }
 };
 
@@ -64,16 +73,16 @@ exports.deleteComment = async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.id);
     if (!comment) {
-      return res.status(404).json({ error: 'Comment not found' });
+      return res.status(404).json({ message: 'Comment not found' });
     }
     if (comment.userId.toString() !== req.user._id.toString() &&
   req.user.role !== "admin") {
-      return res.status(403).json({ error: 'Unauthorized' });
+      return res.status(403).json({ message: 'Unauthorized' });
     }
     await Comment.findByIdAndDelete(req.params.id);
     res.json({ message: 'Comment deleted' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to delete comment' });
+    res.status(500).json({ message: 'Failed to delete comment' });
   }
 };

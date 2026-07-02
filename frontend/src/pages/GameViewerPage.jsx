@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { viewerGames } from '../utils/viewerGames';
+import { useGamesCatalog } from '../hooks/useGamesCatalog';
 import HeroSection from '../components/gameviewer/HeroSection';
 import RecommendedGames from '../components/gameviewer/RecommendedGames';
 import GameDetails from '../components/gameviewer/GameDetails';
@@ -12,14 +13,15 @@ const GameViewerPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
+  const { games: catalogGames } = useGamesCatalog(viewerGames);
 
   const routedGame = location.state?.game;
-  const fallbackGame = viewerGames.find((game) => String(game.id) === String(id));
+  const fallbackGame = catalogGames.find((game) => String(game.id) === String(id));
   const initialGame = routedGame && String(routedGame.id) === String(id)
     ? routedGame
     : fallbackGame;
 
-  const [activeGame, setActiveGame] = useState(initialGame || viewerGames[0]);
+  const [activeGame, setActiveGame] = useState(initialGame || catalogGames[0] || viewerGames[0]);
 
   useEffect(() => {
     if (!initialGame) {
@@ -46,13 +48,13 @@ const GameViewerPage = () => {
       <HeroSection game={activeGame} />
       <div className="gv-content">
         <RecommendedGames
-          games={viewerGames}
+          games={catalogGames}
           activeGame={activeGame}
           onSelect={handleSelectGame}
         />
         <GameDetails game={activeGame} />
         <MoreLikeThis
-          games={viewerGames}
+          games={catalogGames}
           activeGame={activeGame}
           onSelect={handleSelectGame}
         />

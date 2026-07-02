@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Eye, Gem, Search, Sparkles, Star, Trophy, Zap } from '../components/ui/Icons'
+import { apiRequest } from '../services/api'
 import './Leaderboard.css'
 
 const SAMPLE_ENTRIES = [
@@ -18,32 +19,82 @@ const SAMPLE_ENTRIES = [
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
 const PODIUM_ORDER = [2, 1, 3]
 
-const LeaderboardStat = ({ icon: Icon, label, value }) => (
-  <article className="leaderboard-stat-card">
-    <span className="leaderboard-stat-icon" aria-hidden="true">
-      <Icon size={15} />
-    </span>
-    <div className="leaderboard-stat-copy">
-      <p className="leaderboard-stat-label">{label}</p>
-      <p className="leaderboard-stat-value">{value}</p>
-    </div>
-  </article>
-)
+const normalizeLeaderboardEntry = (entry, index) => ({
+  id: entry.userId || entry._id || entry.username || `player-${index}`,
+  name: entry.username || entry.name || `Player ${index + 1}`,
+  country: entry.country || 'GV',
+  games: Number(entry.games) || 0,
+  wins: Number(entry.wins) || 0,
+  score: Number(entry.maxScore ?? entry.score) || 0,
+  streak: Number(entry.streak) || 0,
+})
+
+const LeaderboardStat = ({ icon, label, value }) => {
+  const StatIcon = icon
+
+  return (
+    <article className="leaderboard-stat-card">
+      <span className="leaderboard-stat-icon" aria-hidden="true">
+        <StatIcon size={15} />
+      </span>
+      <div className="leaderboard-stat-copy">
+        <p className="leaderboard-stat-label">{label}</p>
+        <p className="leaderboard-stat-value">{value}</p>
+      </div>
+    </article>
+  )
+}
 
 const Leaderboard = () => {
   const [timeframe, setTimeframe] = useState('weekly')
   const [query, setQuery] = useState('')
+  const [leaderboardEntries, setLeaderboardEntries] = useState(SAMPLE_ENTRIES)
+  const [isLoading, setIsLoading] = useState(true)
+  const [loadError, setLoadError] = useState('')
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [])
+
+  useEffect(() => {
+    let isMounted = true
+
+    const loadLeaderboard = async () => {
+      setIsLoading(true)
+      setLoadError('')
+
+      try {
+        const data = await apiRequest('/leaderboard')
+        const nextEntries = Array.isArray(data.leaderboard)
+          ? data.leaderboard.map(normalizeLeaderboardEntry)
+          : []
+
+        if (!isMounted) return
+        setLeaderboardEntries(nextEntries.length ? nextEntries : SAMPLE_ENTRIES)
+      } catch (error) {
+        if (!isMounted) return
+        setLeaderboardEntries(SAMPLE_ENTRIES)
+        setLoadError(error.message || 'Unable to load live leaderboard')
+      } finally {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadLeaderboard()
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const entries = useMemo(() => {
     const normalized = query.trim().toLowerCase()
 
     const filtered = normalized
-      ? SAMPLE_ENTRIES.filter((entry) => entry.name.toLowerCase().includes(normalized))
-      : SAMPLE_ENTRIES
+      ? leaderboardEntries.filter((entry) => entry.name.toLowerCase().includes(normalized))
+      : leaderboardEntries
 
     const scored = filtered.map((entry) => {
       const multiplier = timeframe === 'daily' ? 0.65 : timeframe === 'monthly' ? 1.15 : 1
@@ -58,9 +109,9 @@ const Leaderboard = () => {
     return scored.map((entry, index) => ({
       ...entry,
       rank: index + 1,
-      winRate: entry.games > 0 ? Math.round((entry.wins / entry.games) * 100) : 0,
+      winRate: entry.games > 0 && entry.wins > 0 ? Math.round((entry.wins / entry.games) * 100) : 0,
     }))
-  }, [query, timeframe])
+  }, [leaderboardEntries, query, timeframe])
 
   const topThree = entries.slice(0, 3)
   const rest = entries.slice(3)
@@ -86,7 +137,9 @@ const Leaderboard = () => {
           </p>
           <h1 className="heading-lg leaderboard-title">Leaderboard</h1>
           <p className="text-body leaderboard-subtitle heading-paragraph-gap">
-            Track top players, rewards, and your climb in the Gameverse competitive ladder.
+            {loadError
+              ? 'Showing demo standings until the live leaderboard is reachable.'
+              : 'Track top players, rewards, and your climb in the Gameverse competitive ladder.'}
           </p>
         </div>
 
@@ -187,7 +240,9 @@ const Leaderboard = () => {
             <Star size={15} fill="currentColor" />
             Global Standings
           </p>
-          <p className="text-muted leaderboard-table-note">{entries.length} players</p>
+          <p className="text-muted leaderboard-table-note">
+            {isLoading ? 'Syncing...' : `${entries.length} players`}
+          </p>
         </div>
 
         <div className="leaderboard-table" role="table" aria-label="Leaderboard">
@@ -236,4 +291,3 @@ const Leaderboard = () => {
 }
 
 export default Leaderboard
-
